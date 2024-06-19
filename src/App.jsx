@@ -7,17 +7,22 @@ import {
 
 // layouts and pages
 import RootLayout from './layouts/RootLayout'
-import Dashboard from './pages/Dashboard'
-import Create from './pages/Create'
-import Profile from './pages/Profile'
+import Home from './pages/Home'
+import About from './pages/About'
+import Pricing from './pages/Pricing'
+import Contact from './pages/Contact'
+import Courses from './pages/Courses'
 
 // router and routes
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route index element={<Dashboard />} />
-      <Route path="create" element={<Create />} />
-      <Route path="profile" element={<Profile />} />
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="pricing" element={<Pricing />} />
+      <Route path="courses" element={<Courses />} />
+      <Route path="contact" element={<Contact />} />
+
     </Route>
   )
 )

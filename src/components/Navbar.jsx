@@ -1,18 +1,25 @@
-import {Flex, Box, HStack, Button, Spacer, Heading,Text} from "@chakra-ui/react"
+import {Flex, Box, HStack, Button, Spacer, Heading, Image, Text} from "@chakra-ui/react"
+import { NavLink } from "react-router-dom"
 
 export default function Navbar(){
   return (
-    <div>
-        <Flex>
-          <Heading as="h1">DojoTasks</Heading>
+    <Box align="center" bg="whitesmoke">
+        <Flex maxWidth="1300px" >
+          <Image src="../../img/Resourcify.png" alt="Logo" maxWidth="150px"></Image>
+          <HStack>
+            <Box ml="20px"><NavLink to="/">Home</NavLink></Box>
+            <Box ml="20px"><NavLink to="/courses">Courses</NavLink></Box>
+            <Box ml="20px"><NavLink to="/about">About Us</NavLink></Box>
+            <Box ml="20px"><NavLink to="/pricing">Pricing</NavLink></Box>
+            <Box ml="20px"><NavLink to="/contact">Contact</NavLink></Box>
+          </HStack>
           <Spacer />
 
           <HStack spacing="40px">
-            <Box bg="gray.200" p="10px">M</Box>
-            <Text>Mario</Text>
-            <Button colorScheme="purple">Logout</Button>          
+            <Box>Sign Up</Box>
+            <Button bg="orange.400" color="white" _hover={{bg:"orange.500"}}>Login</Button>          
           </HStack>
         </Flex>
-    </div>
+    </Box>
   )
 }
