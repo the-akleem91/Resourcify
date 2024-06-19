@@ -3,63 +3,63 @@ import { CiCirclePlus } from "react-icons/ci";
 
 export default function FAQ() {
   return (
-    <Box ml="100px" bg="whitesmoke" maxWidth="1300px" mb="100px">
+    <Box ml="5%" bg="whitesmoke" maxWidth="90%" mb="100px">
       <Box bg="white">
         <HStack>
-          <Box p="40px" maxWidth="450px">
+          <Box p="4%" w="45%" >
             <ChakraProvider>
-              <Text fontSize="40px" fontWeight="bolder">Frequently Asked Questions</Text>
-              <Text fontSize="20px">Still you have any questions? Contact our Team via support@skillbridge.com</Text>
-              <Button mt="35px" bg="white" border="1px solid gray">See All FAQ’s</Button>
+              <Text fontSize={{base : "20px" ,lg : "25px" ,xl : "40px"}} fontWeight="bolder">Frequently Asked Questions</Text>
+              <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}}>Still you have any questions? Contact our Team via support@skillbridge.com</Text>
+              <Button mt="35px" bg="white" border="1px solid gray" w={{base : "105px" ,lg : "110px" ,xl : "120px"}} h={{base : "30px" ,lg : "35px" ,xl : "45px"}}>See All FAQ’s</Button>
             </ChakraProvider>
           </Box>
-          <Box>
-            <Box border="1px solid gray" mb="40px" mt="40px" w="800px" borderRadius="10px" >
+          <Box w="65%" >
+            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px" >
               <Box px="40px" py="20px" maxHeight="70px">
                 <HStack>
-                  <Text fontSize="20px" mb="15px" w="800px" >Can I enroll in multiple courses at once?</Text>
+                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Can I enroll in multiple courses at once?</Text>
                   <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={8} w={8}></Icon>
+                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
                   </Button>
                 </HStack>
               </Box>
             </Box>
-            <Box border="1px solid gray" mb="40px" w="800px" borderRadius="10px" >
+            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
               <Box px="40px" py="20px" maxHeight="70px">
                 <HStack>
-                  <Text fontSize="20px" mb="15px" w="800px" >What kind of support can I expect from instructors?</Text>
+                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >What kind of support can I expect from instructors?</Text>
                   <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={8} w={8}></Icon>
+                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
                   </Button>
                 </HStack>
               </Box>
             </Box>
-            <Box border="1px solid gray" mb="40px" w="800px" borderRadius="10px" >
+            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
               <Box px="40px" py="20px" maxHeight="70px">
                 <HStack>
-                  <Text fontSize="20px" mb="15px" w="800px" >Are the courses self-paced or do they have specific start and end dates?</Text>
+                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Are the courses self-paced?</Text>
                   <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={8} w={8}></Icon>
+                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
                   </Button>
                 </HStack>
               </Box>
             </Box>
-            <Box border="1px solid gray" mb="40px" w="800px" borderRadius="10px" >
+            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
               <Box px="40px" py="20px" maxHeight="70px">
                 <HStack>
-                  <Text fontSize="20px" mb="15px" w="800px" >Are there any prerequisites for the courses?</Text>
+                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Are there any prerequisites for the courses?</Text>
                   <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={8} w={8}></Icon>
+                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
                   </Button>
                 </HStack>
               </Box>
             </Box>
-            <Box border="1px solid gray" mb="40px" w="800px" borderRadius="10px" >
+            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
               <Box px="40px" py="20px" maxHeight="70px">
                 <HStack>
-                  <Text fontSize="20px" mb="15px" w="800px" >Can I download the course materials for offline access?</Text>
+                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Can I download the course materials for offline access?</Text>
                   <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={8} w={8}></Icon>
+                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
                   </Button>
                 </HStack>
               </Box>

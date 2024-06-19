@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 export default function Navbar(){
   return (
     <Box align="center" bg="whitesmoke">
-        <Flex maxWidth="1300px" >
+        <Flex maxWidth="90%" >
           <Image src="../../img/Resourcify.png" alt="Logo" maxWidth="150px"></Image>
           <HStack>
             <Box ml="20px"><NavLink to="/">Home</NavLink></Box>

@@ -9,7 +9,7 @@ import {
 import RootLayout from './layouts/RootLayout'
 import Home from './pages/Home'
 import About from './pages/About'
-import Pricing from './pages/Pricing'
+import Pricingpage from './pages/Pricing'
 import Contact from './pages/Contact'
 import Courses from './pages/Courses'
 
@@ -19,7 +19,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="pricing" element={<Pricing />} />
+      <Route path="pricing" element={<Pricingpage />} />
       <Route path="courses" element={<Courses />} />
       <Route path="contact" element={<Contact />} />
 
