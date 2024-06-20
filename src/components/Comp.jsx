@@ -1,4 +1,4 @@
-import { Icon, Flex,Box, Center, HStack } from "@chakra-ui/react";
+import { Icon, Flex,Box, Center, HStack, ChakraProvider} from "@chakra-ui/react";
 import { SiZapier ,SiSpotify ,SiZoom ,SiAdobe, SiAmazon, SiNotion, SiNetflix} from "react-icons/si";
 
  

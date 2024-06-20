@@ -1,5 +1,4 @@
 import {Flex, Box, HStack, Button, Spacer, Heading, Image, Text} from "@chakra-ui/react"
-import { NavLink } from "react-router-dom"
 
 export default function Head(){
   return (
