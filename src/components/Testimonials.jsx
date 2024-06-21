@@ -7,15 +7,13 @@ export default function OurTestimonials() {
         
         <ChakraProvider>
                 <Text fontSize="30px" fontWeight="semibold">
-                    Benefits
+                Our Testimonials
                 </Text>
                 <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
                     <Box 
                     width={{base: "50px" , lg : "150px" , xl : "1000px"}}
                     height={{ base: "50px" , lg : "75px" , xl : "100px"}}><Text>Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.</Text></Box>
-                    <Box
-                    height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                    ml="450px"><Button>View All</Button></Box>
+                    
                 </SimpleGrid>
         </ChakraProvider>
        

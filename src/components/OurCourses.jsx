@@ -1,5 +1,6 @@
 import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
 import { MdArrowOutward } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 
 export default function OurCourses() {
   return (
@@ -15,7 +16,7 @@ export default function OurCourses() {
                     height={{ base: "50px" , lg : "75px" , xl : "100px"}}><Text>Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.</Text></Box>
                     <Box
                     height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                    ml="450px"><Button>View All</Button></Box>
+                    ml="450px"><Button><NavLink to="/courses">View all</NavLink></Button></Box>
                 </SimpleGrid>
         </ChakraProvider>
        

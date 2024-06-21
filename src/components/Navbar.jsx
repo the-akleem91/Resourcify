@@ -16,8 +16,8 @@ export default function Navbar(){
           <Spacer />
 
           <HStack spacing="40px">
-            <Box>Sign Up</Box>
-            <Button bg="orange.400" color="white" _hover={{bg:"orange.500"}}>Login</Button>          
+            <Box><NavLink to="/signup">Signup</NavLink></Box>
+            <Button bg="orange.400" color="white" _hover={{bg:"orange.500"}}><NavLink to="/login">Login</NavLink></Button>         
           </HStack>
         </Flex>
     </Box>

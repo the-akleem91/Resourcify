@@ -1,5 +1,6 @@
 import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
 import { CiCirclePlus } from "react-icons/ci";
+import { NavLink } from "react-router-dom";
 
 export default function FAQ() {
   return (
@@ -10,7 +11,7 @@ export default function FAQ() {
             <ChakraProvider>
               <Text fontSize={{base : "20px" ,lg : "25px" ,xl : "40px"}} fontWeight="bolder">Frequently Asked Questions</Text>
               <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}}>Still you have any questions? Contact our Team via support@skillbridge.com</Text>
-              <Button mt="35px" bg="white" border="1px solid gray" w={{base : "105px" ,lg : "110px" ,xl : "120px"}} h={{base : "30px" ,lg : "35px" ,xl : "45px"}}>See All FAQ’s</Button>
+              <Button mt="35px" bg="white" border="1px solid gray" w={{base : "105px" ,lg : "110px" ,xl : "120px"}} h={{base : "30px" ,lg : "35px" ,xl : "45px"}}><NavLink to="/pricing">See all FAQ's</NavLink></Button>
             </ChakraProvider>
           </Box>
           <Box w="65%" >

@@ -1,5 +1,6 @@
 import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid  , HStack , Text} from "@chakra-ui/react";
 import { FaBoltLightning } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 
 export default function HeroHome() {
   return (
@@ -26,8 +27,8 @@ export default function HeroHome() {
             </Box>
             </Center>    
             <Center my="25px">
-            <Button color="white" bg="orange.400" _hover={{bg:"orange.500"}} m="10px">Explore Courses</Button>
-            <Button color="black" bg="white" _hover={{bg: "whitesmoke"}} m="10px">View Pricing</Button>
+            <Button color="white" bg="orange.400" _hover={{bg:"orange.500"}} m="10px"><NavLink to="/courses">Explore Courses</NavLink></Button>
+            <Button color="black" bg="white" _hover={{bg: "whitesmoke"}} m="10px"><NavLink to="/pricing">View Pricing</NavLink></Button>
             </Center> 
         </ChakraProvider>
     </Box>
