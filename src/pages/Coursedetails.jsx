@@ -2,8 +2,12 @@ import { Box , Button, Icon, HStack, SimpleGrid, Text ,AspectRatio} from '@chakr
 import { MdArrowOutward } from 'react-icons/md';
 import { CiAlarmOn } from "react-icons/ci";
 import React from 'react'
+import { useParams } from 'react-router-dom';
 
 function Coursedetails() {
+    const {id} = useParams();
+    console.log(id);
+   
   return (
     <Box>
         <Box align="center" bg="whitesmoke">

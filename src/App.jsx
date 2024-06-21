@@ -11,10 +11,10 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Pricingpage from './pages/Pricing'
 import Contact from './pages/Contact'
-import Courses from './pages/Courses'
+import Course from './pages/Courses'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Coursedetails from './pages/Coursedetails'
+import Coursedetails from './pages/coursedetails'
 
 // router and routes
 const router = createBrowserRouter(
@@ -23,12 +23,9 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="pricing" element={<Pricingpage />} />
-      <Route path="courses" element={<Courses />} />
-      <Route path="/courses/1" element={<Coursedetails />} />
-      <Route path="/courses/2" element={<Coursedetails />} />
-      <Route path="/courses/3" element={<Coursedetails />} />
-      <Route path="/courses/4" element={<Coursedetails />} />
-      <Route path="/courses/5" element={<Coursedetails />} />
+      <Route path="courses" element={<Course />} >
+        <Route path=":slug" element={<Coursedetails />}/>
+      </Route>
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />

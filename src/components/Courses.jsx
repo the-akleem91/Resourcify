@@ -1,4 +1,4 @@
-import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
+import { Box , Button, Center, ChakraProvider, Grid, Link, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
 import { MdArrowOutward } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
@@ -393,7 +393,7 @@ export default function Courses() {
                         pl="2%"><Text>Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to="/courses/5">View Course</NavLink></Button></Box>
+                        ml="450px"><Button><Link href="/courses/design">View Course</Link></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">

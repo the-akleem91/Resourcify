@@ -1,6 +1,9 @@
 import { Box ,  HStack ,Text} from "@chakra-ui/react"
+import { useParams } from 'react-router-dom';
 import Courses from "../components/Courses"
-export default function About() {
+export default function Course() {
+  const {id} = useParams();
+  console.log(id);
   return (
     <Box>
       <Box align="center" bg="whitesmoke">
