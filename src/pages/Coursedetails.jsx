@@ -1,302 +1,94 @@
-import { Box , Button, Icon, HStack, SimpleGrid, Text ,AspectRatio} from '@chakra-ui/react';
-import { MdArrowOutward } from 'react-icons/md';
-import { CiAlarmOn } from "react-icons/ci";
-import React from 'react'
+import { Box, Button, Icon, HStack, Text, AspectRatio, Container, Grid } from '@chakra-ui/react';
+import { CiAlarmOn } from 'react-icons/ci';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Coursedetails() {
-    const {id} = useParams();
-    console.log(id);
-   
-  return (
-    <Box>
-        <Box align="center" bg="whitesmoke">
-            <HStack w="90%" borderBottom="1px solid gray">
-                <Box p="5%" w="30%">
-                    <Text fontWeight="bolder" fontSize={{base : "20px", lg : "30px", xl : "40px"}}>UI/UX Design Course</Text>
-                </Box>
-                <Box p="3%" w="70%">
-                    <Text fontSize={{base : "8px", lg : "10px", xl : "15px"}}>Welcome to our UI/UX Design course! This comprehensive program will equip you with the knowledge and skills to create exceptional user interfaces (UI) and enhance user experiences (UX). Dive into the world of design thinking, wireframing, prototyping, and usability testing. Below is an overview of the curriculum.</Text>
-                </Box>
-            </HStack> 
-        </Box>
-        <Box bg="whitesmoke">
-            <AspectRatio  maxWidth="1300px" ratio={16/9} m="100px">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/6yN2ZG_TaGM?si=IMDs3IGIL8SAJ1Kh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </AspectRatio> 
-        </Box> 
-        <Box align="center" bg="whitesmoke" py="2%">
-            <SimpleGrid p="10px" spacing={10} maxWidth={"90%"} minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}  >
-                <Box 
-                bg="white"
-                borderRadius="15px"
-                height={{ base: "100px" , lg : "150px" , xl : "500px"}} >
-                    <Box>
-                        <Text align="right" pt="5px" fontSize="60px" fontWeight="bolder" mr="3%">01</Text>
+    const { id } = useParams();
+    const [courses, setCourses] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/courses');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setCourses(data);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+
+        fetchCourses();
+    }, []);
+
+    if (error) {
+        return <Box>Error: {error}</Box>;
+    }
+
+    if (courses.length === 0) {
+        return <Box>Loading...</Box>;
+    }
+
+    return (
+        <Container maxW="100%" bg="whitesmoke">
+                <Container maxW="90%">
+                {courses.map((course, courseIndex) => (
+                    <Box key={courseIndex} mb={8}>
+                        <Box align="center" bg="whitesmoke" py={4}>
+                            <Text fontWeight="bolder" fontSize={{ base: "20px", lg: "30px", xl: "40px" }}>{course.courseTitle}</Text>
+                            <Text fontSize={{ base: "8px", lg: "10px", xl: "15px" }}>{course.courseDescription}</Text>
+                        </Box>
+                        <Box bg="whitesmoke">
+                            <AspectRatio ratio={16 / 9} m="auto" maxWidth="100%">
+                                <iframe src={course.videoSrc} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                            </AspectRatio>
+                        </Box>
+                        <Box align="center" bg="whitesmoke" py={4}>
+                            <Grid templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)", xl: "repeat(2, 2fr)" }} gap={4} maxWidth="90%" m="auto">
+                                {course.modules.map((module, moduleIndex) => (
+                                    <Box key={moduleIndex} bg="white" borderRadius="15px" p={4}>
+                                        <Text fontSize="60px" fontWeight="bolder" align="right">{moduleIndex+1}</Text>
+                                        <Text fontSize="25px" fontWeight="bold" mb={4} align="left">{module.moduleTitle}</Text>
+                                        {module.sections.map((section, sectionIndex) => (
+                                            <HStack key={sectionIndex} justifyContent="space-between" mb={2}>
+                                                <Box>
+                                                    <Text fontWeight="semibold" fontSize="20px">{section}</Text>
+                                                    <Text fontWeight="thin" fontSize="15px" align="left">Lesson {sectionIndex+1}</Text>
+                                                </Box>
+                                                <Button>
+                                                    <Icon as={CiAlarmOn} />
+                                                    <Text>1 Hour</Text>
+                                                </Button>
+                                            </HStack>
+                                        ))}
+                                    </Box>
+                                ))}
+                            </Grid>
+                        </Box>
                     </Box>
-                    <Box>
-                        <Text ml="30px" fontSize="25px" fontWeight="bold" align="left">Introduction to UI/UX Design</Text>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Understanding UI/UX Design Principles</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 01</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Importance of User-Centered Design</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 02</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">The Role of UI/UX Design in Product Development</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 03</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>             
-                </Box>
-                <Box 
-                bg="white"
-                borderRadius="15px"
-                height={{ base: "100px" , lg : "150px" , xl : "500px"}} >
-                    <Box>
-                        <Text align="right" pt="5px" fontSize="60px" fontWeight="bolder" mr="3%">02</Text>
-                    </Box>
-                    <Box>
-                        <Text ml="30px" fontSize="25px" fontWeight="bold" align="left">User Research and Analysis</Text>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Analyzing User Needs and Behavior</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 01</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Conducting User Research and Interviews</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 02</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Creating User Personas and Scenarios</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 03</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>             
-                </Box>
-                <Box 
-                bg="white"
-                borderRadius="15px"
-                height={{ base: "100px" , lg : "150px" , xl : "500px"}} >
-                    <Box>
-                        <Text align="right" pt="5px" fontSize="60px" fontWeight="bolder" mr="3%">03</Text>
-                    </Box>
-                    <Box>
-                        <Text ml="30px" fontSize="25px" fontWeight="bold" align="left">Wireframing and Prototyping</Text>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Introduction to Wireframing Tools and Techniques</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 01</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Creating Low-Fidelity Wireframes</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 02</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Prototyping and Interactive Mockups</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 03</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>             
-                </Box>
-                <Box 
-                bg="white"
-                borderRadius="15px"
-                height={{ base: "100px" , lg : "150px" , xl : "500px"}} >
-                    <Box>
-                        <Text align="right" pt="5px" fontSize="60px" fontWeight="bolder" mr="3%">04</Text>
-                    </Box>
-                    <Box>
-                        <Text ml="30px" fontSize="25px" fontWeight="bold" align="left">Visual Design and Branding</Text>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Color Theory and Typography in UI Design</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 01</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Visual Hierarchy and Layout Design</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 02</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Creating a Strong Brand Identity</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 03</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>             
-                </Box>
-                <Box 
-                bg="white"
-                borderRadius="15px"
-                height={{ base: "100px" , lg : "150px" , xl : "500px"}} >
-                    <Box>
-                        <Text align="right" pt="5px" fontSize="60px" fontWeight="bolder" mr="3%">01</Text>
-                    </Box>
-                    <Box>
-                        <Text ml="30px" fontSize="25px" fontWeight="bold" align="left">Usability Testing and Iteration</Text>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Usability Testing Methods and Techniques</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 01</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>1 Hour</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Analyzing Usability Test Results</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 02</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>
-                    <Box border="1px solid #F1F1F3" mx="7%" my="3%" borderRadius="5px">
-                        <HStack p="2%" justifyContent="space-between">
-                            <Box align="left">
-                                <Text fontWeight="semibold" fontSize="20px">Iterating and Improving UX Designs</Text>
-                                <Text fontWeight="thin" fontSize="15px">Lesson 03</Text>
-                            </Box>
-                            <Box>
-                                <Button>
-                                    <Icon as={CiAlarmOn}></Icon>
-                                    <Text>45 Min</Text>
-                                </Button>
-                            </Box>
-                        </HStack>
-                    </Box>             
-                </Box>
-            </SimpleGrid>  
-        </Box>      
-    </Box>
-  )
+                ))}
+            </Container>
+        </Container>
+    );
 }
 
-export default Coursedetails
+export default Coursedetails;
+
+export const taskLoader = async () => {
+    try {
+        const res = await fetch('http://localhost:3000/courses');
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch data:', error);
+        return null;
+    }
+};
 

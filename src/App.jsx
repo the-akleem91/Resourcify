@@ -1,8 +1,9 @@
-import { 
-  createBrowserRouter, 
-  createRoutesFromElements, 
-  Route, 
-  RouterProvider 
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+  Routes
 } from 'react-router-dom'
 
 // layouts and pages
@@ -15,6 +16,7 @@ import Course from './pages/Courses'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Coursedetails from './pages/coursedetails'
+import { taskLoader } from './pages/coursedetails'
 
 // router and routes
 const router = createBrowserRouter(
@@ -23,13 +25,11 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="pricing" element={<Pricingpage />} />
-      <Route path="courses" element={<Course />} >
-        <Route path=":slug" element={<Coursedetails />}/>
-      </Route>
+      <Route path="courses" element={<Course />} />
+      <Route path="courses/:id" element={<Coursedetails />}  loader={taskLoader}/>
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
-
     </Route>
   )
 )
@@ -40,4 +40,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
