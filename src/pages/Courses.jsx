@@ -6,7 +6,7 @@ export default function Course() {
   console.log(id);
   return (
     <Box>
-      <Box align="center" bg="whitesmoke">
+      <Box align="center" bg="gray.100">
         <HStack w="90%" borderBottom="1px solid gray">
             <Box p="5%" w="40%">
                 <Text fontWeight="bolder" fontSize={{base : "17px", lg : "20px", xl : "30px"}} align="left">Online Courses on Design and Development</Text>

@@ -5,7 +5,7 @@ import Head from "../components/Head";
 
 export default function Pricingpage() {
   return (
-    <Box bg="whitesmoke" minHeight="1150px" maxHeight="8000px" alignContent="center">
+    <Box bg="gray.100" minHeight="1150px" maxHeight="8000px" alignContent="center">
       <Head />
       <Pricing />
       <FAQ />

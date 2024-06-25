@@ -26,7 +26,7 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="pricing" element={<Pricingpage />} />
       <Route path="courses" element={<Course />} />
-      <Route path="courses/:id" element={<Coursedetails />}  loader={taskLoader}/>
+      <Route path="courses/:courseId" element={<Coursedetails />}  loader={taskLoader}/>
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />

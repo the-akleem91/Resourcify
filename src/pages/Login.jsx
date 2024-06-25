@@ -1,110 +1,143 @@
-import { useState } from "react";
+import React from 'react';
 import {
+  Box,
   Flex,
-  Heading,
+  Text,
   Input,
   Button,
-  InputGroup,
   Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement,
-  Text
-} from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
-
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
-
+  Checkbox,
+  useBreakpointValue,
+  useColorModeValue,
+  Tab,
+  Tabs,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Link
+} from '@chakra-ui/react';
+import { SiGoogle } from 'react-icons/si';
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleShowClick = () => setShowPassword(!showPassword);
+  const formWidth = useBreakpointValue({ base: '100%', md: 'lg' });
 
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="whitesmoke"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Avatar bg="orange.500" />
-        <Heading color="orange.400">Welcome</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <Box pb="20px">
-                  <Text align="center" fontSize="30px" fontWeight="bolder" color="orange.400">Login</Text>
-                  <Text align="center" fontSize="15px" fontWeight="light" color="gray.500">Welcome back! Please log in to access your account.</Text>
+
+    <div>
+        <Tabs isFitted variant='soft-rounded' colorScheme='orange' bg="gray.100">
+          <TabList>
+            <Tab>Student</Tab>
+            <Tab>Creator</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Flex minH="100vh" flexDirection={{ base: 'column', md: 'row' }} align="center" justify="center" bg='gray.100'>
+                <Box
+                  flex="1"
+                  display={{ base: 'none', md: 'flex' }}
+                  bgImg={{md:'../../img/Sign up.png' ,xl:'../../img/signuplong.png'}}
+                  bgRepeat='no-repeat'
+                  bgSize='cover'
+                  color="white"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={8}
+                >
+                  <Stack spacing={6} maxW="md" align="center" justifyContent="center" mx="auto" minH="70vh">
+                    <Text fontSize="xl" fontWeight="bold">
+                      Students
+                    </Text>
+                    <Text fontSize="2xl" fontStyle="italic">
+                      "I always observe the people who pass by when I ride an escalator. I'll never see most of them again, so I imagine a lot of things about their lives... about the day ahead of them."
+                    </Text>
+                    <Text fontSize="lg" align="right">
+                      - Hideo Kojima
+                    </Text>
+                  </Stack>
                 </Box>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
-                  />
-                  <Input type="email" placeholder="email address" />
-                </InputGroup>
-              </FormControl>
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
-                  />
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                      {showPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                <FormHelperText textAlign="right">
-                  <Link>forgot password?</Link>
-                </FormHelperText>
-              </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="orange"
-                width="full"
-              >
-                Login
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
-      <Box>
-        New to us?{" "}
-        <Link color="orange.500" href="#">
-          Sign Up
-        </Link>
-      </Box>
-    </Flex>
+                <Stack spacing={8} mx="auto" maxW={formWidth} py={12} px={6} flex="1">
+                  <Stack align="center">
+                    <Text fontSize="4xl">Register Student Account!</Text>
+                    <Text fontSize="lg" color="gray.600">
+                      For the purpose of gamers regulation, your details are required.
+                    </Text>
+                  </Stack>
+                  <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
+                    <Stack spacing={4}>
+                      <Input placeholder="Enter email address" type="email" />
+                      <Input placeholder="Password" type="password" />
+                      <Input placeholder="Repeat password" type="password" />
+                      <Stack spacing={10}>
+                        <Checkbox>I agree to terms & conditions</Checkbox>
+                        <Button bg="orange.400" color="white" _hover={{ bg: 'orange.500' }}>
+                          Register Account
+                        </Button>
+                        <Button variant="outline" leftIcon={<SiGoogle />}>
+                          Register with Google
+                        </Button>
+                        <Text align="center">Already a Student? <Link href=''>Login</Link></Text>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+            <Flex minH="100vh" flexDirection={{ base: 'column', md: 'row' }} align="center" justify="center" bg='gray.100'>
+                <Stack spacing={8} mx="auto" maxW={formWidth} py={12} px={6} flex="1">
+                  <Stack align="center">
+                    <Text fontSize="4xl">Register Creator Account!</Text>
+                    <Text fontSize="lg" color="gray.600">
+                      For the purpose of Creator regulation, your details are required.
+                    </Text>
+                  </Stack>
+                  <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
+                    <Stack spacing={4}>
+                      <Input placeholder="Enter email address" type="email" />
+                      <Input placeholder="Password" type="password" />
+                      <Input placeholder="Repeat password" type="password" />
+                      <Stack spacing={10}>
+                        <Checkbox>I agree to terms & conditions</Checkbox>
+                        <Button bg="orange.400" color="white" _hover={{ bg: 'orange.500' }}>
+                          Register Account
+                        </Button>
+                        <Button variant="outline" leftIcon={<SiGoogle />}>
+                          Register with Google
+                        </Button>
+                        <Text align="center">Already a Creator?<Link>Login</Link></Text>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+                <Box
+                  flex="1"
+                  display={{ base: 'none', md: 'flex' }}
+                  bgImg={{md:'../../img/Sign up.png' ,xl:'../../img/signuplong.png'}}
+                  bgRepeat='no-repeat'
+                  bgSize='cover'
+                  color="white"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={8}
+                >
+                  <Stack spacing={6} maxW="md" align="center" justifyContent="center" mx="auto" minH="70vh">
+                    <Text fontSize="xl" fontWeight="bold">
+                      Creator
+                    </Text>
+                    <Text fontSize="2xl" fontStyle="italic">
+                      "I always observe the people who pass by when I ride an escalator. I'll never see most of them again, so I imagine a lot of things about their lives... about the day ahead of them."
+                    </Text>
+                    <Text fontSize="lg" align="right">
+                      - Hideo Kojima
+                    </Text>
+                  </Stack>
+                </Box>
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+        
+    </div>
   );
 };
 

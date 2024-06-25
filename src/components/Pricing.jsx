@@ -17,7 +17,7 @@ const Pricing = () => (
     justifyContent="center"
     minH="100vh"
     w="full"
-    backgroundColor="whitesmoke"
+    backgroundColor="gray.100"
   >
     <Stack
       spacing={5}

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Courses() {
   return (
-    <Box align="center" bg="whitesmoke">
+    <Box align="center" bg="gray.100">
        
         <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth= "90%">
             <Box 
@@ -24,7 +24,7 @@ export default function Courses() {
                         pl="2%"><Text>Learn the fundamentals of web design, including HTML, CSS, and responsive design principles. Develop the skills to create visually appealing and user-friendly websites.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to="/courses/1">View Course</NavLink></Button></Box>
+                        ml="450px"><Button><NavLink to={`/courses/1`}>View Course</NavLink></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">
@@ -116,7 +116,7 @@ export default function Courses() {
                         pl="2%"><Text>Master the art of creating intuitive user interfaces (UI) and enhancing user experiences (UX). Learn design principles, wireframing, prototyping, and usability testing techniques.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to="/courses/2">View Course</NavLink></Button></Box>
+                        ml="450px"><Button><NavLink to={`/courses/3`}>View Course</NavLink></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">
@@ -208,7 +208,7 @@ export default function Courses() {
                         pl="2%"><Text>Dive into the world of mobile app development. Learn to build native iOS and Android applications using industry-leading frameworks like Swift and Kotlin.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to="/courses/3">View Course</NavLink></Button></Box>
+                        ml="450px"><Button><NavLink to={`/courses/2`}>View Course</NavLink></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">
@@ -300,7 +300,7 @@ export default function Courses() {
                         pl="2%"><Text>Discover the fundamentals of graphic design, including typography, color theory, layout design, and image manipulation techniques. Create visually stunning designs for print and digital media.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to="/courses/4">View Course</NavLink></Button></Box>
+                        ml="450px"><Button><NavLink to={`/courses/4`}>View Course</NavLink></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">
@@ -393,7 +393,7 @@ export default function Courses() {
                         pl="2%"><Text>Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites.</Text></Box>
                         <Box
                         height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><Link href="/courses/design">View Course</Link></Button></Box>
+                        ml="450px"><Button><Link href={`/courses/5`}>View Course</Link></Button></Box>
                     </SimpleGrid>
                 </ChakraProvider>
                 <HStack pl="2%">
@@ -472,3 +472,18 @@ export default function Courses() {
     </Box>
   )
 }
+
+
+export const taskLoader = async () => {
+    try {
+        const res = await fetch('http://localhost:3000/courses');
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch data:', error);
+        return null;
+    }
+};

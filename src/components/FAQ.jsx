@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function FAQ() {
   return (
-    <Box ml="5%" bg="whitesmoke" maxWidth="90%" mb="100px">
+    <Box ml="5%" bg="gray.100" maxWidth="90%" mb="100px">
       <Box bg="white">
         <HStack>
           <Box p="4%" w="45%" >

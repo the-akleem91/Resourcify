@@ -6,7 +6,7 @@ import { BsFillPuzzleFill } from "react-icons/bs";
 import { AiFillAlert } from "react-icons/ai";
 export default function Achievements(){
   return (
-    <Box align="center" bg="whitesmoke">
+    <Box align="center" bg="gray.100">
         <Box py="100px">
                 <ChakraProvider>
                         <Text fontSize="30px" fontWeight="semibold" align="left" mx="7%">

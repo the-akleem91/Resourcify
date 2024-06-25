@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function OurCourses() {
   return (
-    <Box ml="100px" mb="100px">
+    <Box ml="100px" mb="100px" bg='gray.100'>
         
         <ChakraProvider>
                 <Text fontSize="30px" fontWeight="semibold">

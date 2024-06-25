@@ -1,116 +1,41 @@
-import { useState } from "react";
-import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement,
-  Text
-} from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+// src/components/LoginPage.js
 
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
+import React from 'react';
+import { Box, Flex, Stack, Input, Button, Text, FormControl, FormLabel, Link, Img, Container } from "@chakra-ui/react";
 
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleShowClick = () => setShowPassword(!showPassword);
-
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="whitesmoke"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Avatar bg="orange.500" />
-        <Heading color="orange.400">Welcome</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
-            <Stack
-              spacing={4}
-              p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="md"
-            >
-              <FormControl>
-                <Box pb="20px">
-                  <Text align="center" fontSize="30px" fontWeight="bolder" color="orange.400">Signup</Text>
-                  <Text align="center" fontSize="15px" fontWeight="light" color="gray.500">Create an account to unlock exclusive features.</Text>
-                </Box>
-                <InputGroup pb="20px">
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CFaUserAlt color="black" />}
-                  />
-                  <Input type="Username" placeholder="Username" />
-                </InputGroup>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<MdEmail />}
-                  />
-                  <Input type="email" placeholder="email address" />
-                </InputGroup>
-              </FormControl>
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="black" />}
-                  />
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                      {showPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="orange"
-                width="full"
-              >
-                Signup
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
-      <Box>
-        Already have an acount?{" "}
-        <Link color="orange.500" href="/Login">
-          Login
-        </Link>
+    <Flex minHeight="100vh" align="center" justify="center" bg="gray.100" direction={{ base: "column", md: "row" }}>
+      <Box flex="1" bg="white" p={8} rounded="md" shadow="lg" maxW={{ base: "90%", md: "50%" }} mx="auto">
+        <Stack spacing={4}>
+          <Container alignItems='center' justifyContent='center'w="220px">
+            <Img justifySelf='center' w="220px" src='../../img/Resourcify.png'/>  
+          </Container>
+          <Text fontSize="lg" textAlign="center">Login into your account</Text>
+          
+          <FormControl id="email">
+            <FormLabel>Email Address</FormLabel>
+            <Input type="email" placeholder="alex@email.com" />
+          </FormControl>
+          
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input type="password" placeholder="Enter your password" />
+          </FormControl>
+          
+          <Link href="#" color="blue.500" textAlign="right">Forgot Password?</Link>
+          
+          <Button colorScheme="orange" size="lg">Login Now</Button>
+          
+          <Text textAlign="center">OR</Text>
+          
+          <Button variant="outline" colorScheme="orange" size="lg">Signup Now</Button>
+        </Stack>
+      </Box>
+      <Box flex="1" display={{ base: "none", md: "flex" }} alignItems="center" justifyContent="center" bg="gray.100">
+        <Box as="img" src="../../img/login-illustrator.svg" alt="Login Illustration" maxW="100%" />
       </Box>
     </Flex>
   );
 };
-
 export default Signup;

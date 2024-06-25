@@ -9,7 +9,7 @@ import FAQ from "../components/FAQ";
 
 export default function Home() {
   return (
-    <Box bg="whitesmoke" minHeight="1150px" maxHeight="8000px" alignContent="center">
+    <Box bg="gray.100" minHeight="1150px" maxHeight="8000px" alignContent="center">
         <HeroHome></HeroHome>
         <IconApp></IconApp> 
         <AspectRatio  maxWidth="1300px" ratio={16/9} m="100px">

@@ -34,7 +34,7 @@ function Coursedetails() {
     }
 
     return (
-        <Container maxW="100%" bg="whitesmoke">
+        <Container maxW="100%" bg="gray.100">
                 <Container maxW="90%">
                 {courses.map((course, courseIndex) => (
                     <Box key={courseIndex} mb={8}>

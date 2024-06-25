@@ -28,7 +28,7 @@ export default function HeroHome() {
             </Center>    
             <Center my="25px">
             <Button color="white" bg="orange.400" _hover={{bg:"orange.500"}} m="10px"><NavLink to="/courses">Explore Courses</NavLink></Button>
-            <Button color="black" bg="white" _hover={{bg: "whitesmoke"}} m="10px"><NavLink to="/pricing">View Pricing</NavLink></Button>
+            <Button color="black" bg="white" _hover={{bg: "gray.100"}} m="10px"><NavLink to="/pricing">View Pricing</NavLink></Button>
             </Center> 
         </ChakraProvider>
     </Box>

@@ -2,7 +2,7 @@ import {Flex, Box, HStack, Button, Spacer, Heading, Image, Text} from "@chakra-u
 
 export default function Head(){
   return (
-    <Box align="center" bg="whitesmoke">
+    <Box align="center" bg="gray.100">
         <HStack w="90%" borderBottom="1px solid gray">
             <Box p="5%" w="30%">
                 <Text fontWeight="bolder" fontSize={{base : "20px", lg : "30px", xl : "40px"}}>Our Pricing</Text>

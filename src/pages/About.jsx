@@ -3,7 +3,7 @@ import Achievements from "../components/Achievements"
 export default function About() {
   return (
     <Box>
-      <Box align="center" bg="whitesmoke">
+      <Box align="center" bg="gray.100">
         <HStack w="90%" borderBottom="1px solid gray">
             <Box p="5%" w="30%">
                 <Text fontWeight="bolder" fontSize={{base : "17px", lg : "30px", xl : "40px"}}>About Resourcify</Text>
