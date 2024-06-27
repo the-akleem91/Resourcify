@@ -111,7 +111,7 @@ function CourseCard({ title, description, courseId, images, curriculum }) {
             </Box>
           ))}
         </SimpleGrid>
-        <Button mt={{base : "100px", md : "5%", lg : "3%"}} w='100%'><NavLink to='#'>View Course</NavLink></Button>
+        <Button mt={{base : "100px", md : "5%", lg : "3%"}} w='100%'>View Course</Button>
       </ChakraProvider>
     </Box>
   );
