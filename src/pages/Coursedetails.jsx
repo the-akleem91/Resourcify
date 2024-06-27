@@ -15,7 +15,7 @@ function Coursedetails() {
                 if (!id) {
                     throw new Error('Course ID is not defined');
                 }
-                const response = await fetch(`http://localhost:3000/courses/${id}`);
+                const response = await fetch(`https://your-netlify-site.netlify.app/.netlify/functions/json-server/courses/${id}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -25,9 +25,10 @@ function Coursedetails() {
                 setError(err.message);
             }
         };
-    
+
         fetchCourse();
     }, [id]);
+
 
     if (error) {
         return <Box>Error: {error}</Box>;
