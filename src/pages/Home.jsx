@@ -9,12 +9,18 @@ import FAQ from "../components/FAQ";
 
 export default function Home() {
   return (
-    <Box bg="gray.100" minHeight="1150px" maxHeight="8000px" alignContent="center">
+    <Box bg="gray.100" minHeight='auto' alignContent="center" overflow='hidden'>
         <HeroHome></HeroHome>
         <IconApp></IconApp> 
-        <AspectRatio  maxWidth="1300px" ratio={16/9} m="100px">
-          <iframe src="../../img/Eduvid.mp4" frameborder="1"></iframe>
-        </AspectRatio>  
+        <Box maxW="1300px" mx="auto" my="100px" p={10}>
+          <AspectRatio ratio={16 / 9}>
+            <iframe
+              src="../../img/Eduvid.mp4"
+              frameBorder="1"
+              allowFullScreen
+            />
+          </AspectRatio>
+        </Box>
         <Benefits></Benefits>
         <OurCourses></OurCourses>
         <OurTestimonials></OurTestimonials>  

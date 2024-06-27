@@ -1,177 +1,119 @@
-import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
+import { Box, Button, Center, ChakraProvider, Grid, Icon, SimpleGrid, Text, Img, HStack } from "@chakra-ui/react";
 import { MdArrowOutward } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 export default function OurCourses() {
   return (
-    <Box ml="100px" mb="100px" bg='gray.100'>
-        
-        <ChakraProvider>
-                <Text fontSize="30px" fontWeight="semibold">
-                    Our Courses
-                </Text>
-                <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                    <Box 
-                    width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                    height={{ base: "50px" , lg : "75px" , xl : "100px"}}><Text>Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.</Text></Box>
-                    <Box
-                    height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                    ml="450px"><Button><NavLink to="/courses">View all</NavLink></Button></Box>
-                </SimpleGrid>
-        </ChakraProvider>
-       
-        <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "350px"}}>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image1.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">Web Design Fundamentals</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Learn the fundamentals of web design, including HTML, CSS, and responsive design principles. Develop the skills to create visually appealing and user-friendly websites.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">6 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="78px" borderRadius="4px"><Text fontSize="12px" w="68px" ml="4px">Intermediate</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">UI/UX Design</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Master the art of creating intuitive user interfaces (UI) and enhancing user experiences (UX). Learn design principles, wireframing, prototyping, and usability testing techniques.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image3.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">Mobile App Development</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Dive into the world of mobile app development. Learn to build native iOS and Android applications using industry-leading frameworks like Swift and Kotlin.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image4.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">Graphic Design for Beginners</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Discover the fundamentals of graphic design, including typography, color theory, layout design, and image manipulation techniques. Create visually stunning designs for print and digital media.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image5.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="60px" borderRadius="4px"><Text fontSize="12px" w="50px" ml="4px">10 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="78px" borderRadius="4px"><Text fontSize="12px" w="68px" ml="4px">Intermediate</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">Front-End Web Development</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "480px"}}>
-                <Box p="10px">
-                    <Img aspectRatio={16/9} src="../../img/Image6.png" maxWidth="380px"></Img>
-                </Box>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid whitesmoke" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">6 weeks</Text></Box>
-                        <Box border="1px solid whitesmoke" h="20px" w="60px" borderRadius="4px"><Text fontSize="12px" w="50px" ml="4px">Advance</Text></Box>
-                    </HStack>
-                </Box>
-                <Box px="12px" pt="10px">
-                    <Text fontSize="20px" fontWeight="semibold">Advanced JavaScript</Text>
-                </Box>
-                <Box  px="12px" pt="10px">
-                    <Text fontSize="15px" maxWidth="340px">Take your JavaScript skills to the next level. Explore advanced concepts like closures, prototypes, asynchronous programming, and ES6 features. Build complex applications with confidence.</Text>
-                </Box>
-                <Box px="12px" pt="20px">
-                    <Button h="35px" w="375px" borderRadius="5px" color="black">
-                        Get it now!
-                    </Button>
-                </Box>
-            </Box>
+    <ChakraProvider>
+      <Box ml={{ base: "20px", md: "50px", lg: "100px" }} mb="100px" bg="gray.100" p={4}>
+        <Text fontSize={{ base: "24px", md: "28px", lg: "30px" }} fontWeight="semibold" textAlign="center" mb={6}>
+          Our Courses
+        </Text>
+        <SimpleGrid p="10px" spacing={10} maxWidth="1300px" columns={{ base: 1, md: 2, xl: 2}}>
+          <Box w={{base : '100%', md : '150%', lg : '175%'}}>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit
+              dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.
+            </Text>
+          </Box>
+          <Box textAlign={{base : 'left', md : 'right'}}>
+            <Button border='1px solid black' _hover={{bg : 'black', color : 'white'}}>
+              <NavLink to="/courses">View all</NavLink>
+            </Button>
+          </Box>
         </SimpleGrid>
-    </Box>
-  )
+
+        <SimpleGrid p="10px" spacing={10} maxWidth="1300px" columns={{ base: 1, md: 2, xl: 3 }}>
+          {[
+            {
+              imageSrc: "../../img/Image1.png",
+              duration: "4 weeks",
+              level: "Beginner",
+              title: "Web Design Fundamentals",
+              description:
+                "Learn the fundamentals of web design, including HTML, CSS, and responsive design principles. Develop the skills to create visually appealing and user-friendly websites.",
+            },
+            {
+              imageSrc: "../../img/Image.png",
+              duration: "6 weeks",
+              level: "Intermediate",
+              title: "UI/UX Design",
+              description:
+                "Master the art of creating intuitive user interfaces (UI) and enhancing user experiences (UX). Learn design principles, wireframing, prototyping, and usability testing techniques.",
+            },
+            {
+              imageSrc: "../../img/Image3.png",
+              duration: "4 weeks",
+              level: "Beginner",
+              title: "Mobile App Development",
+              description:
+                "Dive into the world of mobile app development. Learn to build native iOS and Android applications using industry-leading frameworks like Swift and Kotlin.",
+            },
+            {
+              imageSrc: "../../img/Image4.png",
+              duration: "4 weeks",
+              level: "Beginner",
+              title: "Graphic Design for Beginners",
+              description:
+                "Discover the fundamentals of graphic design, including typography, color theory, layout design, and image manipulation techniques. Create visually stunning designs for print and digital media.",
+            },
+            {
+              imageSrc: "../../img/Image5.png",
+              duration: "10 weeks",
+              level: "Intermediate",
+              title: "Front-End Web Development",
+              description:
+                "Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites.",
+            },
+            {
+              imageSrc: "../../img/Image6.png",
+              duration: "6 weeks",
+              level: "Advance",
+              title: "Advanced JavaScript",
+              description:
+                "Take your JavaScript skills to the next level. Explore advanced concepts like closures, prototypes, asynchronous programming, and ES6 features. Build complex applications with confidence.",
+            },
+          ].map((course, index) => (
+            <Box
+              key={index}
+              bg="white"
+              borderRadius="15px"
+              height={{base : 'auto', md : 'auto'}}
+              overflow="hidden"
+              boxShadow="md"
+              transition="all 0.3s"
+              _hover={{ transform: "scale(1.05)" }}
+            >
+              <Box p="10px">
+                <Img src={course.imageSrc} objectFit="cover" borderRadius="md" />
+              </Box>
+              <Box>
+                <HStack p="10px" spacing={2}>
+                  <Box border="1px solid whitesmoke" h="20px" px="8px" borderRadius="4px">
+                    <Text fontSize="12px">{course.duration}</Text>
+                  </Box>
+                  <Box border="1px solid whitesmoke" h="20px" px="8px" borderRadius="4px">
+                    <Text fontSize="12px">{course.level}</Text>
+                  </Box>
+                </HStack>
+              </Box>
+              <Box px="12px" pt="10px">
+                <Text fontSize="20px" fontWeight="semibold">
+                  {course.title}
+                </Text>
+              </Box>
+              <Box px="12px" pt="10px">
+                <Text fontSize="15px">{course.description}</Text>
+              </Box>
+              <Box px="12px" pt="20px" pb="12px">
+                <Button  bg='black' variant="solid" w='100%' color='white' _hover={{bg : 'gray.100', color : 'black'}}>
+                  Get it now!
+                </Button>
+              </Box>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </Box>
+    </ChakraProvider>
+  );
 }

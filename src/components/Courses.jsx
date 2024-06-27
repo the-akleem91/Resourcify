@@ -1,489 +1,132 @@
-import { Box , Button, Center, ChakraProvider, Grid, Link, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
-import { MdArrowOutward } from "react-icons/md";
+import { Box, Button, ChakraProvider, SimpleGrid, Text, Img, HStack } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 
 export default function Courses() {
   return (
     <Box align="center" bg="gray.100">
-       
-        <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth= "90%">
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "780px"}}
-            pt="1.5%" mt="2%">
-                <ChakraProvider>
-                    <Text fontSize="30px" fontWeight="semibold" align="left" pl="2%">
-                        Web Design Fundamentals
-                    </Text>
-                    <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                        <Box 
-                        width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                        height={{ base: "50px" , lg : "75px" , xl : "80px"}}
-                        align="left"
-                        pl="2%"><Text>Learn the fundamentals of web design, including HTML, CSS, and responsive design principles. Develop the skills to create visually appealing and user-friendly websites.</Text></Box>
-                        <Box
-                        height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to={`/courses/1`}>View Course</NavLink></Button></Box>
-                    </SimpleGrid>
-                </ChakraProvider>
-                <HStack pl="2%">
-                    <Img aspectRatio={4/3} src="../../img/Image1.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image12.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image13.png" maxWidth="400px"></Img>
-                </HStack>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box pl="2%">
-                    <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
-                </Box>
-                <HStack pl="2%">
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">01</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Introduction to HTML</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">02</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Styling with CSS</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">03</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Introduction to Responsive Design</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">04</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Design Principles for Web</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">05</Text>
-                        </Box>
-                        <Box>
-                            <Text align="left">Building a Basic Website</Text>
-                        </Box>
-                    </Box>
-                </HStack>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "780px"}}
-            pt="1.5%">
-                <ChakraProvider>
-                    <Text fontSize="30px" fontWeight="semibold" align="left" pl="2%">
-                        UI/UX Design
-                    </Text>
-                    <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                        <Box 
-                        width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                        height={{ base: "50px" , lg : "75px" , xl : "80px"}}
-                        align="left"
-                        pl="2%"><Text>Master the art of creating intuitive user interfaces (UI) and enhancing user experiences (UX). Learn design principles, wireframing, prototyping, and usability testing techniques.</Text></Box>
-                        <Box
-                        height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to={`/courses/3`}>View Course</NavLink></Button></Box>
-                    </SimpleGrid>
-                </ChakraProvider>
-                <HStack pl="2%">
-                    <Img aspectRatio={4/3} src="../../img/Image.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image22.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image23.png" maxWidth="400px"></Img>
-                </HStack>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box pl="2%">
-                    <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
-                </Box>
-                <HStack pl="2%">
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">01</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Introduction to UI/UX Design</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">02</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>User Research and Personas</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">03</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Wireframing and Prototyping</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">04</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Visual Design and Branding</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">05</Text>
-                        </Box>
-                        <Box>
-                            <Text align="left">Usability Testing and Iteration</Text>
-                        </Box>
-                    </Box>
-                </HStack>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "780px"}}
-            pt="1.5%">
-                <ChakraProvider>
-                    <Text fontSize="30px" fontWeight="semibold" align="left" pl="2%">
-                        Mobile App Development
-                    </Text>
-                    <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                        <Box 
-                        width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                        height={{ base: "50px" , lg : "75px" , xl : "80px"}}
-                        align="left"
-                        pl="2%"><Text>Dive into the world of mobile app development. Learn to build native iOS and Android applications using industry-leading frameworks like Swift and Kotlin.</Text></Box>
-                        <Box
-                        height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to={`/courses/2`}>View Course</NavLink></Button></Box>
-                    </SimpleGrid>
-                </ChakraProvider>
-                <HStack pl="2%">
-                    <Img aspectRatio={4/3} src="../../img/Image3.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image32.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image33.png" maxWidth="400px"></Img>
-                </HStack>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box pl="2%">
-                    <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
-                </Box>
-                <HStack pl="2%">
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">01</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Introduction to Mobile App Development</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">02</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Fundamentals of Swift Programming (iOS)</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">03</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Fundamentals of Kotlin Programming (Android)</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">04</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Building User Interfaces</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">05</Text>
-                        </Box>
-                        <Box>
-                            <Text align="left">App Deployment and Testing</Text>
-                        </Box>
-                    </Box>
-                </HStack>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "780px"}}
-            pt="1.5%">
-                <ChakraProvider>
-                    <Text fontSize="30px" fontWeight="semibold" align="left" pl="2%">
-                        Graphic Design for Beginners
-                    </Text>
-                    <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                        <Box 
-                        width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                        height={{ base: "50px" , lg : "75px" , xl : "80px"}}
-                        align="left"
-                        pl="2%"><Text>Discover the fundamentals of graphic design, including typography, color theory, layout design, and image manipulation techniques. Create visually stunning designs for print and digital media.</Text></Box>
-                        <Box
-                        height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><NavLink to={`/courses/4`}>View Course</NavLink></Button></Box>
-                    </SimpleGrid>
-                </ChakraProvider>
-                <HStack pl="2%">
-                    <Img aspectRatio={4/3} src="../../img/Image4.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image42.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image43.png" maxWidth="400px"></Img>
-                </HStack>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box pl="2%">
-                    <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
-                </Box>
-                <HStack pl="2%">
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">01</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Introduction to Graphic Design</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">02</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Typography and Color Theory</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">03</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Layout Design and Composition</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">04</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Image Editing and Manipulation</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">05</Text>
-                        </Box>
-                        <Box>
-                            <Text align="left">Designing for Print and Digital Media</Text>
-                        </Box>
-                    </Box>
-                </HStack>
-            </Box>
-            <Box 
-            bg="white"
-            borderRadius="15px"
-            height={{ base: "100px" , lg : "150px" , xl : "780px"}}
-            pt="1.5%"
-            mb="2%">
-                <ChakraProvider>
-                    <Text fontSize="30px" fontWeight="semibold" align="left" pl="2%">
-                    Front-End Web Development
-                    </Text>
-                    <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
-                        <Box 
-                        width={{base: "50px" , lg : "150px" , xl : "1000px"}}
-                        height={{ base: "50px" , lg : "75px" , xl : "80px"}}
-                        align="left"
-                        pl="2%"><Text>Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites.</Text></Box>
-                        <Box
-                        height={{ base: "50px" , lg : "75px" , xl : "100px"}}
-                        ml="450px"><Button><Link href={`/courses/5`}>View Course</Link></Button></Box>
-                    </SimpleGrid>
-                </ChakraProvider>
-                <HStack pl="2%">
-                    <Img aspectRatio={4/3} src="../../img/Image5.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image52.png" maxWidth="400px"></Img>
-                    <Img aspectRatio={4/3} src="../../img/Image53.png" maxWidth="400px"></Img>
-                </HStack>
-                <Box>
-                    <HStack p="10px">
-                        <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" w="45px" ml="4px">4 weeks</Text></Box>
-                        <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" w="48px" ml="4px">Beginner</Text></Box>
-                    </HStack>
-                </Box>
-                <Box pl="2%">
-                    <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
-                </Box>
-                <HStack pl="2%">
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">01</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>HTML Fundamentals</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">02</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>CSS Styling and Layouts</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">03</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>JavaScript Basics</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">04</Text>
-                        </Box>
-                        <Box align="left">
-                            <Text>Building Responsive Websites</Text>
-                        </Box>
-                    </Box>
-                    <Box p="20px" border="1px solid gray" borderRadius="10px"
-                    h="200px"
-                    w="250px"
-                    mr="2%">
-                        <Box align="left">
-                            <Text fontSize="40px" fontWeight="bolder">05</Text>
-                        </Box>
-                        <Box>
-                            <Text align="left">Introduction to Bootstrap and React</Text>
-                        </Box>
-                    </Box>
-                </HStack>
-            </Box>
-        </SimpleGrid>
+      <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100%", md: "48%", lg: "100%" }}>
+        <CourseCard
+          title="Web Design Fundamentals"
+          description="Learn the fundamentals of web design, including HTML, CSS, and responsive design principles. Develop the skills to create visually appealing and user-friendly websites."
+          courseId="1"
+          images={["../../img/Image1.png", "../../img/Image12.png"]}
+          curriculum={[
+            "Introduction to HTML",
+            "Styling with CSS",
+            "Introduction to Responsive Design",
+            "Design Principles for Web",
+            "Building a Basic Website",
+          ]}
+        />
+        <CourseCard
+          title="UI/UX Design"
+          description="Master the art of creating intuitive user interfaces (UI) and enhancing user experiences (UX). Learn design principles, wireframing, prototyping, and usability testing techniques."
+          courseId="3"
+          images={["../../img/Image.png", "../../img/Image22.png"]}
+          curriculum={[
+            "Introduction to UI/UX Design",
+            "User Research and Personas",
+            "Wireframing and Prototyping",
+            "Visual Design and Branding",
+            "Usability Testing and Iteration",
+          ]}
+        />
+        <CourseCard
+          title="Mobile App Development"
+          description="Dive into the world of mobile app development. Learn to build native iOS and Android applications using industry-leading frameworks like Swift and Kotlin."
+          courseId="2"
+          images={["../../img/Image3.png", "../../img/Image32.png"]}
+          curriculum={[
+            "Introduction to Mobile App Development",
+            "Fundamentals of Swift Programming (iOS)",
+            "Fundamentals of Kotlin Programming (Android)",
+            "Building User Interfaces",
+            "App Deployment and Testing",
+          ]}
+        />
+        <CourseCard
+          title="Graphic Design for Beginners"
+          description="Discover the fundamentals of graphic design, including typography, color theory, layout design, and image manipulation techniques. Create visually stunning designs for print and digital media."
+          courseId="4"
+          images={["../../img/Image4.png", "../../img/Image42.png"]}
+          curriculum={[
+            "Introduction to Graphic Design",
+            "Typography and Color Theory",
+            "Layout Design and Composition",
+            "Image Editing and Manipulation",
+            "Designing for Print and Digital Media",
+          ]}
+        />
+        <CourseCard
+          title="Front-End Web Development"
+          description="Become proficient in front-end web development. Learn HTML, CSS, JavaScript, and popular frameworks like Bootstrap and React. Build interactive and responsive websites."
+          courseId="5"
+          images={["../../img/Image5.png", "../../img/Image52.png"]}
+          curriculum={[
+            "HTML Fundamentals",
+            "CSS Styling and Layouts",
+            "JavaScript Basics",
+            "Building Responsive Websites",
+            "Introduction to Bootstrap and React",
+          ]}
+        />
+      </SimpleGrid>
     </Box>
-  )
+  );
 }
 
+function CourseCard({ title, description, courseId, images, curriculum }) {
+  return (
+    <Box bg="white" minW='90%' borderRadius="15px" p="5%" mt="2%" h={{base:"1700px", md : "auto"}}>
+      <ChakraProvider>
+        <Text fontSize={{ base: "20px", lg: "30px" }} fontWeight="semibold" align="left" pl="2%">
+          {title}
+        </Text>
+        <SimpleGrid p="10px" spacing={10} minChildWidth="100%">
+          <Text align="left" pl="2%">
+            {description}
+          </Text>
+        </SimpleGrid>
+        <HStack pl="2%" flexWrap='wrap' justifyContent='center'>
+          {images.map((src, index) => (
+            <Img key={index} src={src} maxWidth={{base:"300px",md : "350px", lg : "400px"}}  aspectRatio={1}/>
+          ))}
+        </HStack>
+        <Box>
+          <HStack p="10px" spacing={4}>
+            <Box border="1px solid gray.50" h="20px" w="55px" borderRadius="4px"><Text fontSize="12px" ml="4px">4 weeks</Text></Box>
+            <Box border="1px solid gray.50" h="20px" w="58px" borderRadius="4px"><Text fontSize="12px" ml="4px">Beginner</Text></Box>
+          </HStack>
+        </Box>
+        <Box pl="2%">
+          <Text align="left" fontSize="20px" fontWeight="semibold">Curriculum</Text>
+        </Box>
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing="2%" pl="2%">
+          {curriculum.map((item, index) => (
+            <Box key={index} p="20px" border="1px solid gray" borderRadius="10px" h="200px" w="100%">
+              <Box align="left">
+                <Text fontSize="40px" fontWeight="bolder">{`0${index + 1}`}</Text>
+                <Text>{item}</Text>
+              </Box>
+            </Box>
+          ))}
+        </SimpleGrid>
+        <Button mt={{base : "100px", md : "5%", lg : "3%"}} w='100%'><NavLink to={`/courses/${courseId}`}>View Course</NavLink></Button>
+      </ChakraProvider>
+    </Box>
+  );
+}
 
 export const taskLoader = async () => {
-    try {
-        const res = await fetch('http://localhost:3000/courses');
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.error('Failed to fetch data:', error);
-        return null;
+  try {
+    const res = await fetch('http://localhost:3000/courses');
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch data:', error);
+    return null;
+  }
 };

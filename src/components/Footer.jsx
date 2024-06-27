@@ -11,26 +11,24 @@ import {
   List,
   ListItem,
   ListIcon,
-  OrderedList,
-  UnorderedList,
-  ChakraProvider,
-  chakra,
   Center,
+  Stack,
+  VStack,
+  chakra
 } from '@chakra-ui/react';
 import { 
   EmailIcon,
   PhoneIcon,
   AtSignIcon,
 } from "@chakra-ui/icons";
-import { FaFacebook , FaTwitterSquare, FaLinkedin} from "react-icons/fa";
-
+import { FaFacebook , FaTwitterSquare, FaLinkedin } from "react-icons/fa";
 
 export default function Navbar(){
   return (
-    <Box bg="white" justifyItems="center">
-        <Flex px="100px" py="20px">
-          <Box>
-            <Image src="../../img/Resourcify.png" alt="Logo" maxWidth="150px" paddingBottom="20px"></Image>
+    <Box bg="white" py={{ base: "10px", md: "20px" }} px={{ base: "20px", md: "100px" }}>
+        <Flex direction={{ base: "column", md: "row" }} align="start" justify="space-between">
+          <Box mb={{ base: "20px", md: "0" }}>
+            <Image src="../../img/Resourcify.png" alt="Logo" maxWidth="150px" pb="20px" />
             <List spacing={4}>
               <ListItem>
                 <ListIcon as={EmailIcon} color='black' />
@@ -46,8 +44,7 @@ export default function Navbar(){
               </ListItem>
             </List>
           </Box>
-          <Spacer />
-          <Box p="20px">
+          <Box p={{ base: "0", md: "20px" }}>
             <List spacing={4}>
                 <ListItem>
                   <Text fontWeight="bold" fontFamily="sans-serif">Home</Text>
@@ -56,18 +53,18 @@ export default function Navbar(){
                   <Text fontFamily="sans-serif">Benefits</Text>
                 </ListItem>
                 <ListItem>
-                <Text fontFamily="sans-serif">Our Courses</Text>
+                  <Text fontFamily="sans-serif">Our Courses</Text>
                 </ListItem>
                 <ListItem>
-                <Text fontFamily="sans-serif">Our Testimonials</Text>
+                  <Text fontFamily="sans-serif">Our Testimonials</Text>
                 </ListItem>
                 <ListItem>
-                <Text fontFamily="sans-serif">Our FAQ</Text>
+                  <Text fontFamily="sans-serif">Our FAQ</Text>
                 </ListItem>
             </List>
           </Box>
-          <Box p="20px">
-          <List spacing={4}>
+          <Box p={{ base: "0", md: "20px" }}>
+            <List spacing={4}>
                 <ListItem>
                   <Text fontWeight="bold" fontFamily="sans-serif">About Us</Text>
                 </ListItem>
@@ -75,29 +72,31 @@ export default function Navbar(){
                   <Text fontFamily="sans-serif">Company</Text>
                 </ListItem>
                 <ListItem>
-                <Text fontFamily="sans-serif">Achievements</Text>
+                  <Text fontFamily="sans-serif">Achievements</Text>
                 </ListItem>
                 <ListItem>
-                <Text fontFamily="sans-serif">Our Goals</Text>
+                  <Text fontFamily="sans-serif">Our Goals</Text>
                 </ListItem>
             </List>
           </Box>
-          <Box p="20px">
-          <List spacing={4}>
+          <Box p={{ base: "0", md: "20px" }}>
+            <List spacing={4}>
                 <ListItem>
                   <Text fontWeight="bold" fontFamily="sans-serif">Social Profiles</Text>
                 </ListItem>
                 <ListItem>
-                  <Icon as={FaFacebook} w={8} h={8} p="5px"></Icon>
-                  <Icon as={FaTwitterSquare} w={8} h={8} p="5px"></Icon>
-                  <Icon as={FaLinkedin} w={8} h={8} p="5px"></Icon>
+                  <HStack spacing={4}>
+                    <Icon as={FaFacebook} w={8} h={8} p="5px" />
+                    <Icon as={FaTwitterSquare} w={8} h={8} p="5px" />
+                    <Icon as={FaLinkedin} w={8} h={8} p="5px" />
+                  </HStack>
                 </ListItem>
             </List>
           </Box>
         </Flex>
-        <Center>
+        <Center mt={{ base: "20px", md: "40px" }}>
           <Text>All rights are reserved to Jayant Joshi</Text>
         </Center>
     </Box>
-  )
+  );
 }

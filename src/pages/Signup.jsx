@@ -1,41 +1,129 @@
-// src/components/LoginPage.js
-
 import React from 'react';
-import { Box, Flex, Stack, Input, Button, Text, FormControl, FormLabel, Link, Img, Container } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Stack,
+  Checkbox,
+  useBreakpointValue,
+  useColorModeValue,
+  Tab,
+  Tabs,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Link
+} from '@chakra-ui/react';
+import { SiGoogle } from 'react-icons/si';
+import ImageSlider from "../components/ImageSlider";
+import { SlideData1 ,SlideData2 } from "../components/SlideData";
 
 const Signup = () => {
+  const formWidth = useBreakpointValue({ base: '100%', md: 'lg' });
+
   return (
-    <Flex minHeight="100vh" align="center" justify="center" bg="gray.100" direction={{ base: "column", md: "row" }}>
-      <Box flex="1" bg="white" p={8} rounded="md" shadow="lg" maxW={{ base: "90%", md: "50%" }} mx="auto">
-        <Stack spacing={4}>
-          <Container alignItems='center' justifyContent='center'w="220px">
-            <Img justifySelf='center' w="220px" src='../../img/Resourcify.png'/>  
-          </Container>
-          <Text fontSize="lg" textAlign="center">Login into your account</Text>
-          
-          <FormControl id="email">
-            <FormLabel>Email Address</FormLabel>
-            <Input type="email" placeholder="alex@email.com" />
-          </FormControl>
-          
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input type="password" placeholder="Enter your password" />
-          </FormControl>
-          
-          <Link href="#" color="blue.500" textAlign="right">Forgot Password?</Link>
-          
-          <Button colorScheme="orange" size="lg">Login Now</Button>
-          
-          <Text textAlign="center">OR</Text>
-          
-          <Button variant="outline" colorScheme="orange" size="lg">Signup Now</Button>
-        </Stack>
-      </Box>
-      <Box flex="1" display={{ base: "none", md: "flex" }} alignItems="center" justifyContent="center" bg="gray.100">
-        <Box as="img" src="../../img/login-illustrator.svg" alt="Login Illustration" maxW="100%" />
-      </Box>
-    </Flex>
+
+    <div>
+        <Tabs isFitted variant='soft-rounded' colorScheme='orange' bg="gray.100">
+          <TabList>
+            <Tab>Student</Tab>
+            <Tab>Creator</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Flex minH="100vh" flexDirection={{ base: 'column', lg: 'row' }} align="center" justify="center" bg='gray.100' action="/login" method="post">
+                <Box
+                  flex="1"
+                  display={{ base: 'none', md: 'flex' }}
+                  bg='gray.100'
+                  color="white"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={8}
+                >
+                  <Box w="100%" p={4} color="white">
+                    <ImageSlider slides={SlideData2} />
+                  </Box>
+
+                </Box>
+                <Stack spacing={8} mx="auto" maxW={formWidth} py={12} px={6} flex="1">
+                  <Stack align="center">
+                    <Text fontSize="4xl">Register Student Account!</Text>
+                    <Text fontSize="lg" color="gray.600">
+                      For the purpose of gamers regulation, your details are required.
+                    </Text>
+                  </Stack>
+                  <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
+                    <Stack spacing={4}>
+                      <Input placeholder="Enter email address" type="email" />
+                      <Input placeholder="Password" type="password" />
+                      <Input placeholder="Repeat password" type="password" />
+                      <Stack spacing={10}>
+                        <Checkbox>I agree to terms & conditions</Checkbox>
+                        <Button bg="orange.400" color="white" _hover={{ bg: 'orange.500' }}>
+                          Register Account
+                        </Button>
+                        <Button variant="outline" leftIcon={<SiGoogle />}>
+                          Register with Google
+                        </Button>
+                        <Text align="center">Already a Student? <Link href=''>Login</Link></Text>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+            <Flex minH="100vh" flexDirection={{ base: 'column', lg: 'row' }} align="center" justify="center" bg='gray.100'>
+                <Stack spacing={8} mx="auto" maxW={formWidth} py={12} px={6} flex="1">
+                  <Stack align="center">
+                    <Text fontSize="4xl">Register Creator Account!</Text>
+                    <Text fontSize="lg" color="gray.600">
+                      For the purpose of Creator regulation, your details are required.
+                    </Text>
+                  </Stack>
+                  <Box rounded="lg" bg={useColorModeValue('white', 'gray.700')} boxShadow="lg" p={8}>
+                    <Stack spacing={4}>
+                      <Input placeholder="Enter email address" type="email" />
+                      <Input placeholder="Password" type="password" />
+                      <Input placeholder="Repeat password" type="password" />
+                      <Stack spacing={10}>
+                        <Checkbox>I agree to terms & conditions</Checkbox>
+                        <Button bg="orange.400" color="white" _hover={{ bg: 'orange.500' }}>
+                          Register Account
+                        </Button>
+                        <Button variant="outline" leftIcon={<SiGoogle />}>
+                          Register with Google
+                        </Button>
+                        <Text align="center">Already a Creator?<Link>Login</Link></Text>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+                <Box
+                  flex="1"
+                  display={{ base: 'none', md: 'flex' }}
+                  bg='gray.100'
+                  color="white"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={8}
+                >                  
+                  <Box w="100%" p={4} color="white">
+                    <ImageSlider slides={SlideData1} />
+                  </Box>
+
+                </Box>
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+        
+    </div>
   );
 };
+
 export default Signup;

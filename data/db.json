@@ -1,12 +1,12 @@
 {
    "courses": [
      {
-       "courseId": "1",
+       "id": "1",
        "courseTitle": "Web Design Fundamentals",
        "courseDescription": "This course provides a comprehensive introduction to web design principles and practices, covering foundational skills for creating visually appealing and user-friendly websites.",
        "courseDuration": "10 weeks",
        "courseLevel": "Beginner",
-       "videoSrc": "https://www.youtube.com/watch?v=3JluqTojuME",
+       "videoSrc": "../img/GraphicDesign.mp4",
        "modules": [
          {
            "moduleTitle": "Introduction to Web Design",
@@ -51,12 +51,12 @@
        ]
      },
      {
-       "courseId": "2",
+       "id": "2",
        "courseTitle": "UI/UX Design",
        "courseDescription": "This course covers the essentials of UI/UX design, focusing on creating intuitive and engaging digital products through user-centered design principles.",
        "courseDuration": "12 weeks",
        "courseLevel": "Intermediate",
-       "videoSrc": "https://www.youtube.com/watch?v=5bxtt8pUwvo",
+       "videoSrc": "../img/GraphicDesign.mp4",
        "modules": [
          {
            "moduleTitle": "Introduction to UI/UX Design",
@@ -101,12 +101,12 @@
        ]
      },
      {
-       "courseId": "3",
+       "id": "3",
        "courseTitle": "Mobile App Development",
        "courseDescription": "This course introduces the fundamentals of mobile app development, teaching skills for creating apps for both Android and iOS platforms.",
        "courseDuration": "14 weeks",
        "courseLevel": "Intermediate",
-       "videoSrc": "https://www.youtube.com/watch?v=JcCI6REONlg",
+       "videoSrc": "../img/GraphicDesign.mp4",
        "modules": [
          {
            "moduleTitle": "Introduction to Mobile App Development",
@@ -151,12 +151,12 @@
        ]
      },
      {
-       "courseId": "4",
+       "id": "4",
        "courseTitle": "Graphic Design for Beginners",
        "courseDescription": "This course introduces the basics of graphic design, focusing on fundamental design principles and essential tools like Adobe Photoshop and Illustrator.",
        "courseDuration": "8 weeks",
        "courseLevel": "Beginner",
-       "videoSrc": "https://www.youtube.com/watch?v=9b-8VtJX8Ko",
+       "videoSrc": "../img/GraphicDesign.mp4",
        "modules": [
          {
            "moduleTitle": "Introduction to Graphic Design",
@@ -201,12 +201,12 @@
        ]
      },
      {
-       "courseId": "5",
+       "id": "5",
        "courseTitle": "Front-End Web Development",
        "courseDescription": "This course focuses on the front-end aspects of web development, teaching how to create interactive and responsive web pages using HTML, CSS, and JavaScript.",
        "courseDuration": "10 weeks",
        "courseLevel": "Beginner",
-       "videoSrc": "https://www.youtube.com/watch?v=3JluqTojuME",
+       "videoSrc": "../img/GraphicDesign.mp4",
        "modules": [
          {
            "moduleTitle": "Introduction to Front-End Web Development",

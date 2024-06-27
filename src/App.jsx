@@ -14,9 +14,8 @@ import Pricingpage from './pages/Pricing'
 import Contact from './pages/Contact'
 import Course from './pages/Courses'
 import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Coursedetails from './pages/coursedetails'
-import { taskLoader } from './pages/coursedetails'
+import Signup from './pages/Signup';
+import Coursedetails from './pages/Coursedetails';
 
 // router and routes
 const router = createBrowserRouter(
@@ -26,7 +25,7 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="pricing" element={<Pricingpage />} />
       <Route path="courses" element={<Course />} />
-      <Route path="courses/:courseId" element={<Coursedetails />}  loader={taskLoader}/>
+      <Route path="courses/:id" element={<Coursedetails />}/>
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />

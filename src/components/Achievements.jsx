@@ -9,7 +9,7 @@ export default function Achievements(){
     <Box align="center" bg="gray.100">
         <Box py="100px">
                 <ChakraProvider>
-                        <Text fontSize="30px" fontWeight="semibold" align="left" mx="7%">
+                        <Text fontSize="30px" fontWeight="semibold" align="center" mx="7%">
                             Achievements
                         </Text>
                         <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "100px" , lg : "150px" , xl : "550px"}}>
@@ -92,7 +92,7 @@ export default function Achievements(){
         </Box>
         <Box pb="100px">
             <ChakraProvider py="50px">
-                    <Text fontSize="30px" fontWeight="semibold" align="left" mx="7%">
+                    <Text fontSize="30px" fontWeight="semibold" align="center" mx="7%">
                         Our Goals
                     </Text>
                     <SimpleGrid p="10px" spacing={10} maxWidth="1300px" minChildWidth={{ base: "300px" , lg : "450px" , xl : "550px"}}>
@@ -107,7 +107,7 @@ export default function Achievements(){
                 <Box 
                 bg="white"
                 borderRadius="15px"
-                height="250px"
+                height="280px"
                 align="left">
                     <Box p="20px" >
                         <Box bg="gray.50" h="50px" w="50px" borderRadius="5px">
@@ -124,7 +124,7 @@ export default function Achievements(){
                 <Box 
                 bg="white"
                 borderRadius="15px"
-                height="250px"
+                height="280px"
                 align="left">
                     <Box p="20px" >
                         <Box bg="gray.50" h="50px" w="50px" borderRadius="5px">
@@ -141,7 +141,7 @@ export default function Achievements(){
                 <Box 
                 bg="white"
                 borderRadius="15px"
-                height="250px"
+                height="280px"
                 align="left">
                     <Box p="20px" >
                         <Box bg="gray.50" h="50px" w="50px" borderRadius="5px">
@@ -158,7 +158,7 @@ export default function Achievements(){
                 <Box 
                 bg="white"
                 borderRadius="15px"
-                height="250px"
+                height="280px"
                 align="left">
                     <Box p="20px" >
                         <Box bg="gray.50" h="50px" w="50px" borderRadius="5px">

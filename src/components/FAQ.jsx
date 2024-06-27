@@ -1,73 +1,57 @@
-import { Box , Button, Center, ChakraProvider, Grid, Icon, SimpleGrid , Text , Img, HStack} from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Button, ChakraProvider, Text, HStack, Icon } from "@chakra-ui/react";
 import { CiCirclePlus } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 
 export default function FAQ() {
   return (
-    <Box ml="5%" bg="gray.100" maxWidth="90%" mb="100px">
-      <Box bg="white">
-        <HStack>
-          <Box p="4%" w="45%" >
-            <ChakraProvider>
-              <Text fontSize={{base : "20px" ,lg : "25px" ,xl : "40px"}} fontWeight="bolder">Frequently Asked Questions</Text>
-              <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}}>Still you have any questions? Contact our Team via support@skillbridge.com</Text>
-              <Button mt="35px" bg="white" border="1px solid gray" w={{base : "105px" ,lg : "110px" ,xl : "120px"}} h={{base : "30px" ,lg : "35px" ,xl : "45px"}}><NavLink to="/pricing">See all FAQ's</NavLink></Button>
-            </ChakraProvider>
+    <Box ml={{ base: "5%", xl: "10%" }} mb={{ base: "100px", xl: "150px" }} bg="gray.100">
+      <Box bg="white" p={{ base: "4%", xl: "6%" }} borderRadius="10px">
+        <ChakraProvider>
+          <Text fontSize={{ base: "20px", xl: "40px" }} fontWeight="bold">Frequently Asked Questions</Text>
+          <HStack justifyContent='space-between'>
+            <Text fontSize={{ base: "10px", xl: "20px" }} mt={{ base: "10px", xl: "20px" }}>
+              Still have questions? Contact our team via support@skillbridge.com
+            </Text>
+            <Button mt={{ base: "20px", xl: "35px" }} bg="white" border="1px solid gray" w={{ base: "105px", xl: "120px" }} h={{ base: "30px", xl: "45px" }}>
+              <NavLink to="/pricing">See all FAQs</NavLink>
+            </Button>
+          </HStack>
+          <Box mt={{ base: "20px", xl: "40px" }}>
+            <FAQItem question="Can I enroll in multiple courses at once?" />
+            <FAQItem question="What kind of support can I expect from instructors?" />
+            <FAQItem question="Are the courses self-paced?" />
+            <FAQItem question="Are there any prerequisites for the courses?" />
+            <FAQItem question="Can I download the course materials for offline access?" />
           </Box>
-          <Box w="65%" >
-            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px" >
-              <Box px="40px" py="20px" maxHeight="70px">
-                <HStack>
-                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Can I enroll in multiple courses at once?</Text>
-                  <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
-                  </Button>
-                </HStack>
-              </Box>
-            </Box>
-            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
-              <Box px="40px" py="20px" maxHeight="70px">
-                <HStack>
-                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >What kind of support can I expect from instructors?</Text>
-                  <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
-                  </Button>
-                </HStack>
-              </Box>
-            </Box>
-            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
-              <Box px="40px" py="20px" maxHeight="70px">
-                <HStack>
-                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Are the courses self-paced?</Text>
-                  <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
-                  </Button>
-                </HStack>
-              </Box>
-            </Box>
-            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
-              <Box px="40px" py="20px" maxHeight="70px">
-                <HStack>
-                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Are there any prerequisites for the courses?</Text>
-                  <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
-                  </Button>
-                </HStack>
-              </Box>
-            </Box>
-            <Box border="1px solid gray" mb="5%" mt="2%" w={{base : "80%" ,lg : "92%" ,xl : "95%"}} borderRadius="10px">
-              <Box px="40px" py="20px" maxHeight="70px">
-                <HStack>
-                  <Text fontSize={{base : "10px" ,lg : "17px" ,xl : "20px"}} mb="15px" w="800px" >Can I download the course materials for offline access?</Text>
-                  <Button h="50px" w="50px" bg="white" pb="15px" _hover={{bg : "white"}}>
-                    <Icon as={CiCirclePlus} h={{base : 4 ,lg : 6 ,xl : 8}} w={{base : 4 ,lg : 6 ,xl : 8}}></Icon>
-                  </Button>
-                </HStack>
-              </Box>
-            </Box>
-          </Box>
-        </HStack>
+        </ChakraProvider>
       </Box>
     </Box>
-  )
+  );
+}
+
+function FAQItem({ question }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <Box border="1px solid gray" borderRadius="10px" mb={{ base: "20px", xl: "40px" }}>
+      <Box px={{ base: "20px", xl: "30px" }} py={{ base: "20px", xl: "30px" }}>
+        <HStack justifyContent="space-between">
+          <Text fontSize={{ base: "14px", xl: "20px" }} mb={{ base: "10px", xl: "15px" }} w={{ base: "100%", xl: "800px" }}>{question}</Text>
+          <Button h={{ base: "40px", xl: "50px" }} w={{ base: "40px", xl: "50px" }} bg="white" _hover={{ bg: "white" }} onClick={toggleOpen}>
+            <Icon as={CiCirclePlus} h={{ base: 4, xl: 8 }} w={{ base: 4, xl: 8 }} />
+          </Button>
+        </HStack>
+        {isOpen && (
+          <Box mt="10px" fontSize={{ base: "12px", xl: "17px" }}>
+            <Text>This is where the answer to the question would go.</Text>
+          </Box>
+        )}
+      </Box>
+    </Box>
+  );
 }
