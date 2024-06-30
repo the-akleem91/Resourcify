@@ -16,6 +16,10 @@ import Course from './pages/Courses'
 import Login from './pages/Login'
 import Signup from './pages/Signup';
 import Coursedetails from './pages/Coursedetails';
+import User from './pages/User';
+import Forgotpassword from './pages/Forgotpassword';
+import Resetpassword from './pages/ResetPassword'
+
 
 // router and routes
 const router = createBrowserRouter(
@@ -29,6 +33,9 @@ const router = createBrowserRouter(
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
+      <Route path="user" element={<User />} />
+      <Route path='forgotPassword' element={<Forgotpassword />} />
+      <Route path='resetPassword/:token' element={<Resetpassword />} />
     </Route>
   )
 )

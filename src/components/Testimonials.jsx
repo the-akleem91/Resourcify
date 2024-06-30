@@ -6,13 +6,12 @@ export default function OurTestimonials() {
     <ChakraProvider>
       <Box ml={{ base: "20px", md: "50px", lg: "100px" }} mb="60px">
         <Text fontSize={{ base: "24px", md: "28px", lg: "30px" }} fontWeight="semibold" textAlign="center" mb="20px">
-          Benefits
+          Testimonials
         </Text>
         <SimpleGrid p="10px" spacing={10} maxWidth="1300px" columns={{ base: 1, md: 2, xl: 2}}>
             <Box w={{base : '100%', md : '150%', lg : '175%'}}>
                 <Text>
-                Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit
-                dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.
+                At Resourcify, we pride ourselves on delivering exceptional courses that resonate with our learners. Here are a few testimonials from individuals who have benefited from our free, high-quality educational offerings:
                 </Text>
             </Box>
             <Box textAlign={{base : 'left', md : 'right'}}>

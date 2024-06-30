@@ -12,8 +12,7 @@ export default function OurCourses() {
         <SimpleGrid p="10px" spacing={10} maxWidth="1300px" columns={{ base: 1, md: 2, xl: 2}}>
           <Box w={{base : '100%', md : '150%', lg : '175%'}}>
             <Text>
-              Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit
-              dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.
+            Resourcify offers the best courses at no cost. These courses span a variety of subjects, ensuring comprehensive learning for all. Designed by experts, Resourcify's courses provide valuable insights and practical skills, making high-quality education accessible to everyone. Take advantage of this exceptional opportunity to enhance your knowledge and skills without any financial burden.
             </Text>
           </Box>
           <Box textAlign={{base : 'left', md : 'right'}}>
