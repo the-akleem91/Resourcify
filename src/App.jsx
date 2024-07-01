@@ -8,17 +8,16 @@ import {
 
 // layouts and pages
 import RootLayout from './layouts/RootLayout'
-import Home from './pages/Home'
-import About from './pages/About'
-import Pricingpage from './pages/Pricing'
-import Contact from './pages/Contact'
-import Course from './pages/Courses'
-import Login from './pages/Login'
-import Signup from './pages/Signup';
-import Coursedetails from './pages/Coursedetails';
-import User from './pages/User';
-import Forgotpassword from './pages/Forgotpassword';
-import Resetpassword from './pages/ResetPassword'
+import Home from './pages/home/Home'
+import About from './pages/about/About'
+import Pricingpage from './pages/pricing/Pricing'
+import Contact from './pages/contact/Contact'
+import Course from './pages/courses/Courses'
+import Login from './pages/login/Login'
+import Signup from './pages/signup/Signup';
+import Coursedetails from './pages/courses/details/Coursedetails';
+import Forgotpassword from './pages/login/Forgotpassword';
+import Resetpassword from './pages/login/ResetPassword'
 
 
 // router and routes
@@ -33,7 +32,6 @@ const router = createBrowserRouter(
       <Route path="contact" element={<Contact />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
-      <Route path="user" element={<User />} />
       <Route path='forgotPassword' element={<Forgotpassword />} />
       <Route path='resetPassword/:token' element={<Resetpassword />} />
     </Route>

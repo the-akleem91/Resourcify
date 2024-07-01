@@ -1,11 +1,11 @@
 import { Box ,AspectRatio} from "@chakra-ui/react";
-import HeroHome from "../components/HeroHome";
-import IconApp from "../components/Comp";
-import Benefits from "../components/Benefits";
-import OurCourses from "../components/OurCourses";
-import OurTestimonials from "../components/Testimonials"; 
-import Pricing from "../components/Pricing";
-import FAQ from "../components/FAQ";
+import HeroHome from "./components/HeroHome";
+import IconApp from "./components/Comp";
+import Benefits from "./components/Benefits";
+import OurCourses from "./components/OurCourses";
+import OurTestimonials from "./components/Testimonials"; 
+import Pricing from "./components/Pricing";
+import FAQ from "../pricing/components/FAQ";
 
 export default function Home() {
   return (

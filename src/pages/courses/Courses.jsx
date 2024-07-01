@@ -1,6 +1,6 @@
 import { Box ,  Flex,Heading ,Text} from "@chakra-ui/react"
 import { useParams } from 'react-router-dom';
-import Courses from "../components/Courses"
+import Courses from "./components/Courses";
 export default function Course() {
   const {id} = useParams();
   console.log(id);

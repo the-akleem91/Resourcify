@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import Pricing from "../components/Pricing";
-import FAQ from "../components/FAQ";
-import Head from "../components/Head";
+import Pricing from "./components/Pricing";
+import FAQ from "./components/FAQ";
+import Head from "./components/Head";
 
 export default function Pricingpage() {
   return (

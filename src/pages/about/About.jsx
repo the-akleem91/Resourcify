@@ -1,5 +1,5 @@
 import { Box ,  Flex, Heading ,Text} from "@chakra-ui/react"
-import Achievements from "../components/Achievements"
+import Achievements from "./component/Achievements"
 export default function About() {
   return (
     <Box>

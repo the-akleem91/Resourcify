@@ -18,8 +18,8 @@ import {
   Link
 } from '@chakra-ui/react';
 import { SiGoogle } from 'react-icons/si';
-import ImageSlider from "../components/ImageSlider";
-import { SlideData1 ,SlideData2 } from "../components/SlideData";
+import ImageSlider from "./components/ImageSlider";
+import { SlideData1 ,SlideData2 } from "./components/SlideData";
 import { useNavigate } from 'react-router-dom';
 
 

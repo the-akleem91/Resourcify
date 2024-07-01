@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken'
 
 const router = express.Router();
 
