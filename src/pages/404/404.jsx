@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './404.module.css'; 
+import { VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export default function ErrPage() {
   return (
@@ -9,7 +11,10 @@ export default function ErrPage() {
             <p>
             404
             <br />
-            <small>PAGE NOT FOUND</small>
+            <VStack spacing={8}>
+                <small>PAGE NOT FOUND</small>
+                <small>Want to go <Link to='/'>Home</Link>?</small>
+            </VStack>
             </p>
             <span className={`${styles.circle} ${styles.big}`} />
             <span className={`${styles.circle} ${styles.med}`} />
