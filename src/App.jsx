@@ -17,7 +17,8 @@ import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup';
 import Coursedetails from './pages/courses/details/Coursedetails';
 import Forgotpassword from './pages/login/Forgotpassword';
-import Resetpassword from './pages/login/ResetPassword'
+import Resetpassword from './pages/login/ResetPassword';
+import ErrPage from './pages/404/404'
 
 
 // router and routes
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       <Route path="signup" element={<Signup />} />
       <Route path='forgotPassword' element={<Forgotpassword />} />
       <Route path='resetPassword/:token' element={<Resetpassword />} />
+      <Route path="*" element={<ErrPage />} />
     </Route>
   )
 )

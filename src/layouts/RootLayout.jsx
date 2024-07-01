@@ -6,16 +6,51 @@ import Footer from "../components/Footer";
 export default function RootLayout() {
   const location = useLocation();
 
-  const hideNavbarPaths = ["/login", "/signup"];
-  const hideFooterPaths = ["/login","/signup"];
-  const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
-  const shouldHideFooter = hideFooterPaths.includes(location.pathname);
+  const a=location.pathname;
+  let test;
+  switch (a) {
+    case '/':
+      test = 1;
+      break;
+
+    case '/courses':
+      test = 1;
+      break;
+    
+    case '/pricing':
+      test = 1;
+      break; 
+      
+    case '/about':
+      test = 1;
+      break;
+      
+    case '/contact':
+      test = 1;
+      break;      
+      
+    case '/forgotPassword':
+      test = 1;
+      break;
+        
+    case '/resetPassword/:token':
+      test = 1;
+      break;
+
+    default:
+      test = 0;
+      break;
+  }
 
   return (
     <Box w="100%">
-      {!shouldHideNavbar && <Navbar />}
+      <Box style={{display : test ? 'block' : 'none'}}>
+        <Navbar />
+      </Box>
       <Outlet />
-      {!shouldHideNavbar && <Footer />}
+      <Box style={{display : test ? 'block' : 'none'}}>
+        <Footer/>
+      </Box>
     </Box>
   );
 }

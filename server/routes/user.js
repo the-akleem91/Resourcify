@@ -3,10 +3,9 @@ import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
-
 router.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -143,4 +142,5 @@ router.post('/reset-password/:token', async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 });
+
 export { router as UserRouter };
