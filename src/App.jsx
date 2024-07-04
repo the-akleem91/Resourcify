@@ -19,7 +19,13 @@ import Coursedetails from './pages/courses/details/Coursedetails';
 import Forgotpassword from './pages/login/Forgotpassword';
 import Resetpassword from './pages/login/ResetPassword';
 import ErrPage from './pages/404/404'
-
+import CourseEditor from './pages/Dashboard/CourseEditor';
+import CChapterEditor from './pages/Dashboard/CChapterEditor';
+import CCourses from './pages/Dashboard/CCourses';
+import CAnalytics from './pages/Dashboard/CAnalytics';
+import SCourses from './pages/Dashboard/SCourses';
+import SBrowse from './pages/Dashboard/SBrowse';
+import CourseView from './pages/courses/CourseView/CourseView'
 
 // router and routes
 const router = createBrowserRouter(
@@ -36,6 +42,13 @@ const router = createBrowserRouter(
       <Route path='forgotPassword' element={<Forgotpassword />} />
       <Route path='resetPassword/:token' element={<Resetpassword />} />
       <Route path="*" element={<ErrPage />} />
+      <Route path="edit-course" element={<CourseEditor />} />
+      <Route path="edit-course/1" element={<CChapterEditor />}/>
+      <Route path="chapter-courses" elemtnt={<CCourses />} />
+      <Route path="user-analytics" element={<CAnalytics />} />
+      <Route path="student-courses" element={<SCourses />}  />
+      <Route path="student-browse" element={<SBrowse />}  />
+      <Route path='courseView' element={<CourseView/>} />
     </Route>
   )
 )
