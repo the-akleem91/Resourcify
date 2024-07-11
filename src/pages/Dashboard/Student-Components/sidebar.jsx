@@ -49,7 +49,7 @@ export default function Sidebar() {
             spacing={4}
           >
             <Icon as={IoIosCompass} boxSize={iconSize} />
-            <NavLink cursor="pointer" to='/analytics'>Explore</NavLink>
+            <NavLink cursor="pointer" to='/student-browse'>Explore</NavLink>
           </HStack>
         </VStack>
       </Box>

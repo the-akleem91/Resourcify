@@ -65,17 +65,19 @@ app.post('/auth/courses', (req, res) => {
     const thumbnail = req.files ? req.files.thumbnail[0].path : null;
 
     // Save course details to database or perform any required operations.
+    console.log('Course details received:', { title, description, tags, chapters, thumbnail });
     res.status(200).send({ message: 'Course details saved successfully' });
   } catch (error) {
+    console.error('Error saving course details:', error);
     res.status(500).send({ message: 'Error saving course details', error });
   }
 });
 
 app.post('/auth/signup', (req, res) => {
   // Implement your signup logic here
-  // Example: extract username, email, password from req.body and save to database
   const { username, email, password } = req.body;
   // Perform signup logic, e.g., save user to database
+  console.log('Signup request received:', { username, email, password });
   res.status(201).json({ message: 'Signup successful' });
 });
 

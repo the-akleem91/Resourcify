@@ -1,41 +1,30 @@
-import React, { useState } from 'react';
-import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Progress, Input } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Progress } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
+import axios from 'axios';
 
 export default function SBrowse() {
-    const [file, setFile] = useState();
-    const [input, setInput] = useState('');
-    const [tagList, setTagList] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true); // Track loading state
 
-    function handleChange(e) {
-        let inputFile = e.target.files[0];
-        let size = inputFile.size;
-        let type = inputFile.type;
-        if (size < 2000000 && (type === 'image/png' || type === 'image/jpg')) {
-            setFile(URL.createObjectURL(e.target.files[0]));
-        } else {
-            alert("img size exceeded or type is undesired");
+    useEffect(() => {
+        async function fetchCourses() {
+            try {
+                const response = await axios.get('http://localhost:3000/auth/courses');
+                setCourses(response.data);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
         }
-    }
 
-    function handlePdfChange(e) {
-        let inputFile = e.target.files[0];
-        let size = inputFile.size;
-        let type = inputFile.type;
-        if (size < 10000000 && (type === 'application/pdf')) {
-            setFile(URL.createObjectURL(e.target.files[0]));
-        } else {
-            alert("img size exceeded or type is undesired");
-        }
-    }
+        fetchCourses();
+    }, []);
 
-    const handleInputChange = (e) => {
-        const input = e.target.value;
-        setInput(input);
-        const tags = input.split(' ');
-        setTagList(tags);
-    };
+
+    // if (loading) {
+    //     return <div>Loading...</div>; // Render a loading indicator while fetching data
+    // }
 
     return (
         <ChakraProvider>
@@ -48,9 +37,9 @@ export default function SBrowse() {
                         <Tag>Engineering</Tag>
                     </HStack>
                     <Flex wrap='wrap' justifyContent='center'>
-                        {[...Array(12)].map((_, i) => (
+                        {courses.map(course => (
                             <VStack
-                                key={i}
+                                key={course._id} // Assuming your course model has _id as the unique identifier
                                 border='3px solid gray'
                                 w={{ base: '100%', sm: '45%', md: '30%' }}
                                 align='left'
@@ -59,21 +48,17 @@ export default function SBrowse() {
                                 borderRadius='10'
                                 boxShadow='lg'
                             >
-                                <Img src='../../img/Image1.png' />
-                                <Text fontWeight='bold' fontSize='20px' align='left'>Introduction to engineering</Text>
-                                <Text fontWeight='light' align='left'>Filmy</Text>
+                                <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px'/>
+                                <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
+                                <Text fontWeight='light' align='left'>{course.description}</Text>
                                 <HStack>
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                     </Box>
-                                    <Text>2 Chapters</Text>
+                                    <Text>{course.chapters} Chapters</Text>
                                 </HStack>
-                                {i % 6 === 0 ? (
-                                    <Tag colorScheme='orange'>Trending</Tag>
-                                ) : (
-                                    <Progress value={80} size='xs' colorScheme='orange' w="full" />
-                                )}
-                                {i % 6 !== 0 && <Text>50% Completed</Text>}
+                                <Tag colorScheme='orange'>{course.status}</Tag>
+                                <Progress value={course.progress} size='xs' colorScheme='orange' w="full" />
                             </VStack>
                         ))}
                     </Flex>

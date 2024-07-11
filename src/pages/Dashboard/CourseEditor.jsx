@@ -42,6 +42,7 @@ export default function CourseEditor() {
         console.log('File type:', type);
 
         if (size < 2000000 && (type === 'image/png' || type === 'image/jpg' || type === 'image/jpeg')) {
+            console.log('FormData creating:')
             const formData = new FormData();
             formData.append('file', inputFile);
 
