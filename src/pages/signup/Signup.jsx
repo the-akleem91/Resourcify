@@ -31,27 +31,46 @@ const Signup = () => {
 
   const navigate =useNavigate();
 
-  const handleSignup = async () => {
+  const handlePublish = async () => {
+    const formData = new FormData();
+    formData.append('title', courseTitle);
+    formData.append('description', courseDescription);
+    if (courseNotes) formData.append('notes', courseNotes);
+    if (videoLectures) formData.append('video', videoLectures);
+
     try {
-        const response = await Axios.post('http://localhost:3000/auth/signup', {
-            username,
-            email,
-            password,
+        const response = await axios.post('http://localhost:3000/courses', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
-        
-        if (response.status === 201) {
-            navigate('/login'); // Navigate to login page upon successful signup
-        } else {
-            setError(response.data.message); // Set the error message from the response
-        }
+
+        console.log(response.data);
+        toast({
+            title: "Chapter Published",
+            description: "Your chapter details have been saved.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+        });
+
+        // Reset the form (optional)
+        setCourseTitle('');
+        setCourseDescription('');
+        setCourseNotes(null);
+        setVideoLectures(null);
     } catch (error) {
-        console.error('Error signing up:', error);
-        if (error.response) {
-            console.error('Error response data:', error.response.data);
-            setError(error.response.data.message);
-        }
+        console.error('Error saving chapter details:', error);  // Log the error
+        toast({
+            title: "Error",
+            description: "There was an error saving your chapter details.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+        });
     }
 };
+
 
   return (
 
