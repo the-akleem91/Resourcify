@@ -1,0 +1,75 @@
+{
+    "courses": [
+      {
+        "title": "Introduction to Engineering",
+        "category": "Filmy",
+        "chapters": "2 Chapters",
+        "status": "Trending",
+        "image": "https://wireframes.linowski.ca/wp-content/themes/darwin/images/full81.jpg"
+      },
+      {
+        "title": "Basics of Web Development",
+        "category": "Technology",
+        "chapters": "5 Chapters",
+        "status": "Popular",
+        "image": "https://c0.wallpaperflare.com/preview/900/739/702/school-startup-coding-software-development.jpg"
+      },
+      {
+        "title": "Graphic Design Fundamentals",
+        "category": "Art & Design",
+        "chapters": "4 Chapters",
+        "status": "New",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnFgMc83fuOmQo-mMugTHNqzrKNpxWfRYiSQ&s"
+      },
+      {
+        "title": "Introduction to Machine Learning",
+        "category": "Data Science",
+        "chapters": "6 Chapters",
+        "status": "Trending",
+        "image": "https://c8.alamy.com/comp/2JP46MG/computer-engineers-reading-code-cgi-data-and-analyzing-special-effects-charts-while-working-late-at-night-manager-and-team-leader-helping-diverse-2JP46MG.jpg"
+      },
+      {
+        "title": "Advanced Python Programming",
+        "category": "Technology",
+        "chapters": "8 Chapters",
+        "status": "Featured",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40Xnkwk5QNNzsTvI1tdX1q3LTDVLJkR52bA&s"
+      },
+      {
+        "title": "Digital Marketing Essentials",
+        "category": "Business",
+        "chapters": "3 Chapters",
+        "status": "Popular",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5690MqiVn4zZVawP0LrLkmgcKBQumGkQFjg&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5690MqiVn4zZVawP0LrLkmgcKBQumGkQFjg&s"
+      },
+      {
+        "title": "Introduction to Cybersecurity",
+        "category": "Technology",
+        "chapters": "7 Chapters",
+        "status": "Trending",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-_ChN4Z-cc8crUQ_bCetAqGtW9WOzXHsiXQ&s"
+      },
+      {
+        "title": "Basics of Data Analysis",
+        "category": "Data Science",
+        "chapters": "5 Chapters",
+        "status": "New",
+        "image": "https://www.analyticssteps.com/backend/media/thumbnail/1205212/8604512_1603957048_stats.jpg"
+      },
+      {
+        "title": "Project Management 101",
+        "category": "Business",
+        "chapters": "4 Chapters",
+        "status": "Featured",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ8NHMfRmLnoYi3xpic3pF1ZQUEASNkNuxhw&s"
+      },
+      {
+        "title": "Introduction to Artificial Intelligence",
+        "category": "Technology",
+        "chapters": "6 Chapters",
+        "status": "Trending",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1W5iRgYJLUOzDh7GhZuTEhZfRgRmk18NWNA&s."
+      }
+    ]
+  }
+  

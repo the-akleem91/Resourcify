@@ -7,11 +7,24 @@ import { BsFilePdfFill, BsTextParagraph } from 'react-icons/bs';
 import CommentSection from './components/CommentSection';
 import { MdOutlinePlayCircle } from "react-icons/md";
 import { FaRegCircleDot } from "react-icons/fa6";
-import { Tag , TagLeftIcon, TagLabel} from '@chakra-ui/react';
+import { Tag, TagLeftIcon, TagLabel } from '@chakra-ui/react';
 import { CiClock1 } from 'react-icons/ci';
 
+const courseSections = [
+  { title: 'Getting Started', duration: '51m' },
+  { title: 'Introduction', duration: '30m' },
+  { title: 'Chapter 1', duration: '45m' },
+  { title: 'Chapter 2', duration: '50m' },
+  // add more sections as needed
+];
 
 function CourseView() {
+
+  const handleChapterClick = (id) => {
+    navigate(`/course/chapter/${id}`);
+};
+
+
   return (
     <ChakraProvider>
       <Flex h="100vh" flexDirection={{ base: 'column', lg: 'row' }}>
@@ -29,11 +42,11 @@ function CourseView() {
           </Box>
           <Flex
             w='100%'
-            flexDirection={{ base: 'column', lg: 'row' }}
+            flexDirection={{ base: 'column', lg: 'column' }}
             alignItems={{ base: 'center', lg: 'flex-start' }}
             >
             <Box
-                w={{ base: '100%', lg: '60%' }}
+                w={{ base: '100%', lg: '98%' }}
                 maxW="1300px"
                 mx="auto"
                 my={{ base: '4', md: '10' }}
@@ -45,7 +58,7 @@ function CourseView() {
             </Box>
             <Box
                 border="1px solid #e2e8f0"
-                w={{ base: '100%', lg: '40%' }}
+                w={{ base: '100%', lg: '98%' }}
                 p={4}
                 mt={{ base: '4', lg: '0' }}
             >
@@ -53,7 +66,7 @@ function CourseView() {
                 <Text>Course Content</Text>
                 <Progress colorScheme='orange' size='xs' value={40} />
                 </VStack>
-                {Array(10).fill('').map((_, index) => (
+                {courseSections.map((section, index) => (
                 <HStack
                     key={index}
                     border="1px solid #e2e8f0"
@@ -61,15 +74,16 @@ function CourseView() {
                     my={2}
                     justifyContent='space-between'
                     borderRadius={5}
+                    onClick={() => handleChapterClick(chapter._id)}
                 >
                     <HStack>
                     <Icon as={index === 0 ? MdOutlinePlayCircle : FaRegCircleDot} h={5} w={5} />
-                    <Text fontWeight='semibold'>Getting Started</Text>
+                    <Text fontWeight='semibold'>{section.title}</Text>
                     </HStack>
                     <HStack spacing={4}>
                     <Tag size='md' variant='subtle' colorScheme='orange'>
                         <TagLeftIcon boxSize='12px' as={CiClock1} h={5} w={5} />
-                        <TagLabel>51m</TagLabel>
+                        <TagLabel>{section.duration}</TagLabel>
                     </Tag>
                     </HStack>
                 </HStack>

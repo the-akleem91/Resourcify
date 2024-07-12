@@ -5,10 +5,11 @@ import Sidebar from './Student-Components/sidebar';
 import { Icon } from '@chakra-ui/react';
 import { FiClock, FiCheckCircle } from 'react-icons/fi';
 import { IoBookSharp } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 export default function SCourses() {
     const [courses, setCourses] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetch('http://localhost:3000/auth/courses')
             .then(response => response.json())
@@ -16,7 +17,13 @@ export default function SCourses() {
             .catch(error => console.error('Error fetching courses:', error));
     }, []);
     
+
+
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
+
+    const handleCourseClick = (id) => {
+        navigate(`/course/${id}`);
+    };
 
     return (
         <ChakraProvider>
@@ -45,7 +52,7 @@ export default function SCourses() {
                     </HStack>
                     <Flex wrap='wrap' spacing={4}>
                         {courses.map(course => (
-                            <VStack key={course._id} border='3px solid gray' w={columnWidth} align='left' p='10px' m={2} borderRadius='10'>
+                            <VStack key={course._id} border='3px solid gray' w={columnWidth} align='left' p='10px' m={2} onClick={() => handleCourseClick(course._id)} borderRadius='10'>
                                 <Img src={course.image} alt={course.title} />
                                 <Text fontWeight='bold' fontSize='20px' align='left'>{course.title}</Text>
                                 <Text fontWeight='light' align='left'>{course.description}</Text>

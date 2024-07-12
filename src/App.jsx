@@ -48,7 +48,7 @@ const router = createBrowserRouter(
       <Route path="user-analytics" element={<CAnalytics />} />
       <Route path="student-courses" element={<SCourses />}  />
       <Route path="student-browse" element={<SBrowse />}  />
-      <Route path='courseView' element={<CourseView/>} />
+      <Route path='course/:id' element={<CourseView/>} />
     </Route>
   )
 )
