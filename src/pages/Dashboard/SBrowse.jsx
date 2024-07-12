@@ -3,16 +3,20 @@ import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Progre
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function SBrowse() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true); // Track loading state
+
+    const navigate=useNavigate();
 
     useEffect(() => {
         async function fetchCourses() {
             try {
                 const response = await axios.get('http://localhost:3000/auth/courses');
                 setCourses(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
@@ -21,10 +25,9 @@ export default function SBrowse() {
         fetchCourses();
     }, []);
 
-
-    // if (loading) {
-    //     return <div>Loading...</div>; // Render a loading indicator while fetching data
-    // }
+    const navigateToCourseDetails = (title) => {
+        navigate(`/course/${title}`);
+      };    
 
     return (
         <ChakraProvider>
@@ -47,6 +50,7 @@ export default function SBrowse() {
                                 m={3}
                                 borderRadius='10'
                                 boxShadow='lg'
+                                onClick={() => navigateToCourseDetails(course.title)}
                             >
                                 <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px'/>
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>

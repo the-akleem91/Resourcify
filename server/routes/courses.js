@@ -4,43 +4,32 @@ import { Course } from '../models/Courses.js';
 
 const router = express.Router();
 const app = express();
+
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Destination folder for uploaded files
-    },
-    filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`); // File naming convention
-    }
-  });
-  console.log("before upload");
-  const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-      // Add any specific file type checks if necessary
-      console.log("in the program");
-      if (file.mimetype.startsWith('image/')) {
-        console.log("in the if");
-        cb(null, true); // Accept the file
-        console.log("in the if");
-      } else {
-        console.log("in the else");
-        cb(new Error('File type not supported!'), false); // Reject the file
-      }
-    }
-  });  
+  destination: function (req, file, cb) {
+    cb(null, "../src/images/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
 
-  console.log("after upload");
+const upload = multer({ storage: storage });
 
-  app.post('/courses', upload.single('thumbnail'), (req, res) => {
-    try {
-      // Handle the uploaded file here
-      console.log('File uploaded:', req.file);
-      res.status(200).send('File uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      res.status(500).send('Error uploading file');
-    }
-  });
+app.post("/auth/courses", upload.single("image"), async (req, res) => {
+  console.log("console req body",req.body);
+  const imageName = req.file.filename;
+  console.log(imageName);
+
+  try {
+    const temp = await Images.create({ thumbnail: imageName });
+    console.log("console log temp",temp);
+    res.status(200).json({ status: "ok" });
+  } catch (error) {
+    res.status(500).json({ status: error });
+  }
+});
 
 // Get all courses
 router.get('/', async (req, res) => {

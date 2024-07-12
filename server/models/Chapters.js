@@ -15,6 +15,9 @@ const chapterSchema = new mongoose.Schema({
   video: { 
     type: String 
   }, 
+  courseTitle:{
+    type: String
+  },
   tags: [{ type: String }],  // Array of tags
   createdAt: { 
     type: Date, 

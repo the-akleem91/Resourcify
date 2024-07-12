@@ -25,7 +25,8 @@ import CCourses from './pages/Dashboard/CCourses';
 import CAnalytics from './pages/Dashboard/CAnalytics';
 import SCourses from './pages/Dashboard/SCourses';
 import SBrowse from './pages/Dashboard/SBrowse';
-import CourseView from './pages/courses/CourseView/CourseView'
+import CourseView from './pages/courses/CourseView/CourseView';
+import ChapterView from './pages/courses/CourseView/ChapterView';
 
 // router and routes
 const router = createBrowserRouter(
@@ -43,12 +44,13 @@ const router = createBrowserRouter(
       <Route path='resetPassword/:token' element={<Resetpassword />} />
       <Route path="*" element={<ErrPage />} />
       <Route path="edit-course" element={<CourseEditor />} />
-      <Route path="edit-course/1" element={<CChapterEditor />}/>
+      <Route path="edit-course/:id" element={<CChapterEditor />}/>
       <Route path="chapter-courses" elemtnt={<CCourses />} />
       <Route path="user-analytics" element={<CAnalytics />} />
       <Route path="student-courses" element={<SCourses />}  />
       <Route path="student-browse" element={<SBrowse />}  />
       <Route path='course/:id' element={<CourseView/>} />
+      <Route path='course/:id/:id' element={<ChapterView/>} />
     </Route>
   )
 )

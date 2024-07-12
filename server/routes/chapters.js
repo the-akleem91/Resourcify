@@ -33,13 +33,19 @@ router.get('/', async (req, res) => {
 });
 
 // Delete a course by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/by-title/:title', async (req, res) => {
   try {
-    await Chapters.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Course deleted' });
+    const title = req.params.title;
+    const chapter = await Chapters.findOneAndDelete({ title });
+
+    if (!chapter) {
+      return res.status(404).json({ message: 'Chapter not found' });
+    }
+
+    res.status(200).json({ message: 'Chapter deleted' });
   } catch (err) {
+    console.error('Error deleting chapter:', err);
     res.status(500).json({ error: err.message });
   }
 });
-
 export { router as ChapterRouter };

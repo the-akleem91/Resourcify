@@ -11,6 +11,7 @@ import { dirname } from 'path';
 import { CourseRouter } from './routes/courses.js';
 import { UserRouter } from './routes/user.js';
 import { ChapterRouter } from './routes/chapters.js';
+import { Course } from './models/Courses.js';
 
 // Initialize environment variables
 dotenv.config();
@@ -55,23 +56,43 @@ const courseUpload = upload.fields([{ name: 'thumbnail' }]);
 const chapterUpload = upload.fields([{ name: 'notes' }, { name: 'video' }]);
 
 app.use('/chapters', chapterUpload, ChapterRouter);
-
+app.use('/auth/courses', chapterUpload, CourseRouter);
 // Routes
-app.use('/auth/courses', courseUpload, CourseRouter);
-
-app.post('/auth/courses', (req, res) => {
+app.post('/auth/courses', async (req, res) => {
   try {
+    console.log('Received a request to /auth/courses');
+    console.log('Request body:', req.body);
+    console.log('Request files:', req.files);
+
     const { title, description, tags, chapters } = req.body;
     const thumbnail = req.files ? req.files.thumbnail[0].path : null;
 
-    // Save course details to database or perform any required operations.
-    console.log('Course details received:', { title, description, tags, chapters, thumbnail });
+    // Validate required fields
+    if (!title || !description) {
+      console.log('Validation error: Title and description are required');
+      return res.status(400).send({ message: 'Title and description are required' });
+    }
+
+    // Create a new course instance
+    const newCourse = new Course({ 
+      title, 
+      description, 
+      tags: JSON.parse(tags), 
+      chapters: JSON.parse(chapters), 
+      thumbnail 
+    });
+
+    // Save the course to the database
+    await newCourse.save();
+
+    console.log('Course details saved:', { title, description, tags, chapters, thumbnail });
     res.status(200).send({ message: 'Course details saved successfully' });
   } catch (error) {
     console.error('Error saving course details:', error);
     res.status(500).send({ message: 'Error saving course details', error });
   }
 });
+
 
 app.post('/auth/signup', (req, res) => {
   // Implement your signup logic here

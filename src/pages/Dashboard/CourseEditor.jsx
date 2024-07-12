@@ -32,50 +32,31 @@ export default function CourseEditor() {
         fetchChapters();
     }, []);
 
-    const handleFileChange = async (e) => {
-        let inputFile = e.target.files[0];
-        let size = inputFile.size;
-        let type = inputFile.type;
+    const handleChapterClick = async () => {
+        const newChapter = {
+            id: 'chapter-' + Math.random().toString(36).substr(2, 9),
+            title: `Chapter ${chapterList.length + 1}`
+        };
 
-        console.log('File selected:', inputFile);
-        console.log('File size:', size);
-        console.log('File type:', type);
-
-        if (size < 2000000 && (type === 'image/png' || type === 'image/jpg' || type === 'image/jpeg')) {
-            console.log('FormData creating:')
-            const formData = new FormData();
-            formData.append('file', inputFile);
-
-            console.log('FormData created:', formData);
-
-            try {
-                console.log('Sending POST request to upload image...');
-                const response = await axios.post('http://localhost:3000/auth/courses', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                console.log('Response received:', response);
-                setFile(URL.createObjectURL(inputFile));
-                console.log('File URL set:', URL.createObjectURL(inputFile));
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                if (error.response) {
-                    console.error('Response data:', error.response.data);
-                    console.error('Response status:', error.response.status);
-                    console.error('Response headers:', error.response.headers);
-                } else if (error.request) {
-                    console.error('Request data:', error.request);
-                } else {
-                    console.error('Error message:', error.message);
-                }
+        try {
+            const response = await axios.post('http://localhost:3000/chapters', newChapter);
+            if (response.status === 201) {
+                setChapterList([...chapterList, newChapter]);
+                console.log('Chapter added successfully:', response.data);
+            } else {
+                console.error('Error adding chapter:', response);
             }
-        } else {
-            alert("Image size exceeded or type is undesired");
+        } catch (error) {
+            console.error('Error adding chapter:', error);
         }
     };
 
+    const onInputChange = (e) => {
+        console.log(e.target.files[0]);
+        setCourseThumbnail(e.target.files[0]);
+      };
+
+    
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             const trimmedInput = input.trim();
@@ -95,23 +76,39 @@ export default function CourseEditor() {
         setInput(input);
     };
 
-    const handlePublish = async () => {
+
+    const deleteChapterByTitle = async (title) => {
+        try {
+          const response = await axios.delete(`http://localhost:3000/chapters/by-title/${title}`);
+          console.log('Chapter deleted:', response.data);
+        } catch (err) {
+          console.error('Error deleting chapter:', err.message);
+        }
+      };
+    
+      // Handle the button click
+      const handleDeleteClick = (title) => {
+        deleteChapterByTitle(title);
+      };
+
+
+      const handlePublish = async () => {
         const formData = new FormData();
         formData.append('title', courseTitle);
         formData.append('description', courseDescription);
-        formData.append('thumbnail', courseThumbnail);
         formData.append('tags', JSON.stringify(tagList));
-        formData.append('chapters', JSON.stringify(chapterList));
+        formData.append('chapters', JSON.stringify(chapterList))
+    
+        if (courseThumbnail) formData.append('thumbnail', courseThumbnail);
     
         try {
-            console.log('Publishing course...');
             const response = await axios.post('http://localhost:3000/auth/courses', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
     
-            console.log('Course published successfully:', response.data);
+            console.log(response.data);
             toast({
                 title: "Course Published",
                 description: "Your course details have been saved.",
@@ -124,20 +121,10 @@ export default function CourseEditor() {
             setCourseTitle('');
             setCourseDescription('');
             setCourseThumbnail(null);
-            setTagList([]);
-            setChapterList([]);
+            setChapterList(null);
+            setTagList([]); // Reset tags list after successful publish
         } catch (error) {
-            console.error('Error saving course details:', error);
-            if (error.response) {
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
-                console.error('Response headers:', error.response.headers);
-            } else if (error.request) {
-                console.error('Request data:', error.request);
-            } else {
-                console.error('Error message:', error.message);
-            }
-    
+            console.error('Error saving course details:', error);  // Log the error
             toast({
                 title: "Error",
                 description: "There was an error saving your course details.",
@@ -147,9 +134,7 @@ export default function CourseEditor() {
             });
         }
     };
-    
-    
-    
+
     return (
         <ChakraProvider>
             <Flex>
@@ -204,7 +189,7 @@ export default function CourseEditor() {
                                     <Input
                                         placeholder='Add Thumbnail'
                                         type='file'
-                                        onChange={handleFileChange}
+                                        onChange={onInputChange}
                                         accept="image/png, image/jpeg"
                                     />
                                     {file && <Img src={file} />}
@@ -215,16 +200,16 @@ export default function CourseEditor() {
                                         <Button leftIcon={<MdOutlineModeEdit />}>Edit Tags</Button>
                                     </HStack>
                                     <Input
-                                        placeholder='Enter tags and press Enter'
+                                        placeholder='Enter tags and press enter'
                                         value={input}
                                         onChange={handleInputChange}
                                         onKeyPress={handleKeyPress}
                                     />
-                                    <HStack spacing={2} wrap='wrap'>
+                                    <HStack>
                                         {tagList.map((tag, index) => (
                                             <Tag
+                                                size='lg'
                                                 key={index}
-                                                size='md'
                                                 borderRadius='full'
                                                 variant='solid'
                                                 colorScheme='orange'
@@ -235,35 +220,22 @@ export default function CourseEditor() {
                                         ))}
                                     </HStack>
                                 </VStack>
-                            </VStack>
-                        </VStack>
-                        <VStack w='45%' align='left' borderRadius='20px'>
-                            <VStack spacing={4}>
-                                <HStack spacing={2} w='100%'>
-                                    <Box align='left' bg='#F6D6A8' h={12} w={12} borderRadius='50%' p={1} color='#FF9500'>
-                                        <Icon as={FiPlusCircle} h={8} w={8} m={1} />
-                                    </Box>
-                                    <Text fontSize='25px' fontWeight='semibold'>Course Chapters</Text>
-                                </HStack>
-                                <VStack w='100%' bg="gray.100" p="20px">
+                                <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
                                     <HStack w='100%' justifyContent='space-between'>
-                                        <Text fontWeight='semibold'>Course Chapters</Text>
-                                        <Button leftIcon={<FiPlusCircle />}>Add Chapter</Button>
+                                        <Text fontWeight='semibold'>Add Chapters</Text>
+                                        <Button leftIcon={<FiPlusCircle />} onClick={handleChapterClick}>New Chapter</Button>
                                     </HStack>
-                                    {chapterList.map((item, index) => (
-                                        <HStack key={index} justifyContent='space-between' border='2px solid gray' width='100%' bg='gray.200' p='10px' borderRadius='10px'>
+                                    {chapterList.map((chapter, index) => (
+                                        <HStack key={index} w='100%' justifyContent='space-between'>
                                             <HStack>
-                                                <Icon as={CgMenuGridO} />
-                                                <Text>{item.title}</Text>
+                                                <Box bg='#F6D6A8' h={12} w={12} borderRadius='50%' p={1} color='#FF9500'>
+                                                    <Icon as={CgMenuGridO} h={10} w={10} />
+                                                </Box>
+                                                <Text>{chapter.title}</Text>
                                             </HStack>
                                             <HStack>
-                                                <Tag borderRadius='full' variant='solid' bg='black'>
-                                                    <TagLabel>Free</TagLabel>
-                                                </Tag>
-                                                <Tag borderRadius='full' variant='solid' colorScheme='orange'>
-                                                    <TagLabel>Published</TagLabel>
-                                                </Tag>
-                                                <Icon as={MdOutlineModeEdit} />
+                                                <Button leftIcon={<MdOutlineModeEdit />} variant='link'>Edit</Button>
+                                                <Button leftIcon={<MdDelete />} onClick={() => deleteChapterByTitle('Chapter Title')} variant='link'>Delete</Button>
                                             </HStack>
                                         </HStack>
                                     ))}
