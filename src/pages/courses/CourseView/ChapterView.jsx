@@ -12,47 +12,51 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ChapterView() {
-      const navigate = useNavigate();
-      const title = useParams(); // Destructure to get 'title' directly
-      const [chapters, setChapters] = useState([]);
-      const [chapter , setChapter] =useState([]);
-      const chaptertitle = title.id;
-      let c;
-      useEffect(() => {
+    const navigate = useNavigate();
+    const title = useParams(); // Destructure to get 'title' directly
+    const [chapters, setChapters] = useState([]);
+    const [chapter, setChapter] = useState([]);
+    const chaptertitle = title.id;
+    let c;
+
+    useEffect(() => {
         async function fetchChapters() {
             try {
-                console.log("c = ",c);
                 const response = await axios.get('http://localhost:3000/chapters');
                 const filteredCourse = response.data.filter(chapter => {
-                  console.log("entered yay!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                  return chapter.title === chaptertitle;
+                    return chapter.title === chaptertitle;
                 });
-                c= filteredCourse[0].courseTitle;
+                c = filteredCourse[0].courseTitle;
                 setChapter(filteredCourse);
-                console.log("c = ",c);
-                let coursetitle="a";
                 const filteredCourses = response.data.filter(chapter => {
                     return chapter.courseTitle === c;
                 });
-                console.log('Course founded: ',filteredCourse);
-                console.log('Filtered Courses:', filteredCourses);
                 setChapters(filteredCourses);
-                console.log("c = ",c);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         }
-  
-          fetchChapters();
-      }, [title]);
-      
-      const handleChapterClick = (id) => {
-          navigate(`/course/chapter/${id}`);
-      };
-      console.log("c = ",c);
-      const navigateToChapterDetails = (chapterTitle) => {
+
+        fetchChapters();
+    }, [title]);
+
+    // let d=chapter[0];
+    // let e=d.courseTitle;
+    // console.log("this chapter is : ", e);
+
+    const navigateToChapterDetails = (chapterTitle) => {
         navigate(`/course/${c}/${chapterTitle}`);
-      };   
+    };
+
+    const handleVideoComplete = async () => {
+        try {
+          console.log('Video has ended');
+          await axios.post(`http://localhost:3000/auth/chapters/complete`);
+          console.log('Completion status saved to MongoDB');
+        } catch (error) {
+          console.error('Error saving completion status:', error);
+        }
+      };
 
     return (
         <ChakraProvider>
@@ -81,13 +85,17 @@ function ChapterView() {
                             my={{ base: '4', md: '10' }}
                             p={{ base: '2', md: '5' }}
                         >
-                        {chapter.map(chapter => (
-                            <AspectRatio ratio={16 / 9}>
-                                <iframe src={chapter.video} allowFullScreen title="Course Video" />
-                            </AspectRatio>
-                        ))}
+                            {chapter.map(chapter => (
+                                <AspectRatio ratio={16 / 9} key={chapter._id}>
+                                    <video
+                                        src='../../img/Eduvid.mp4'
+                                        controls
+                                        onEnded={handleVideoComplete}
+                                    />
+                                </AspectRatio>
+                            ))}
                         </Box>
-                    
+
                         <Box
                             border="1px solid #e2e8f0"
                             w={{ base: '100%', lg: '98%' }}
@@ -128,35 +136,35 @@ function ChapterView() {
                         </Box>
                     </Flex>
                     {chapter.map(chapter => (
-                    <VStack>
-                        <Box w="100%">
-                            <HStack spacing="2" mb="4">
-                                <Icon as={BsTextParagraph} />
-                                <Text fontSize="xl" fontWeight="bold">
-                                    Chapter Overview
+                        <VStack key={chapter._id}>
+                            <Box w="100%">
+                                <HStack spacing="2" mb="4">
+                                    <Icon as={BsTextParagraph} />
+                                    <Text fontSize="xl" fontWeight="bold">
+                                        Chapter Overview
+                                    </Text>
+                                </HStack>
+                                <Text>
+                                    {chapter.description}
                                 </Text>
-                            </HStack>
-                            <Text>
-                                {chapter.description} 
-                            </Text>
-                        </Box>
-                        <Box w="100%">
-                            <HStack spacing="2" mb="4">
-                                <Icon as={BsFilePdfFill} />
-                                <Text fontSize="xl" fontWeight="bold">
-                                    Resources & Attachments
-                                </Text>
-                            </HStack>
-                            <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100" >
-                                {chapter.notes}
                             </Box>
-                        </Box>
-                        
-                        <Box w="100%" pb={10}>
-                            <CommentSection />
-                        </Box>
-                    </VStack>
-                ))}
+                            <Box w="100%">
+                                <HStack spacing="2" mb="4">
+                                    <Icon as={BsFilePdfFill} />
+                                    <Text fontSize="xl" fontWeight="bold">
+                                        Resources & Attachments
+                                    </Text>
+                                </HStack>
+                                <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100" >
+                                    {chapter.notes}
+                                </Box>
+                            </Box>
+
+                            <Box w="100%" pb={10}>
+                                <CommentSection />
+                            </Box>
+                        </VStack>
+                    ))}
                 </VStack>
             </Flex>
         </ChakraProvider>
