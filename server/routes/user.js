@@ -6,7 +6,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
-router.post('/signup', async (req, res) => {
+router.post('signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
@@ -37,6 +37,22 @@ router.post('/signup', async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
+});
+
+router.post('/auth/signup', (req, res) => {
+    // Implement your signup logic here
+    const { username, email, password } = req.body;
+    // Perform signup logic, e.g., save user to database
+    console.log('Signup request received:', { username, email, password });
+    res.status(201).json({ message: 'Signup successful' });
+  });
+  
+router.post('/auth/login', (req, res) => {
+    // Implement your signup logic here
+    const { email, password } = req.body;
+    // Perform signup logic, e.g., save user to database
+    console.log('login request received:', { email, password });
+    res.status(201).json({ message: 'login successful' });
 });
 
 router.post('/login', async (req, res) => {

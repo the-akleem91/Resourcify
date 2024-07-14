@@ -12,8 +12,8 @@ export default function Sidebar() {
   const direction = useBreakpointValue({ base: "row", md: "column" });
 
   return (
-    <Box border='5px solid blue'  h='100vh'>
-      <Box border='5px solid black' h='100vh'>
+    <Box h='' border='2px solid black'>
+      <Box h='100%' border='2px solid blue'>
         <Box display={{ base: "block", md: "none" }} h='100%' p="4">
           <Button onClick={isOpen ? onClose : onOpen}>
             {isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -40,7 +40,7 @@ export default function Sidebar() {
               spacing={4}
             >
               <Icon as={MdSpaceDashboard} boxSize={iconSize} />
-              <NavLink cursor="pointer" to='/courses'>Dashboard</NavLink>
+              <NavLink cursor="pointer" to='/student-courses'>Dashboard</NavLink>
             </HStack>
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}

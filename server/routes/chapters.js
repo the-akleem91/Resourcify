@@ -48,13 +48,15 @@ router.delete('/by-title/:title', async (req, res) => {
 });
 
 // Update chapter completion status
-router.post('auth/chapters/complete', async (req, res) => {
+router.post('/complete', async (req, res) => {
+  console.log("Ya bro i am here.");
   try {
-    const { id } = req.params;
+    const id = req.body.chapterId;
+    console.log('This is id i am getting: ', id);
     const chapter = await Chapters.findByIdAndUpdate(id, { completed: true }, { new: true });
 
     if (!chapter) {
-      return res.status(404).json({ message: 'Chapter not found' });
+      return res.status(500).json({ message: 'Chapter not found' });
     }
 
     res.status(200).json({ message: 'Chapter marked as completed', chapter });

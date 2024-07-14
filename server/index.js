@@ -35,9 +35,19 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/auth')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+const uri = process.env.MONGODB_URL;
+
+mongoose.connect(uri, {
+  serverApi: {
+    version: '1',
+    strict: true,
+    deprecationErrors: true,
+  }
+}).then(() => {
+  console.log("Successfully connected to MongoDB Atlas!");
+}).catch((error) => {
+  console.error("Connection error", error);
+});
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -55,8 +65,20 @@ const upload = multer({ storage });
 const courseUpload = upload.fields([{ name: 'thumbnail' }]);
 const chapterUpload = upload.fields([{ name: 'notes' }, { name: 'video' }]);
 
+app.use('/chapters', ChapterRouter); 
 app.use('/chapters', chapterUpload, ChapterRouter);
 app.use('/auth/courses', chapterUpload, CourseRouter);
+app.use('/auth/signup', (req, res, next) => {
+  // Perform any middleware-specific tasks here
+    if (req.method === 'POST') {
+      console.log('I am in');
+      CourseRouter(req, res, next);
+  } else {
+      next(); // Pass control to the next middleware or route handler
+  }
+  console.log('Middleware for /auth/signup route');
+  next();
+});
 // Routes
 app.post('/auth/courses', async (req, res) => {
   try {
@@ -93,14 +115,21 @@ app.post('/auth/courses', async (req, res) => {
   }
 });
 
+// app.post('/auth/signup', (req, res) => {
+//   // Implement your signup logic here
+//   const { username, email, password } = req.body;
+//   // Perform signup logic, e.g., save user to database
+//   console.log('Signup request received:', { username, email, password });
+//   res.status(201).json({ message: 'Signup successful' });
+// });
 
-app.post('/auth/signup', (req, res) => {
-  // Implement your signup logic here
-  const { username, email, password } = req.body;
-  // Perform signup logic, e.g., save user to database
-  console.log('Signup request received:', { username, email, password });
-  res.status(201).json({ message: 'Signup successful' });
-});
+// app.post('/auth/login', (req, res) => {
+//   // Implement your signup logic here
+//   const { email, password } = req.body;
+//   // Perform signup logic, e.g., save user to database
+//   console.log('login request received:', { email, password });
+//   res.status(201).json({ message: 'login successful' });
+// });
 
 // Start server on a single port
 const PORT = process.env.PORT || 5000;

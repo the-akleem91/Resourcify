@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Progress, Input } from '@chakra-ui/react';
+import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
 import { InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
+import { color } from 'framer-motion';
 
 export default function SBrowse() {
     const [courses, setCourses] = useState([]);
@@ -13,6 +14,7 @@ export default function SBrowse() {
     const [input, setInput] = useState("");
     const [chapters, setChapters] = useState([]);
     const navigate = useNavigate();
+    const toast=useToast();
 
     useEffect(() => {
         async function fetchCourses() {
@@ -120,7 +122,6 @@ export default function SBrowse() {
                                 m={3}
                                 borderRadius='10'
                                 boxShadow='lg'
-                                onClick={() => navigateToCourseDetails(course.title)}
                             >
                                 <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
@@ -132,7 +133,9 @@ export default function SBrowse() {
                                     <Text>{course.chapters} Chapters</Text>
                                 </HStack>
                                 <Tag colorScheme='orange'>{course.status}</Tag>
-                                
+                                <Button bg='orange.300' color='white' size='xs'  _hover={{color:'orange.300' ,border:'3px solid orange', bg:'white'}}  onClick={() => navigateToCourseDetails(course.title)}>
+                                    Enroll Now!
+                                </Button>
                             </VStack>
                         ))}
                     </Flex>

@@ -17,6 +17,14 @@ function ChapterView() {
     const [chapters, setChapters] = useState([]);
     const [chapter, setChapter] = useState([]);
     const chaptertitle = title.id;
+    let chapterId;
+
+    if (chapter && chapter.length > 0) {
+        chapterId = chapter[0]._id;
+    } else {
+        console.error('Chapter or chapter[0] is undefined or empty.');
+    }
+    console.log(chapterId);
     let c;
 
     useEffect(() => {
@@ -39,19 +47,16 @@ function ChapterView() {
 
         fetchChapters();
     }, [title]);
-
-    // let d=chapter[0];
-    // let e=d.courseTitle;
-    // console.log("this chapter is : ", e);
-
+    
     const navigateToChapterDetails = (chapterTitle) => {
         navigate(`/course/${c}/${chapterTitle}`);
     };
 
-    const handleVideoComplete = async () => {
+    const handleVideoComplete = async (chapterId) => {  // Accept chapterId as a parameter
         try {
           console.log('Video has ended');
-          await axios.post(`http://localhost:3000/auth/chapters/complete`);
+          console.log(`Sending request to mark chapter ${chapterId} as completed`);
+          await axios.post(`http://localhost:3000/chapters/complete`, { chapterId });   // Include chapterId in the URL
           console.log('Completion status saved to MongoDB');
         } catch (error) {
           console.error('Error saving completion status:', error);
@@ -61,7 +66,7 @@ function ChapterView() {
     return (
         <ChakraProvider>
             <Flex h="100vh" flexDirection={{ base: 'column', lg: 'row' }}>
-                <Sidebar />
+                <Sidebar/>
                 <VStack
                     h="100%"
                     w="100%"
@@ -85,15 +90,14 @@ function ChapterView() {
                             my={{ base: '4', md: '10' }}
                             p={{ base: '2', md: '5' }}
                         >
-                            {chapter.map(chapter => (
-                                <AspectRatio ratio={16 / 9} key={chapter._id}>
+                                <AspectRatio ratio={16 / 9} >
                                     <video
                                         src='../../img/Eduvid.mp4'
                                         controls
-                                        onEnded={handleVideoComplete}
+                                        onEnded={() => handleVideoComplete(chapterId)} 
                                     />
                                 </AspectRatio>
-                            ))}
+                           
                         </Box>
 
                         <Box
@@ -119,7 +123,7 @@ function ChapterView() {
                                         onClick={() => navigateToChapterDetails(chapter.title)}
                                     >
                                         <HStack>
-                                            <Icon as={index === 0 ? MdOutlinePlayCircle : FaRegCircleDot} h={5} w={5} />
+                                            <Icon as={chaptertitle === chapter.title ? MdOutlinePlayCircle : FaRegCircleDot} h={5} w={5} />
                                             <Text fontWeight='semibold'>{chapter.title}</Text>
                                         </HStack>
                                         <HStack spacing={4}>

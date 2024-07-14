@@ -17,6 +17,7 @@ import {
   TabPanels,
   Link
 } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import { SiGoogle } from 'react-icons/si';
 import ImageSlider from "./components/ImageSlider";
 import { SlideData1 ,SlideData2 } from "./components/SlideData";
@@ -28,49 +29,40 @@ const Signup = () => {
   const [username,setUsername] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const toast=useToast();
+
 
   const navigate =useNavigate();
 
-  const handlePublish = async () => {
-    const formData = new FormData();
-    formData.append('title', courseTitle);
-    formData.append('description', courseDescription);
-    if (courseNotes) formData.append('notes', courseNotes);
-    if (videoLectures) formData.append('video', videoLectures);
-
+  const handleSignup = async () => {
     try {
-        const response = await axios.post('http://localhost:3000/courses', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+        const response = await Axios.post('http://localhost:3000/auth/signup', {
+            username,
+            email,
+            password,
         });
-
-        console.log(response.data);
         toast({
-            title: "Chapter Published",
-            description: "Your chapter details have been saved.",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-        });
-
-        // Reset the form (optional)
-        setCourseTitle('');
-        setCourseDescription('');
-        setCourseNotes(null);
-        setVideoLectures(null);
+          title: "Signup Successful",
+          description: "Your are succesfully signuped.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+      });
+        
+        if (response.status === 201) {
+            navigate('/login'); // Navigate to login page upon successful signup
+            
+        } else {
+            setError(response.data.message); // Set the error message from the response
+        }
     } catch (error) {
-        console.error('Error saving chapter details:', error);  // Log the error
-        toast({
-            title: "Error",
-            description: "There was an error saving your chapter details.",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-        });
+        console.error('Error signing up:', error);
+        if (error.response) {
+            console.error('Error response data:', error.response.data);
+            setError(error.response.data.message);
+        }
     }
 };
-
 
   return (
 
