@@ -49,6 +49,7 @@ mongoose.connect(uri, {
 }).then(() => {
   console.log("Successfully connected to MongoDB Atlas!");
 }).catch((error) => {
+  console.log("err in connecting");
   console.error("Connection error", error);
 });
 
