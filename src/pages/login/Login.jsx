@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    console.log('Ya i am in ');
     try {
       const response = await Axios.post('http://localhost:3000/auth/login', {
         email,
@@ -20,7 +21,7 @@ const Login = () => {
       Axios.defaults.withCredentials = true;
       
       if (response.status === 200) { // Adjust status check based on your server response
-        navigate('/'); // Navigate to home page upon successful login
+        navigate('/student-courses/enrolled'); // Navigate to home page upon successful login
       } else {
         setError(response.data.message); // Set the error message from the response
       }

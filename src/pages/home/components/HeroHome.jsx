@@ -45,7 +45,7 @@ export default function HeroHome() {
         <Center my="25px">
           <Box>
             <Text fontSize={{ base: "15px", md: "25px" }} textAlign="center">
-              with Online Design and Development Courses.
+            with Online Courses Across All Disciplines.
             </Text>
           </Box>
         </Center>

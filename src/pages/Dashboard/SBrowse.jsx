@@ -130,7 +130,7 @@ export default function SBrowse() {
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                     </Box>
-                                    <Text>{course.chapters} Chapters</Text>
+                                    <Text>{course.chapterNo} Chapters</Text>
                                 </HStack>
                                 <Tag colorScheme='orange'>{course.status}</Tag>
                                 <Button bg='orange.300' color='white' size='xs'  _hover={{color:'orange.300' ,border:'3px solid orange', bg:'white'}}  onClick={() => navigateToCourseDetails(course.title)}>

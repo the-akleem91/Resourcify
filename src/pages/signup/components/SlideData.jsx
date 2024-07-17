@@ -1,7 +1,11 @@
-export const SlideData1 = [
+export const SlideData = [
     {
       image:
         "../../img/Frame 1000002241.png"
+    },
+    {
+      image:
+        "../../img/Testist1.png"
     },
     {
       image:
@@ -9,26 +13,11 @@ export const SlideData1 = [
     },
     {
       image:
-        "../../img/Testi3.png"
-    },
-    {
-      image:
-        "../../img/Testi4.png"
-    },
-    {
-      image:
-        "../../img/Testi5.png"
-    }
-  ];
-
-export const SlideData2 = [
-    {
-      image:
-        "../../img/Testist1.png"
-    },
-    {
-      image:
         "../../img/Testist2.png"
+    },
+    {
+      image:
+        "../../img/Testi3.png"
     },
     {
       image:
@@ -36,7 +25,15 @@ export const SlideData2 = [
     },
     {
       image:
+        "../../img/Testi4.png"
+    },
+    {
+      image:
         "../../img/Testist4.png"
+    },
+    {
+      image:
+        "../../img/Testi5.png"
     },
     {
       image:

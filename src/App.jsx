@@ -23,10 +23,12 @@ import CourseEditor from './pages/Dashboard/CourseEditor';
 import CChapterEditor from './pages/Dashboard/CChapterEditor';
 import CCourses from './pages/Dashboard/CCourses';
 import CAnalytics from './pages/Dashboard/CAnalytics';
-import SCourses from './pages/Dashboard/SCourses';
+import SECourses from './pages/Dashboard/SECourses';
+import SCompCourses from './pages/Dashboard/SCompCourses'
 import SBrowse from './pages/Dashboard/SBrowse';
 import CourseView from './pages/courses/CourseView/CourseView';
 import ChapterView from './pages/courses/CourseView/ChapterView';
+import Profile from './pages/profile/Profile'
 
 // router and routes
 const router = createBrowserRouter(
@@ -47,10 +49,13 @@ const router = createBrowserRouter(
       <Route path="edit-course/:id" element={<CChapterEditor />}/>
       <Route path="chapter-courses" elemtnt={<CCourses />} />
       <Route path="user-analytics" element={<CAnalytics />} />
-      <Route path="student-courses" element={<SCourses />}  />
+      <Route path="student-courses/:id/enrolled" element={<SECourses />}  />
+      <Route path="student-courses/enrolled" element={<SECourses />}  />
+      <Route path="student-courses/completed" element={<SCompCourses />} />
       <Route path="student-browse" element={<SBrowse />}  />
       <Route path='course/:id' element={<CourseView/>} />
       <Route path='course/:id/:id' element={<ChapterView/>} />
+      <Route path='profile/:id' element={<Profile/>} />
     </Route>
   )
 )

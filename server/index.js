@@ -13,6 +13,8 @@ import { UserRouter } from './routes/user.js';
 import { ChapterRouter } from './routes/chapters.js';
 import { Course } from './models/Courses.js';
 
+
+
 // Initialize environment variables
 dotenv.config();
 
@@ -62,23 +64,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Define upload fields for courses and chapters
+const avatarUpload = upload.single('avatar');
 const courseUpload = upload.fields([{ name: 'thumbnail' }]);
 const chapterUpload = upload.fields([{ name: 'notes' }, { name: 'video' }]);
 
-app.use('/chapters', ChapterRouter); 
+app.use('/auth/courses', courseUpload, CourseRouter);
 app.use('/chapters', chapterUpload, ChapterRouter);
-app.use('/auth/courses', chapterUpload, CourseRouter);
-app.use('/auth/signup', (req, res, next) => {
-  // Perform any middleware-specific tasks here
-    if (req.method === 'POST') {
-      console.log('I am in');
-      CourseRouter(req, res, next);
-  } else {
-      next(); // Pass control to the next middleware or route handler
-  }
-  console.log('Middleware for /auth/signup route');
-  next();
-});
+app.use('/auth', UserRouter);
+app.use('/auth/*', UserRouter);
 // Routes
 app.post('/auth/courses', async (req, res) => {
   try {
