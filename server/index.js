@@ -40,18 +40,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // MongoDB connection
 const uri = process.env.MONGODB_URL;
 
-mongoose.connect(uri, {
-  serverApi: {
-    version: '1',
-    strict: true,
-    deprecationErrors: true,
-  }
-}).then(() => {
-  console.log("Successfully connected to MongoDB Atlas!");
-}).catch((error) => {
-  console.log("err in connecting");
-  console.error("Connection error", error);
-});
+
+// Connect to MongoDB
+mongoose.connect(uri)
+  .then(() => {
+    console.log("Successfully connected to MongoDB Atlas!");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB Atlas:", error);
+  });
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
