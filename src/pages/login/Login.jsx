@@ -10,6 +10,10 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const handleNavigate = ()=>{
+    navigate('/signup');
+  }
+
   const handleLogin = async () => {
     console.log('Ya i am in ');
     try {
@@ -69,7 +73,7 @@ const Login = () => {
           
           <Text textAlign="center">OR</Text>
           
-          <Button variant="outline" colorScheme="orange" size="lg">Signup Now</Button>
+          <Button variant="outline" colorScheme="orange" size="lg" onClick={handleNavigate}>Signup Now</Button>
           
           {error && <Text color="red.500" textAlign="center">{error}</Text>}
         </Stack>

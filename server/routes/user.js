@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
+import { Course } from '../models/Courses.js';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
@@ -25,40 +26,58 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Endpoint for uploading avatar
-router.post('/users/upload-avatar', upload.single('avatar'), async (req, res) => {
-    try {
-      console.log('Uploading avatar for user');
-      
-      // Debugging statement to inspect request body
-      console.log('Request body:', JSON.stringify(req.body));
-      console.log('Request file:', req.file);
-      
-      const { username } = req.body;
-      
-      // Validate the username field
-      if (!username || typeof username !== 'string') {
-        return res.status(400).json({ message: 'Invalid username' });
-      }
-      
-      const avatarUrl = `/uploads/${req.file.filename}`;
-      
-      // Find user by username
-      const user = await User.findOne({ username });
-      
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      
-      // Update user's avatar URL
-      user.avatarUrl = avatarUrl;
-      await user.save();
-      
-      res.json({ avatarUrl: user.avatarUrl });
-    } catch (error) {
-      console.error('Error updating avatar:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+router.put('/update', async (req, res) => {
+    const { avatar, name, description } = req.body;
+
+    if (!avatar && !name && !description) {
+        return res.status(400).json({ error: 'At least one of avatar, name, or description is required' });
     }
-  });
+
+    try {
+        const userId = req.user.id; // Assuming you have user ID from authentication middleware
+        const updateFields = {};
+
+        if (avatar) updateFields.avatar = avatar;
+        if (name) updateFields.name = name;
+        if (description) updateFields.description = description;
+
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateFields }, { new: true });
+
+        res.json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
+router.post('/enroll', async (req, res) => {
+    const { userId, courseId } = req.body;
+    console.log("this is req", req.body);
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Find the course by ID
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Add the course title to the user's enrolled courses
+        user.enrolledCourses.push(course.title);
+
+        // Save the updated user
+        await user.save();
+
+        res.status(200).json({ message: 'Course enrolled successfully', user });
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred', error });
+    }
+});
 
 router.post('/', async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Avatar,
   Box,
@@ -7,160 +7,186 @@ import {
   Button,
   Divider,
   HStack,
+  VStack,
   Grid,
+  Image,
   Heading,
   Link,
   Text,
   Input
 } from '@chakra-ui/react';
-import { FaGithub } from 'react-icons/fa';
-import { BsFillCircleFill} from 'react-icons/bs';
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const Profile = () => {
+  const [userDetails, setUserDetails] = useState(null);
+  const [avatar, setAvatar] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState(null);
+  const [description, setDescription] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const inputFileRef = useRef(null);
+  let d = useParams().id;
+  const username = d;
 
-    const [userDetails, setUserDetails] = useState(null);
-    const [avatar, setAvatar] = useState('/path_to_your_image.jpg');
-    const inputFileRef = useRef(null);
-    let d= useParams().id;
-    console.log("id : ",d);
-    const username= d;
-    console.log(userDetails);
+  const fetchUserDetails = async (username) => {
+    try {
+      const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+      if (response.status === 200) {
+        const userDetails = response.data;
+        setUserDetails(userDetails);
+        setDescription(userDetails.description || '');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while fetching user details.');
+      }
+    }
+  };
 
-    const fetchUserDetails = async (username) => {
-        try {
-            console.log("hello, are you here");
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
-            if (response.status === 200) {
-                const userDetails = response.data;
-                console.log('User details fetched successfully:', userDetails);
-                // Set the user details in the state
-                setUserDetails(userDetails);
-            } else {
-                console.error('Failed to fetch user details:', response.data.message);
-                setError(response.data.message); // Set the error message from the response
-            }
-        } catch (error) {
-            console.error('Error fetching user details:', error);
-            if (error.response) {
-                console.error('Error response data:', error.response.data);
-                setError(error.response.data.message);
-            }
-        }
-    };
+  useEffect(() => {
+    fetchUserDetails(username);
+  }, [username]);
 
-    useEffect(() => {
-        fetchUserDetails(username);
-    }, [username]);
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setAvatar(e.target.result);
+        uploadAvatar(file);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file.');
+    }
+  };
 
-    const handleAvatarChange = (event) => {
-        const file = event.target.files[0];
-        console.log('Selected file:', file);
-        if (file && file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setAvatar(e.target.result);
-            uploadAvatar(file); // Call function to upload image to backend
-          };
-          reader.readAsDataURL(file);
+  const uploadAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    formData.append('username', username);
+
+    try {
+      const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/upload-avatar', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (response.data && response.data.avatarUrl) {
+        setAvatar(response.data.avatarUrl);
+      }
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+    }
+  };
+
+  const handleEditClick = () => {
+    if (isEditing) {
+        // Prepare the data to be sent
+        const updateData = {};
+        if (avatar) updateData.avatar = avatar;
+        if (name) updateData.name = name;
+        if (description) updateData.description = description;
+
+        // Ensure at least one field is present
+        if (Object.keys(updateData).length > 0) {
+            axios.put('https://resourcify-qw1s.onrender.com/auth/update', updateData)
+                .then(response => {
+                    // Handle successful update
+                    console.log('User updated successfully:', response.data);
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error updating user:', error);
+                });
         } else {
-          alert('Please select a valid image file.');
+            alert('At least one of avatar, name, or description must be provided');
         }
-      };
-    
-      const uploadAvatar = async (file) => {
-        const formData = new FormData();
-        formData.append('avatar', file);
-        formData.append('username', 'your_username'); // Replace 'your_username' with the actual username
-        console.log('Form data:', formData);
-    
-        try {
-          const response = await axios.post('http://localhost:5000/users/upload-avatar', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          // Assuming the response contains the updated avatar URL
-          if (response.data && response.data.avatarUrl) {
-            setAvatar(response.data.avatarUrl);
-          }
-          console.log('Avatar uploaded successfully:', response.data);
-        } catch (error) {
-          console.error('Error uploading avatar:', error);
-        }
-      };
+    }
+
+    setIsEditing(!isEditing);
+};
 
   return (
     <Box bg="gray.100" color="black" minH="100vh" p={8}>
       <Flex direction="column" align="center" maxW="1000px" mx="auto">
-        <Input
+        
+        {userDetails ? (
+          <>
+          <Input
           type="file"
           ref={inputFileRef}
           display="none"
-          onChange={handleAvatarChange}
-        />
-        <Avatar
-          size="2xl"
-          src={avatar}
-          name="Jayant Joshi"
-          cursor="pointer"
-          onClick={() => inputFileRef.current.click()}
-        />
-        {userDetails.map(user=> (
-        <HStack>
-          <Heading mt={4}>Jayant Joshi</Heading>
-          <Text>@ {user.username}· he/him</Text>
-          <Text mt={2} textAlign="center">
-            1st-year undergrad at Dr B R Ambedkar NIT Jalandhar. 5-star Python coder.
-            Adaptable and collaborative, merging academic rigor with coding proficiency.
-          </Text>
-          <HStack mt={4}>
-            <Icon as={FaGithub} boxSize={6} />
-            <Text>1 follower · 1 following</Text>
-          </HStack>
-        </HStack>
-        ))};
-        <Button mt={4} colorScheme="teal" variant="outline">
-          Edit profile
-        </Button>
-        <Divider my={8} />
-        <Heading size="lg" textAlign="center" mb={4}>
-          Pinned
-        </Heading>
-        <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={6}>
-          {[
-            { title: 'login', description: 'JavaScript', color: 'yellow.500', url: '#' },
-            { title: 'AMS-with-TimeTable', description: 'JavaScript', color: 'yellow.500', url: '#' },
-            { title: 'portfolio', description: 'CSS', color: 'purple.500', url: '#' },
-            { title: 'Resourcify', description: 'JavaScript', color: 'yellow.500', url: '#' },
-            { title: 'meshery', description: 'JavaScript', color: 'yellow.500', url: '#' },
-          ].map((repo, index) => (
-            <Box
-              key={index}
-              p={4}
-              bg="gray.300"
-              borderRadius="md"
-              boxShadow="md"
-            >
-              <Link href={repo.url} isExternal>
-                <Heading size="md">{repo.title}</Heading>
-                <HStack mt={2}>
-                  <Icon as={BsFillCircleFill} color={repo.color} boxSize={2} />
-                  <Text>{repo.description}</Text>
-                </HStack>
-              </Link>
-            </Box>
-          ))}
-        </Grid>
+          onChange={(e) => setAvatar(e.target.value)}
+          />
+          <Avatar
+            size="2xl"
+            src={avatar}
+            name={userDetails.username}
+            cursor="pointer"
+            onClick={() => inputFileRef.current.click()}
+          />
+            <VStack mt={4}>
+              <Heading>
+                {isEditing ? (
+                  <Input
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    // Add description
+                  />
+                ) : (
+                  description || 'Add you name'
+                )}
+              </Heading>
+              <Text>@{userDetails.username} · he/him</Text>
+            </VStack>
+            <Text mt={2} textAlign="center">
+              {isEditing ? (
+                <Input
+                  placeholder="Add description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  // Add description
+                />
+              ) : (
+                description || 'No description added yet.'
+              )}
+            </Text>
+            <HStack mt={4}>
+              <Text>0 follower · 0 following</Text>
+            </HStack>
+            <Button mt={4} colorScheme="orange" variant="outline" onClick={handleEditClick}>
+              {isEditing ? 'Save' : 'Edit'}
+            </Button>
+            
+            <VStack  w="90%" align='left' spacing={5} m={5}>
+              <Divider border='1px solid gray'/>
+              <Text fontSize='30px' fontWeight='bolder'>Badges</Text>
+              <HStack>
+              <Image
+                objectFit='cover'
+                src='../../img/badge.svg'
+                alt='Dan Abramov'
+              />
+              </HStack>
+              <Divider border='1px solid gray'/>
+            </VStack>
+          </>
+        ) : (
+          <>
+            <SkeletonCircle size='100' />
+            <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+          </>
+        )}
         <Box mt={8} textAlign="center">
-          <Heading size="md">117 contributions in the last year</Heading>
-          <Box mt={4} bg="gray.800" p={4} borderRadius="md" w="full">
-            <Text>Contribution graph would be here.</Text>
-          </Box>
         </Box>
-        
       </Flex>
     </Box>
   );

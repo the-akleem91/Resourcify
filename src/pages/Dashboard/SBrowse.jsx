@@ -3,39 +3,78 @@ import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
-import { InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
-import { color } from 'framer-motion';
+import { InputGroup, InputRightElement } from '@chakra-ui/react';
 
 export default function SBrowse() {
     const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true); // Track loading state
     const [input, setInput] = useState("");
     const [chapters, setChapters] = useState([]);
+    const [userDetails, setUserDetails] = useState(null);
+    const { id: username } = useParams();
     const navigate = useNavigate();
-    const toast=useToast();
+    const toast = useToast();
+
+    const fetchUserDetails = async (username) => {
+        try {
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+            if (response.status === 200) {
+                setUserDetails(response.data);
+            } else {
+                toast({
+                    title: "Error",
+                    description: response.data.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: error.response?.data?.message || error.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    };
 
     useEffect(() => {
-        async function fetchCourses() {
+        fetchUserDetails(username);
+    }, [username]);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
             try {
                 const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 setCourses(response.data);
-                console.log(response.data);
             } catch (error) {
-                console.error('Error fetching courses:', error);
+                toast({
+                    title: "Error",
+                    description: error.response?.data?.message || error.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
             }
-        }
+        };
 
-        async function fetchChapters() {
+        const fetchChapters = async () => {
             try {
                 const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 setChapters(response.data);
-                console.log(response.data);
             } catch (error) {
-                console.error('Error fetching chapters:', error);
+                toast({
+                    title: "Error",
+                    description: error.response?.data?.message || error.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
             }
-        }
+        };
 
         fetchChapters();
         fetchCourses();
@@ -45,49 +84,87 @@ export default function SBrowse() {
         setInput(e.target.value.toLowerCase());
     };
 
-    const Search = async () => {
+    const search = async () => {
         try {
-            console.log(input);
             const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
-            const filteredChapters = response.data.filter(chapter => {
-                const tags = chapter.tags.map(tag => tag.toLowerCase());
-                return tags.includes(input);
-            });
+            const filteredChapters = response.data.filter(chapter => chapter.tags.map(tag => tag.toLowerCase()).includes(input));
 
             if (filteredChapters.length === 0) {
-                console.log('No chapters found with the given tag');
+                toast({
+                    title: "No chapters found",
+                    description: "No chapters found with the given tag",
+                    status: "info",
+                    duration: 5000,
+                    isClosable: true,
+                });
                 return;
             }
 
-            let c = filteredChapters[0].courseTitle;
-            console.log(c);
+            const courseTitle = filteredChapters[0].courseTitle;
             const cresponse = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
-            const filteredCourses = cresponse.data.filter(course => course.title === c);
+            const filteredCourses = cresponse.data.filter(course => course.title === courseTitle);
 
             setCourses(filteredCourses);
-            console.log('Filtered Courses:', filteredCourses);
             setChapters(filteredChapters);
         } catch (error) {
-            console.error('Error fetching chapters:', error);
+            toast({
+                title: "Error",
+                description: error.response?.data?.message || error.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
         }
     };
 
     const handleTagClick = (tag) => {
-        setInput(tag.toLowerCase()); // Set input value to the clicked tag
-        Search(); // Trigger search with the clicked tag
+        setInput(tag.toLowerCase());
+        search();
     };
 
     const renderUniqueTags = () => {
-        // Aggregate all tags from all chapters
         const allTags = chapters.reduce((accumulator, chapter) => {
             accumulator.push(...chapter.tags);
             return accumulator;
         }, []);
 
-        // Remove duplicates using Set
         const uniqueTags = Array.from(new Set(allTags));
 
         return uniqueTags.map(tag => <Tag key={tag} onClick={() => handleTagClick(tag)}>{tag}</Tag>);
+    };
+
+    const enrollCourse = async (userId, courseId) => {
+        console.log("this is userId", userId);
+        console.log("this is courseId", courseId);
+        
+        try {
+            const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/enroll', { userId, courseId });
+            if (response.status === 200) {
+                toast({
+                    title: "Success",
+                    description: "Course enrolled successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            } else {
+                toast({
+                    title: "Error",
+                    description: response.data.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: error.response?.data?.message || error.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
     };
 
     const navigateToCourseDetails = (title) => {
@@ -102,19 +179,18 @@ export default function SBrowse() {
                     <HStack>
                         <InputGroup>
                             <Input placeholder='Enter search text' type='text' onChange={handleInputChange} />
-                            <InputRightElement onClick={Search}>
+                            <InputRightElement onClick={search}>
                                 <Search2Icon color='green.500' />
                             </InputRightElement>
                         </InputGroup>
                     </HStack>
-                    {/* Horizontal scrollable list of tags */}
                     <HStack spacing={4} mb={4} wrap='wrap' justify={{ base: 'center', md: 'flex-start' }}>
                         {renderUniqueTags()}
                     </HStack>
                     <Flex wrap='wrap' justifyContent='center'>
                         {courses.map(course => (
                             <VStack
-                                key={course._id} // Assuming your course model has _id as the unique identifier
+                                key={course._id}
                                 border='3px solid gray'
                                 w={{ base: '100%', sm: '45%', md: '30%' }}
                                 align='left'
@@ -123,7 +199,7 @@ export default function SBrowse() {
                                 borderRadius='10'
                                 boxShadow='lg'
                             >
-                                <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
+                                <Img src={course.image} alt={course.title} aspectRatio={3 / 4} h='150px' />
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                 <Text fontWeight='light' align='left'>{course.description}</Text>
                                 <HStack>
@@ -133,9 +209,17 @@ export default function SBrowse() {
                                     <Text>{course.chapterNo} Chapters</Text>
                                 </HStack>
                                 <Tag colorScheme='orange'>{course.status}</Tag>
-                                <Button bg='orange.300' color='white' size='xs'  _hover={{color:'orange.300' ,border:'3px solid orange', bg:'white'}}  onClick={() => navigateToCourseDetails(course.title)}>
-                                    Enroll Now!
-                                </Button>
+                                {userDetails && (
+                                    <Button
+                                        bg='orange.300'
+                                        color='white'
+                                        size='xs'
+                                        _hover={{ color: 'orange.300', border: '3px solid orange', bg: 'white' }}
+                                        onClick={() => enrollCourse(userDetails._id, course._id)}
+                                    >
+                                        Enroll Now!
+                                    </Button>
+                                )}
                             </VStack>
                         ))}
                     </Flex>

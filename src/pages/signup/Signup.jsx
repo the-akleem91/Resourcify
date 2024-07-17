@@ -151,7 +151,7 @@ const Signup = () => {
                         <Button variant="outline" leftIcon={<SiGoogle />}>
                           Register with Google
                         </Button>
-                        <Text align="center">Already Registered? <Link href=''>Login</Link></Text>
+                        <Text align="center">Already Registered? <Link href='/login'>Login</Link></Text>
                       </Stack>
                     </Stack>
                     {error && <p style={{ color: 'red' }}>{error}</p>}

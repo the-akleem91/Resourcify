@@ -1,15 +1,58 @@
 import React from 'react';
 import { Box, VStack, HStack, Icon, Image, useDisclosure, Button } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { IoIosCompass } from "react-icons/io";
 import { MdSpaceDashboard } from "react-icons/md";
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useBreakpointValue} from '@chakra-ui/react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sidebarWidth = useBreakpointValue({ base: "full", md: "200px" });
   const iconSize = useBreakpointValue({ base: "20px", md: "24px" });
   const direction = useBreakpointValue({ base: "row", md: "column" });
+  const navigate=useNavigate();
+
+
+  const [userDetails, setUserDetails] = useState(null);
+  let d= useParams().id;
+  console.log("aaaho mai te aithe ha id singh:  ",d);
+  const username= d;
+
+    const fetchUserDetails = async (username) => {
+        try {
+            console.log("hello, are you here");
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+            if (response.status === 200) {
+                const userDetails = response.data;
+                console.log('User details fetched successfully:', userDetails);
+                // Set the user details in the state
+                setUserDetails(userDetails);
+            } else {
+                console.error('Failed to fetch user details:', response.data.message);
+                setError(response.data.message); // Set the error message from the response
+            }
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+            if (error.response) {
+                console.error('Error response data:', error.response.data);
+                setError(error.response.data.message);
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchUserDetails(username);
+    }, [username]);
+
+    const handleExplore = () => {
+        navigate(`/${username}/student-browse`);
+    };
+
 
   return (
     <Box>
@@ -50,7 +93,7 @@ export default function Sidebar() {
               spacing={4}
             >
               <Icon as={IoIosCompass} boxSize={iconSize} />
-              <NavLink cursor="pointer" to='/student-browse'>Explore</NavLink>
+              <NavLink cursor="pointer" onClick={handleExplore}>Explore</NavLink>
             </HStack>
           </VStack>
         </Box>

@@ -52,7 +52,7 @@ const router = createBrowserRouter(
       <Route path="student-courses/:id/enrolled" element={<SECourses />}  />
       <Route path="student-courses/enrolled" element={<SECourses />}  />
       <Route path="student-courses/completed" element={<SCompCourses />} />
-      <Route path="student-browse" element={<SBrowse />}  />
+      <Route path=":id/student-browse" element={<SBrowse />}  />
       <Route path='course/:id' element={<CourseView/>} />
       <Route path='course/:id/:id' element={<ChapterView/>} />
       <Route path='profile/:id' element={<Profile/>} />
