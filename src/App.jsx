@@ -49,13 +49,12 @@ const router = createBrowserRouter(
       <Route path="edit-course/:id" element={<CChapterEditor />}/>
       <Route path="chapter-courses" elemtnt={<CCourses />} />
       <Route path="user-analytics" element={<CAnalytics />} />
-      <Route path="student-courses/:id/enrolled" element={<SECourses />}  />
-      <Route path="student-courses/enrolled" element={<SECourses />}  />
+      <Route path="student-courses/:uid/enrolled" element={<SECourses />}  />
       <Route path="student-courses/completed" element={<SCompCourses />} />
       <Route path=":id/student-browse" element={<SBrowse />}  />
-      <Route path='course/:id' element={<CourseView/>} />
-      <Route path='course/:id/:id' element={<ChapterView/>} />
-      <Route path='profile/:id' element={<Profile/>} />
+      <Route path='course/:uid/:cid' element={<CourseView/>} />
+      <Route path='course/:uid/:cid/:chid' element={<ChapterView/>} />
+      <Route path='profile/:uid' element={<Profile/>} />
     </Route>
   )
 )

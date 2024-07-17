@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../../Dashboard/Student-Components/sidebar';
+import Sidebar from './components/sidebar';
 import {
-    Button, HStack, VStack, Box, AspectRatio, Icon, Text, Flex, ChakraProvider, Progress, Tag, TagLeftIcon, TagLabel
+    Button, HStack, VStack, Box, AspectRatio, Icon, Text, Flex, ChakraProvider, Progress, Tag, TagLeftIcon, TagLabel, useToast
 } from '@chakra-ui/react';
 import { FaBackward, FaRegCircleDot } from 'react-icons/fa6';
 import { BsFilePdfFill, BsTextParagraph } from 'react-icons/bs';
@@ -12,18 +12,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ChapterView() {
+    const  {uid, cid, chid}  = useParams(); 
     const navigate = useNavigate();
     const title = useParams(); // Destructure to get 'title' directly
+    const [courses, setCourses] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [chapter, setChapter] = useState([]);
+    const toast= useToast();
     const chaptertitle = title.id;
     let chapterId;
 
-    if (chapter && chapter.length > 0) {
-        chapterId = chapter[0]._id;
-    } else {
-        console.error('Chapter or chapter[0] is undefined or empty.');
-    }
     console.log(chapterId);
     let c;
 
@@ -31,22 +29,48 @@ function ChapterView() {
         async function fetchChapters() {
             try {
                 const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
-                const filteredCourse = response.data.filter(chapter => {
-                    return chapter.title === chaptertitle;
-                });
-                c = filteredCourse[0].courseTitle;
-                setChapter(filteredCourse);
-                const filteredCourses = response.data.filter(chapter => {
-                    return chapter.courseTitle === c;
-                });
+                const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         }
-
+    
+        async function fetchCourses(courseId) {
+            try {
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const filteredCourses = response.data.filter(course => course._id === courseId);
+                setCourses(filteredCourses);
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: error.response?.data?.message || error.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        }
+        async function fetchChapter(courseId) {
+            try {
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const filteredChapter = response.data.filter(chapter => chapter._id === chid);
+                setChapter(filteredChapter);
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: error.response?.data?.message || error.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        }
+        fetchChapter(chid);
+        fetchCourses(cid);
         fetchChapters();
-    }, [title]);
+    }, [cid, courses, toast]);
+
     
     const navigateToChapterDetails = (chapterTitle) => {
         navigate(`/course/${c}/${chapterTitle}`);
@@ -62,6 +86,13 @@ function ChapterView() {
           console.error('Error saving completion status:', error);
         }
       };
+
+    
+    if (chapter && chapter.length > 0) {
+        chapterId = chapter[0]._id;
+    } else {
+        console.error('Chapter or chapter[0] is undefined or empty.');
+    }
 
     return (
         <ChakraProvider>

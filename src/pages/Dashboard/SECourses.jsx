@@ -14,7 +14,7 @@ import axios from 'axios';
 export default function SECourses() {
     const [courses, setCourses] = useState([]);
     const [userDetails, setUserDetails] = useState(null);
-    let d= useParams().id;
+    let d= useParams().uid;
     console.log("id : ",d);
     const username= d;
 
@@ -47,11 +47,32 @@ export default function SECourses() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        fetch('https://resourcify-qw1s.onrender.com/auth/courses')
-            .then(response => response.json())
-            .then(data => setCourses(data))
-            .catch(error => console.error('Error fetching courses:', error));
-    }, []);
+        const fetchCourses = async () => {
+            try {
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const allCourses = response.data;
+    
+                if (userDetails && userDetails.enrolledCourses) {
+                    const enrolledCourses = userDetails.enrolledCourses;
+                    const filteredCourses = allCourses.filter(course => enrolledCourses.includes(course.id));
+                    setCourses(filteredCourses);
+                } else {
+                    setCourses(allCourses);
+                }
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: error.response?.data?.message || error.message,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        };
+    
+        fetchCourses();
+    }, [userDetails]);
+    
     
 
     let c = courses[0];
@@ -76,7 +97,7 @@ export default function SECourses() {
                 <Sidebar />
                 <Box flex="1" p="4">
                     <HStack justifyContent='flex-end'>
-                        <Avatar name='Kola Tioluwani' src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
+                        <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
                     </HStack>
                     <HStack spacing={4}>
                         <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2}>

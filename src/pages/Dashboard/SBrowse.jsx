@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast } from '@chakra-ui/react';
+import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast, Avatar } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
 import axios from 'axios';
@@ -49,7 +49,14 @@ export default function SBrowse() {
         const fetchCourses = async () => {
             try {
                 const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
-                setCourses(response.data);
+                const allCourses = response.data;
+
+                if (userDetails) {
+                    const filteredCourses = allCourses.filter(course => !userDetails.enrolledCourses.includes(course.title));
+                    setCourses(filteredCourses);
+                } else {
+                    setCourses(allCourses);
+                }
             } catch (error) {
                 toast({
                     title: "Error",
@@ -76,9 +83,11 @@ export default function SBrowse() {
             }
         };
 
-        fetchChapters();
-        fetchCourses();
-    }, []);
+        if (userDetails) {
+            fetchCourses();
+            fetchChapters();
+        }
+    }, [userDetails]);
 
     const handleInputChange = (e) => {
         setInput(e.target.value.toLowerCase());
@@ -147,6 +156,8 @@ export default function SBrowse() {
                     duration: 5000,
                     isClosable: true,
                 });
+
+                navigate(`/course/${userId}/${courseId}`);
             } else {
                 toast({
                     title: "Error",
@@ -167,8 +178,8 @@ export default function SBrowse() {
         }
     };
 
-    const navigateToCourseDetails = (title) => {
-        navigate(`/course/${title}`);
+    const handleAvatar = () => {
+        navigate(`/profile/${username}`);
     };
 
     return (
@@ -183,6 +194,7 @@ export default function SBrowse() {
                                 <Search2Icon color='green.500' />
                             </InputRightElement>
                         </InputGroup>
+                        <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
                     </HStack>
                     <HStack spacing={4} mb={4} wrap='wrap' justify={{ base: 'center', md: 'flex-start' }}>
                         {renderUniqueTags()}

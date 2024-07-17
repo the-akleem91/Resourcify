@@ -19,7 +19,7 @@ export default function Sidebar() {
 
 
   const [userDetails, setUserDetails] = useState(null);
-  let d= useParams().uid;
+  let d= useParams().id;
   const username= d;
 
     const fetchUserDetails = async (username) => {
@@ -47,12 +47,8 @@ export default function Sidebar() {
         fetchUserDetails(username);
     }, [username]);
 
-    const handleDashboard = () => {
-      navigate(`/${username}/student-browse`);
-  };
-
     const handleExplore = () => {
-        navigate(`/student-courses/${username}/enrolled`);
+        navigate(`/${username}/student-browse`);
     };
 
 
@@ -85,7 +81,7 @@ export default function Sidebar() {
               spacing={4}
             >
               <Icon as={MdSpaceDashboard} boxSize={iconSize} />
-              <NavLink cursor="pointer" onClick={handleDashboard}>Dashboard</NavLink>
+              <NavLink cursor="pointer" to='/student-courses/enrolled'>Dashboard</NavLink>
             </HStack>
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}
