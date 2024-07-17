@@ -22,9 +22,10 @@ dotenv.config();
 const app = express();
 
 // Middleware
+
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+  origin: '*',
+  credentials: true
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
