@@ -19,7 +19,7 @@ function ChapterView() {
   useEffect(() => {
     async function fetchChapters() {
       try {
-          const response = await axios.get('http://localhost:3000/chapters');
+          const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
           let coursetitle=title.id;
           const filteredCourses = response.data.filter(chapter => {
               return chapter.courseTitle === coursetitle;

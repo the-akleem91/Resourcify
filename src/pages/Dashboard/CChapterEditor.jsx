@@ -83,7 +83,7 @@ export default function CChapterEditor() {
         if (videoLectures) formData.append('video', videoLectures);
     
         try {
-            const response = await axios.post('http://localhost:3000/chapters', formData, {
+            const response = await axios.post('https://resourcify-qw1s.onrender.com/chapters', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

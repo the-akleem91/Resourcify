@@ -30,7 +30,7 @@ function ChapterView() {
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 const filteredCourse = response.data.filter(chapter => {
                     return chapter.title === chaptertitle;
                 });
@@ -56,7 +56,7 @@ function ChapterView() {
         try {
           console.log('Video has ended');
           console.log(`Sending request to mark chapter ${chapterId} as completed`);
-          await axios.post(`http://localhost:3000/chapters/complete`, { chapterId });   // Include chapterId in the URL
+          await axios.post(`https://resourcify-qw1s.onrender.com/chapters/complete`, { chapterId });   // Include chapterId in the URL
           console.log('Completion status saved to MongoDB');
         } catch (error) {
           console.error('Error saving completion status:', error);

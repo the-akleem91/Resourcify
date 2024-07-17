@@ -32,7 +32,7 @@ const Profile = () => {
     const fetchUserDetails = async (username) => {
         try {
             console.log("hello, are you here");
-            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 console.log('User details fetched successfully:', userDetails);

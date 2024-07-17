@@ -21,7 +21,7 @@ export default function SECourses() {
     const fetchUserDetails = async (username) => {
         try {
             console.log("hello, are you here");
-            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 console.log('User details fetched successfully:', userDetails);
@@ -47,7 +47,7 @@ export default function SECourses() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        fetch('http://localhost:3000/auth/courses')
+        fetch('https://resourcify-qw1s.onrender.com/auth/courses')
             .then(response => response.json())
             .then(data => setCourses(data))
             .catch(error => console.error('Error fetching courses:', error));

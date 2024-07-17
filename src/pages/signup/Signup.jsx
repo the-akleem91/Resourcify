@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-        const response = await Axios.post('http://localhost:3000/auth/signup', {
+        const response = await Axios.post('https://resourcify-qw1s.onrender.com/auth/signup', {
             username,
             email,
             password,

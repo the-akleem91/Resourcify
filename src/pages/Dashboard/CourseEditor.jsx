@@ -22,7 +22,7 @@ export default function CourseEditor() {
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 setChapterList(response.data);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
@@ -39,7 +39,7 @@ export default function CourseEditor() {
         };
 
         try {
-            const response = await axios.post('http://localhost:3000/chapters', newChapter);
+            const response = await axios.post('https://resourcify-qw1s.onrender.com/chapters', newChapter);
             if (response.status === 201) {
                 setChapterList([...chapterList, newChapter]);
                 console.log('Chapter added successfully:', response.data);
@@ -79,7 +79,7 @@ export default function CourseEditor() {
 
     const deleteChapterByTitle = async (title) => {
         try {
-          const response = await axios.delete(`http://localhost:3000/chapters/by-title/${title}`);
+          const response = await axios.delete(`https://resourcify-qw1s.onrender.com/chapters/by-title/${title}`);
           console.log('Chapter deleted:', response.data);
         } catch (err) {
           console.error('Error deleting chapter:', err.message);
@@ -102,7 +102,7 @@ export default function CourseEditor() {
         if (courseThumbnail) formData.append('thumbnail', courseThumbnail);
     
         try {
-            const response = await axios.post('http://localhost:3000/auth/courses', formData, {
+            const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/courses', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

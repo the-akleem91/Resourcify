@@ -19,7 +19,7 @@ export default function SBrowse() {
     useEffect(() => {
         async function fetchCourses() {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 setCourses(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -29,7 +29,7 @@ export default function SBrowse() {
 
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 setChapters(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -48,7 +48,7 @@ export default function SBrowse() {
     const Search = async () => {
         try {
             console.log(input);
-            const response = await axios.get('http://localhost:3000/chapters');
+            const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
             const filteredChapters = response.data.filter(chapter => {
                 const tags = chapter.tags.map(tag => tag.toLowerCase());
                 return tags.includes(input);
@@ -61,7 +61,7 @@ export default function SBrowse() {
 
             let c = filteredChapters[0].courseTitle;
             console.log(c);
-            const cresponse = await axios.get('http://localhost:3000/auth/courses');
+            const cresponse = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
             const filteredCourses = cresponse.data.filter(course => course.title === c);
 
             setCourses(filteredCourses);
