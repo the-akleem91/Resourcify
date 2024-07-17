@@ -17,7 +17,7 @@ import { Course } from './models/Courses.js';
 
 // Initialize environment variables
 dotenv.config();
-
+console.log(process.env.MONGODB_URL);
 // Create express app
 const app = express();
 
