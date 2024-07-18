@@ -1,5 +1,5 @@
 import {React , useState} from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import {
   Box,
   Flex,
@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-        const response = await Axios.post('https://resourcify-qw1s.onrender.com/auth/signup', {
+        const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/signup', {
             username,
             email,
             password,
