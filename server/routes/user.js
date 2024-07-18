@@ -84,6 +84,10 @@ router.post('/', async (req, res) => {
         console.log("jihne vi tera raha dakaya");
         console.log("this req:  ", req.body);
         const { username, email, password , role} = req.body;
+        console.log("this username:  ", username);
+        console.log("this email:  ", email);
+        console.log("this password:  ", password);
+        console.log("this role:  ", role);
 
         if (!username || !email || !password || !role) {
             return res.status(400).json({ message: 'Please provide all required fields' });
@@ -100,6 +104,7 @@ router.post('/', async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log("this hashedpassword:  ", hashedPassword);
 
         const newUser = new User({
             username,
