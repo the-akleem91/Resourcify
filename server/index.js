@@ -69,7 +69,7 @@ const chapterUpload = upload.fields([{ name: 'notes' }, { name: 'video' }]);
 
 app.use('/auth/courses', courseUpload, CourseRouter);
 app.use('/chapters', chapterUpload, ChapterRouter);
-app.use('/auth', UserRouter);
+// app.use('/auth', UserRouter);
 app.use('/auth/*', UserRouter);
 // Routes
 app.post('/auth/courses', async (req, res) => {
