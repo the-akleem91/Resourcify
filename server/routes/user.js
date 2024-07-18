@@ -112,6 +112,7 @@ router.post('/', async (req, res) => {
             password: hashedPassword,
             role
         });
+        console.log("This is a newUser: ",newUser);
 
         await newUser.save();
         return res.status(201).json({ status: true, message: "Record registered" });
