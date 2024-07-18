@@ -82,6 +82,7 @@ router.post('/enroll', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         console.log("jihne vi tera raha dakaya");
+        console.log("this req:  ", req.body);
         const { username, email, password , role} = req.body;
 
         if (!username || !email || !password || !role) {
