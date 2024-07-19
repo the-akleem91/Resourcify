@@ -83,6 +83,7 @@ const Signup = () => {
             setError(response.data.message); // Set the error message from the response
         }
     } catch (error) {
+        console.log("this is err: ",error);
         console.error('Error signing up:', error);
         if (error.response) {
             console.error('Error response data:', error.response.data);
