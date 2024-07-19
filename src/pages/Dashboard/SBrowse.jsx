@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast, Avatar } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
@@ -17,8 +17,9 @@ export default function SBrowse() {
     const toast = useToast();
 
     const fetchUserDetails = async (username) => {
+        console.log(username);
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
             if (response.status === 200) {
                 setUserDetails(response.data);
             } else {
@@ -48,7 +49,7 @@ export default function SBrowse() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
 
                 if (userDetails) {
@@ -70,7 +71,7 @@ export default function SBrowse() {
 
         const fetchChapters = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 setChapters(response.data);
             } catch (error) {
                 toast({
@@ -95,7 +96,7 @@ export default function SBrowse() {
 
     const search = async () => {
         try {
-            const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+            const response = await axios.get('http://localhost:3000/chapters');
             const filteredChapters = response.data.filter(chapter => chapter.tags.map(tag => tag.toLowerCase()).includes(input));
 
             if (filteredChapters.length === 0) {
@@ -110,7 +111,7 @@ export default function SBrowse() {
             }
 
             const courseTitle = filteredChapters[0].courseTitle;
-            const cresponse = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+            const cresponse = await axios.get('http://localhost:3000/auth/courses');
             const filteredCourses = cresponse.data.filter(course => course.title === courseTitle);
 
             setCourses(filteredCourses);
@@ -147,7 +148,7 @@ export default function SBrowse() {
         console.log("this is courseId", courseId);
         
         try {
-            const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/enroll', { userId, courseId });
+            const response = await axios.post('http://localhost:3000/auth/enroll', { userId, courseId });
             if (response.status === 200) {
                 toast({
                     title: "Success",

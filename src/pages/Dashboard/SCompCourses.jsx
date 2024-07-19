@@ -12,7 +12,7 @@ export default function SCompCourses() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('https://resourcify-qw1s.onrender.com/auth/courses')
+        fetch('http://localhost:3000/auth/courses')
             .then(response => response.json())
             .then(data => setCourses(data))
             .catch(error => console.error('Error fetching courses:', error));

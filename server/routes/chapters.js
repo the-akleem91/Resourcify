@@ -6,11 +6,11 @@ const router = express.Router();
 // Create a new course
 router.post('/', async (req, res) => {
   try {
-    const { title, description, tags } = req.body;
+    const { title, description, tags , courseTitle} = req.body;
     const notes = req.files?.notes ? req.files.notes[0].path : null;
     const video = req.files?.video ? req.files.video[0].path : null;
 
-    const newCourse = new Chapters({ title, description, tags, notes, video });
+    const newCourse = new Chapters({ title, description, tags, notes, video, courseTitle });
     await newCourse.save();
 
     res.status(201).json(newCourse);

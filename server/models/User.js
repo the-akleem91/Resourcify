@@ -6,9 +6,10 @@ const UserSchema = new mongoose.Schema({
     description:{type: String},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true, unique: true},
-    role:{type: String, required:true, unique: true},
+    role:{type: String, required:true},
     avatar:{type: String, default:'#'},
     enrolledCourses: [{ type: String }],
+    myCourses: [{ type: String }],
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date }
 })

@@ -33,9 +33,37 @@ export default function RootLayout() {
       test = 1;
       break;
         
+    case '/educator':
+      test = 1;
+      break;
+
     case '/resetPassword/:token':
       test = 1;
       break;
+
+    case '/resetPassword/:token':
+      test = 1;
+      break;
+    
+    case '/resetPassword/:token':
+      test = 1;
+      break;  
+
+    case '/resetPassword/:token':
+        test = 1;
+      break;
+  
+    case '/resetPassword/:token':
+        test = 1;
+      break;
+  
+    case '/resetPassword/:token':
+        test = 1;
+      break;
+      
+    case '/resetPassword/:token':
+        test = 1;
+      break;          
 
     default:
       test = 0;

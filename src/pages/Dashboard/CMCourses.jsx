@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Img, Progress, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Button, Img, Progress, Text, useBreakpointValue } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import { ChakraProvider, Box, Flex, HStack, VStack, Tag , Avatar} from '@chakra-ui/react';
-import Sidebar from './Student-Components/sidebar';
+import Sidebar from './Creator-Components/sidebar';
 import { Icon } from '@chakra-ui/react';
-import { FiClock, FiCheckCircle } from 'react-icons/fi';
+import { MdLibraryAdd } from "react-icons/md";
+import { PiEyesFill } from "react-icons/pi";
 import { IoBookSharp } from 'react-icons/io5';
+import { MdLibraryBooks } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
-
-export default function SECourses() {
+export default function CMCourses() {
     const [courses, setCourses] = useState([]);
+    const [error, setError] = useState(null);
     const [userDetails, setUserDetails] = useState(null);
-    let d= useParams().uid;
-    console.log("id : ",d);
+    const navigate=useNavigate();
+    let d= useParams().id;
     const username= d;
+    const toast= useToast();
 
-    const fetchUserDetails = async (username) => {
+
+    const fetchUserDetails = async () => {
         try {
-            console.log("hello, are you here");
-            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
-                console.log('User details fetched successfully:', userDetails);
                 // Set the user details in the state
                 setUserDetails(userDetails);
             } else {
@@ -43,18 +46,18 @@ export default function SECourses() {
     useEffect(() => {
         fetchUserDetails(username);
     }, [username]);
-
-
-    const navigate = useNavigate();
+    
+    const C = userDetails?.myCourses;
+    
     useEffect(() => {
         const fetchCourses = async () => {
             try {
                 const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
-    
-                if (userDetails && userDetails.enrolledCourses) {
-                    const enrolledCourses = userDetails.enrolledCourses;
-                    const filteredCourses = allCourses.filter(course => enrolledCourses.includes(course.id));
+
+                if (C) {
+                    const myCourse = C;
+                    const filteredCourses = allCourses.filter(course => myCourse.includes(course.title));
                     setCourses(filteredCourses);
                 } else {
                     setCourses(allCourses);
@@ -69,18 +72,20 @@ export default function SECourses() {
                 });
             }
         };
-    
-        fetchCourses();
-    }, [userDetails]);
-    
-    
 
-    let c = courses[0];
-    console.log("this is courses", c); 
+        fetchCourses();
+        fetchUserDetails(username);
+    }, [username, C]);
+    
+    let c = courses;
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
 
     const handleCourseClick = (id) => {
         navigate(`/course/${id}`);
+    };
+
+    const handleAddCourse = () => {
+        navigate(`/edit-course/${username}`)
     };
 
     const handleAvatar = () => {
@@ -93,31 +98,36 @@ export default function SECourses() {
 
     return (
         <ChakraProvider>
-            <Flex>
+            <Flex h='100vh'>
                 <Sidebar />
                 <Box flex="1" p="4">
                     <HStack justifyContent='flex-end'>
                         <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
                     </HStack>
-                    <HStack spacing={4}>
-                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2}>
-                            <Box bg='orange.100' borderRadius='50%' h={10} w={10}>
-                                <Icon as={FiClock} w={8} h={8} m={1} color='orange'></Icon>
-                            </Box>
-                            <Box>
-                                <Text fontSize='20px' fontWeight='semibold'>Enrolled</Text>
-                                <Text>{courses.filter(course => !course.completed).length} Courses</Text>
-                            </Box>
+                    <HStack justifyContent='space-between'>
+                        <HStack spacing={4} w="50%">
+                            <HStack border='3px solid gray' w='50%' borderRadius='10px' p={2}>
+                                <Box bg='orange.100' borderRadius='50%' h={10} w={10}>
+                                    <Icon as={MdLibraryBooks} w={8} h={8} m={1} color='orange'></Icon>
+                                </Box>
+                                <Box>
+                                    <Text fontSize='20px' fontWeight='semibold'>Your Courses</Text>
+                                    <Text>{courses.filter(course => !course.completed).length} Courses</Text>
+                                </Box>
+                            </HStack>
+                            <HStack border='3px solid gray' w='50%' borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer" >
+                                <Box bg='green.100' borderRadius='50%' h={10} w={10}>
+                                    <Icon as={PiEyesFill} w={8} h={8} m={1} color='green'></Icon>
+                                </Box>
+                                <Box>
+                                    <Text fontSize='20px' fontWeight='semibold' >Views</Text>
+                                    <Text>{courses.filter(course => course.completed).length} Views</Text>
+                                </Box>
+                            </HStack>
                         </HStack>
-                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer" >
-                            <Box bg='green.100' borderRadius='50%' h={10} w={10}>
-                                <Icon as={FiCheckCircle} w={8} h={8} m={1} color='green'></Icon>
-                            </Box>
-                            <Box>
-                                <Text fontSize='20px' fontWeight='semibold' >Completed</Text>
-                                <Text>{courses.filter(course => course.completed).length} Courses</Text>
-                            </Box>
-                        </HStack>
+                        <Button leftIcon={<MdLibraryAdd />} colorScheme='orange' variant='solid' onClick={handleAddCourse}>
+                            Add course
+                        </Button>
                     </HStack>
                     <Flex wrap='wrap' justifyContent='center'>
                         {courses.map(course => (
@@ -131,18 +141,22 @@ export default function SECourses() {
                                 borderRadius='10'
                                 boxShadow='lg'
                             >
-                                <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
+                                <Img src={course.thumbnail} alt={course.title} aspectRatio={3/4} h='150px' />
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                 <Text fontWeight='light' align='left'>{course.description}</Text>
                                 <HStack>
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                     </Box>
-                                    <Text>{course.chapterNo} Chapters</Text>
+                                    <Text>{course.chadl} Chapters</Text>
                                 </HStack>
-                                <Tag colorScheme='orange'>{course.status}</Tag>
-                                <Text>% completed</Text>
-                                <Progress size='xs' colorScheme='orange' value='50'></Progress>
+                                <HStack>
+                                    <HStack>
+                                        <Icon as={PiEyesFill} w={4} h={4} m={1} color='orange'></Icon>
+                                        <Text>Views</Text>
+                                    </HStack>
+                                    <Text>{course.view}</Text>
+                                </HStack>
                             </VStack>
                         ))}
                     </Flex>

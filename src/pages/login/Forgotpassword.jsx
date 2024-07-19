@@ -10,7 +10,7 @@ export default function Forgotpassword() {
 
     const handleForgotPassword = async () => {
         try {
-            const response = await Axios.post('https://resourcify-qw1s.onrender.com/auth/forgotpassword', { email });
+            const response = await Axios.post('http://localhost:3000/auth/forgotpassword', { email });
             if (response.status === 200) {
                 alert("Check your email for reset password link");
                 navigate('/login');

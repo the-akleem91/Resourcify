@@ -32,7 +32,7 @@ const Profile = () => {
 
   const fetchUserDetails = async (username) => {
     try {
-      const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+      const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
       if (response.status === 200) {
         const userDetails = response.data;
         setUserDetails(userDetails);
@@ -73,7 +73,7 @@ const Profile = () => {
     formData.append('username', username);
 
     try {
-      const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/upload-avatar', formData, {
+      const response = await axios.post('http://localhost:3000/auth/upload-avatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -96,7 +96,7 @@ const Profile = () => {
 
         // Ensure at least one field is present
         if (Object.keys(updateData).length > 0) {
-            axios.put('https://resourcify-qw1s.onrender.com/auth/update', updateData)
+            axios.put('http://localhost:3000/auth/update', updateData)
                 .then(response => {
                     // Handle successful update
                     console.log('User updated successfully:', response.data);

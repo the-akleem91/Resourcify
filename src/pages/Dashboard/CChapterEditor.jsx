@@ -23,8 +23,13 @@ import { TbLayout2 } from "react-icons/tb";
 import { MdOutlineModeEdit, MdOutlineVideoLibrary, MdDelete } from "react-icons/md";
 import { FaFileLines } from "react-icons/fa6";
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CChapterEditor() {
+    const  {id, title} = useParams();
+    const navigate = useNavigate();
+    console.log("this is id",id);
+    console.log("this is title",title);
     const [file, setFile] = useState();
     const [chapterTitle, setChapterTitle] = useState('');
     const [chapterDescription, setChapterDescription] = useState('');
@@ -75,6 +80,7 @@ export default function CChapterEditor() {
 
     const handlePublish = async () => {
         const formData = new FormData();
+        formData.append('courseTitle', title);
         formData.append('title', chapterTitle);
         formData.append('description', chapterDescription);
         formData.append('tags', JSON.stringify(tagList)); // Assuming tagList is an array of strings
@@ -83,7 +89,7 @@ export default function CChapterEditor() {
         if (videoLectures) formData.append('video', videoLectures);
     
         try {
-            const response = await axios.post('https://resourcify-qw1s.onrender.com/chapters', formData, {
+            const response = await axios.post('http://localhost:3000/chapters', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -97,6 +103,8 @@ export default function CChapterEditor() {
                 duration: 5000,
                 isClosable: true,
             });
+
+            navigate(`/edit-course/${id}/${title}`);
     
             // Reset the form (optional)
             setChapterTitle('');
@@ -141,6 +149,12 @@ export default function CChapterEditor() {
                                     </Box>
                                     <Text fontSize='25px' fontWeight='semibold'>Customize your Chapter</Text>
                                 </HStack>
+                                <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'  align="left">
+                                    <HStack w='100%' justifyContent='space-between'>
+                                        <Text fontWeight='semibold'>Course Title</Text>
+                                    </HStack>
+                                    <Text>{title}</Text>
+                                </VStack>
                                 <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
                                     <HStack w='100%' justifyContent='space-between'>
                                         <Text fontWeight='semibold'>Chapter Title</Text>

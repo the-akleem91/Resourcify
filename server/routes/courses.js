@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/auth/courses", upload.single("image"), async (req, res) => {
+app.post("/courses", upload.single("image"), async (req, res) => {
   console.log("console req body",req.body);
   const imageName = req.file.filename;
   console.log(imageName);
@@ -28,6 +28,30 @@ app.post("/auth/courses", upload.single("image"), async (req, res) => {
     res.status(200).json({ status: "ok" });
   } catch (error) {
     res.status(500).json({ status: error });
+  }
+});
+
+app.post('/course', async (req, res) => {
+  const { title } = req.body;
+
+  if (!title) {
+      return res.status(400).json({ message: 'Course title is required.' });
+  }
+
+  try {
+      const course = new Course({
+          title,
+          description: '', // Provide default value
+          thumbnail: '', // Provide default value
+          tags: [], // Provide default value
+          chapters: [] // Provide default value
+      });
+
+      await course.save();
+      res.status(201).json({ message: 'Course title added successfully.', course });
+  } catch (error) {
+      console.error('Error adding course:', error);
+      res.status(500).json({ message: 'An error occurred while adding the course title.' });
   }
 });
 

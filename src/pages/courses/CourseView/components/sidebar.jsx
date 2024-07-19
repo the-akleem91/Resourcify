@@ -19,12 +19,13 @@ export default function Sidebar() {
 
 
   const [userDetails, setUserDetails] = useState(null);
-  let d= useParams().id;
+  let d= useParams().uid;
   const username= d;
 
-    const fetchUserDetails = async (username) => {
+    const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users`);
+            console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
                 console.log('User details fetched successfully:', userDetails);
@@ -48,7 +49,11 @@ export default function Sidebar() {
     }, [username]);
 
     const handleExplore = () => {
-        navigate(`/${username}/student-browse`);
+      navigate(`/${username}/student-browse`);
+  };
+
+    const handleDashboard = () => {
+        navigate(`/student-courses/${username}/enrolled`);
     };
 
 
@@ -81,7 +86,7 @@ export default function Sidebar() {
               spacing={4}
             >
               <Icon as={MdSpaceDashboard} boxSize={iconSize} />
-              <NavLink cursor="pointer" to='/student-courses/enrolled'>Dashboard</NavLink>
+              <NavLink cursor="pointer" onClick={handleDashboard}>Dashboard</NavLink>
             </HStack>
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}

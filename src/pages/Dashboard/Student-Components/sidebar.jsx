@@ -22,9 +22,10 @@ export default function Sidebar() {
   let d= useParams().uid;
   const username= d;
 
-    const fetchUserDetails = async (username) => {
+    const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users`);
+            console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
                 console.log('User details fetched successfully:', userDetails);
@@ -47,17 +48,17 @@ export default function Sidebar() {
         fetchUserDetails(username);
     }, [username]);
 
-    const handleDashboard = () => {
+    const handleExplore = () => {
       navigate(`/${username}/student-browse`);
   };
 
-    const handleExplore = () => {
+    const handleDashboard = () => {
         navigate(`/student-courses/${username}/enrolled`);
     };
 
 
   return (
-    <Box>
+    <Box h='100%'>
       <Box h='100%'>
         <Box display={{ base: "block", md: "none" }} h='100%' p="4">
           <Button onClick={isOpen ? onClose : onOpen}>

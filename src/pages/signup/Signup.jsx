@@ -36,7 +36,7 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault(); // Prevent form from submitting
-    
+
     // Define regex patterns for validation
     const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-        const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/signup', {
+        const response = await axios.post('http://localhost:3000/auth/signup', {
             username,
             email,
             password,
@@ -77,13 +77,12 @@ const Signup = () => {
             if (role === 'Student') {
                 navigate(`/student-courses/${username}/enrolled`);
             } else if (role === 'Teacher') {
-                navigate('/edit-course');
+                navigate(`/dashboard/${username}`);
             }
         } else {
             setError(response.data.message); // Set the error message from the response
         }
     } catch (error) {
-        console.log("this is err: ",error);
         console.error('Error signing up:', error);
         if (error.response) {
             console.error('Error response data:', error.response.data);
@@ -91,6 +90,7 @@ const Signup = () => {
         }
     }
 };
+
 
   return (
 

@@ -7,15 +7,12 @@ const courseSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
   },
   thumbnail: {
     type: String,
-    required: false
   },
   tags: {
     type: [String],
-    required: true
   },
   chapters: [{
     type: mongoose.Schema.Types.ObjectId,

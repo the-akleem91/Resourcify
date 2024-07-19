@@ -28,7 +28,7 @@ function ChapterView() {
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
@@ -38,7 +38,7 @@ function ChapterView() {
     
         async function fetchCourses(courseId) {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const response = await axios.get('http://localhost:3000/auth/courses');
                 const filteredCourses = response.data.filter(course => course._id === courseId);
                 setCourses(filteredCourses);
             } catch (error) {
@@ -53,7 +53,7 @@ function ChapterView() {
         }
         async function fetchChapter(courseId) {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 const filteredChapter = response.data.filter(chapter => chapter._id === chid);
                 setChapter(filteredChapter);
             } catch (error) {
@@ -80,7 +80,7 @@ function ChapterView() {
         try {
           console.log('Video has ended');
           console.log(`Sending request to mark chapter ${chapterId} as completed`);
-          await axios.post(`https://resourcify-qw1s.onrender.com/chapters/complete`, { chapterId });   // Include chapterId in the URL
+          await axios.post(`http://localhost:3000/chapters/complete`, { chapterId });   // Include chapterId in the URL
           console.log('Completion status saved to MongoDB');
         } catch (error) {
           console.error('Error saving completion status:', error);

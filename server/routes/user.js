@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
+import mongoose from 'mongoose';
 import path from 'path';
 
 const router = express.Router();
@@ -49,6 +50,41 @@ router.put('/update', async (req, res) => {
     }
 });
 
+router.post('/users/myCourses', async (req, res) => {
+    const { userId, title } = req.body;
+    console.log("this is userId: ", userId);
+    console.log("this is title: ", title);
+
+    if (!userId || !title) {
+        console.log("Process going onn1");
+        return res.status(400).json({ error: "User ID and course title are required." });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        console.log("Process going onn2");
+        return res.status(400).json({ error: "Invalid User ID format." });
+    }
+
+    try {
+        // Find the user by ID and update their myCourses field
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $push: { myCourses: title } },
+            { new: true, useFindAndModify: false }
+        );
+
+        console.log(user);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        res.status(200).json({ message: "Course title added to myCourses successfully." });
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while adding the course title." });
+    }
+});
+
 
 router.post('/enroll', async (req, res) => {
     const { userId, courseId } = req.body;
@@ -83,7 +119,7 @@ router.post('/', async (req, res) => {
     try {
         console.log("jihne vi tera raha dakaya");
         console.log("this req:  ", req.body);
-        const { username, email, password , role} = req.body;
+        const { username, email, password, role } = req.body;
         console.log("this username:  ", username);
         console.log("this email:  ", email);
         console.log("this password:  ", password);
@@ -112,16 +148,17 @@ router.post('/', async (req, res) => {
             password: hashedPassword,
             role
         });
-        console.log("This is a newUser: ",newUser);
+        console.log("This is a newUser: ", newUser);
 
-        await newUser.save();
+        await newUser.save(); // Save the user without a callback
+        console.log("User saved successfully");
         return res.status(201).json({ status: true, message: "Record registered" });
     } catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error("Error during user registration:", error);
+        return res.status(500).json({ message: "Internal server error", error: error.message });
     }
 });
-
-router.get('/user/:userId', async (req, res) => {
+router.get('/users/:userId', async (req, res) => {
     try {
         const username = req.params.userId;
         console.log(`Fetching details for user with username: ${username}`);
@@ -133,6 +170,7 @@ router.get('/user/:userId', async (req, res) => {
             console.log("i have send data to frontend");
             res.status(200).json(user);
         } else {
+            console.log("User not found");
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {

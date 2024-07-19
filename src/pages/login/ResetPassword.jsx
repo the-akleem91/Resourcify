@@ -13,7 +13,7 @@ function ResetPassword() {
     console.log('Sending token:', token);
     console.log('Sending password:', password);
     try {
-      const response = await Axios.post(`https://resourcify-qw1s.onrender.com/auth/reset-password/${token}`, { password });
+      const response = await Axios.post(`http://localhost:3000/auth/reset-password/${token}`, { password });
       if (response.data.status) {
         console.log('Password changed successfully');
         navigate('/login');
