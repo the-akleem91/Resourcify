@@ -27,28 +27,41 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Endpoint for uploading avatar
-router.put('/update', async (req, res) => {
+router.put('/:useid/update', async (req, res) => {
     const { avatar, name, description } = req.body;
+    const useid = req.params.useid;
+
+    console.log("Request Body:", req.body);
 
     if (!avatar && !name && !description) {
         return res.status(400).json({ error: 'At least one of avatar, name, or description is required' });
     }
 
     try {
-        const userId = req.user.id; // Assuming you have user ID from authentication middleware
-        const updateFields = {};
+        // Ensure this is correctly populated
+        if (!useid) {
+            return res.status(400).json({ error: 'User ID not found' });
+        }
 
+        const updateFields = {};
         if (avatar) updateFields.avatar = avatar;
         if (name) updateFields.name = name;
         if (description) updateFields.description = description;
+        console.log("Update Fields:", updateFields);
 
-        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateFields }, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(useid, { $set: updateFields }, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
+        console.log("Updated User:", updatedUser);
         res.json(updatedUser);
     } catch (error) {
+        console.error("Error during update:", error);
         res.status(500).json({ error: 'Server error' });
     }
 });
+
 
 router.post('/users/myCourses', async (req, res) => {
     const { userId, title } = req.body;
@@ -179,6 +192,34 @@ router.get('/users/:userId', async (req, res) => {
     }
 });
 
+router.get('/users/id/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        console.log(`Fetching details for user with ID: ${userId}`);
+        
+        // Ensure the userId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            console.log("Invalid user ID format");
+            return res.status(400).json({ message: 'Invalid user ID format' });
+        }
+        
+        // Use findById to find the user by their ObjectId
+        const user = await User.findById(userId);
+        
+        if (user) {
+            console.log("I have sent data to frontend");
+            res.status(200).json(user);
+        } else {
+            console.log("User not found");
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
 router.put('/users/:id/completedChapters', async (req, res) => {
     const { id } = req.params;  // _id of the user
     const { chid } = req.body;
@@ -193,6 +234,29 @@ router.put('/users/:id/completedChapters', async (req, res) => {
   
       if (user) {
         res.status(200).send(`Chapter ${chid} marked as completed for user with ID ${id}`);
+      } else {
+        res.status(404).send(`User with ID ${id} not found`);
+      }
+    } catch (error) {
+      console.error('Error updating completed chapters:', error);
+      res.status(500).send('Error updating completed chapters');
+    }
+  });
+
+  router.put('/users/:id/completedCourses', async (req, res) => {
+    const { id } = req.params;  // _id of the user
+    const { cid } = req.body;
+  
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,  // Use _id to find the user
+        { $addToSet: { completedCourses: cid } },  // Use $addToSet to avoid duplicates
+        { new: true }
+      );
+
+  
+      if (user) {
+        res.status(200).send(`Chapter ${cid} marked as completed for user with ID ${id}`);
       } else {
         res.status(404).send(`User with ID ${id} not found`);
       }

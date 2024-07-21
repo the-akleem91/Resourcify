@@ -24,7 +24,7 @@ export default function Sidebar() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth//users/id/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
@@ -44,17 +44,20 @@ export default function Sidebar() {
         }
     };
 
+    const useid= userDetails?.username;
+
     useEffect(() => {
         fetchUserDetails(username);
     }, [username]);
 
     const handleExplore = () => {
-      navigate(`/${username}/student-browse`);
+      navigate(`/${useid}/student-browse`);
   };
 
     const handleDashboard = () => {
-        navigate(`/student-courses/${username}/enrolled`);
+        navigate(`/student-courses/${useid}/enrolled`);
     };
+
 
 
   return (

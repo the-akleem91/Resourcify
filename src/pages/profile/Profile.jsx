@@ -27,12 +27,12 @@ const Profile = () => {
   const [description, setDescription] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const inputFileRef = useRef(null);
-  let d = useParams().id;
+  let d = useParams().uid;
   const username = d;
 
   const fetchUserDetails = async (username) => {
     try {
-      const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+      const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
       if (response.status === 200) {
         const userDetails = response.data;
         setUserDetails(userDetails);
@@ -73,7 +73,7 @@ const Profile = () => {
     formData.append('username', username);
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/upload-avatar', formData, {
+      const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/upload-avatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -86,6 +86,10 @@ const Profile = () => {
     }
   };
 
+  const useid=userDetails?._id;
+  const na=userDetails?.name;
+  const des=userDetails?.description;
+
   const handleEditClick = () => {
     if (isEditing) {
         // Prepare the data to be sent
@@ -93,13 +97,15 @@ const Profile = () => {
         if (avatar) updateData.avatar = avatar;
         if (name) updateData.name = name;
         if (description) updateData.description = description;
+        console.log("this is updated data: ",updateData);
 
         // Ensure at least one field is present
         if (Object.keys(updateData).length > 0) {
-            axios.put('http://localhost:3000/auth/update', updateData)
+            axios.put(`https://resourcify-qw1s.onrender.com/auth/${useid}/update`, updateData)
                 .then(response => {
                     // Handle successful update
                     console.log('User updated successfully:', response.data);
+                    window.location.reload();
                 })
                 .catch(error => {
                     // Handle errors
@@ -141,22 +147,25 @@ const Profile = () => {
                     onChange={(e) => setName(e.target.value)}
                     // Add description
                   />
+                ) : userDetails.name ? (
+                  na
                 ) : (
                   description || 'Add you name'
                 )}
               </Heading>
               <Text>@{userDetails.username} · he/him</Text>
-            </VStack>
+            </VStack>    
             <Text mt={2} textAlign="center">
               {isEditing ? (
                 <Input
                   placeholder="Add description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  // Add description
                 />
+              ) : userDetails.description ? (
+                des
               ) : (
-                description || 'No description added yet.'
+                'No description yet.'
               )}
             </Text>
             <HStack mt={4}>

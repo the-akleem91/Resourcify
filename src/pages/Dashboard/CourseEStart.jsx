@@ -20,7 +20,7 @@ export default function CourseEStart() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
@@ -61,7 +61,7 @@ export default function CourseEStart() {
     
         try {
             // Add course title to the courses
-            await axios.post('http://localhost:3000/courses/course', { title });
+            await axios.post('https://resourcify-qw1s.onrender.com/courses/course', { title });
     
             // Assuming you have access to the current user's ID
             const userId = user; // Replace with actual user ID logic
@@ -69,7 +69,7 @@ export default function CourseEStart() {
             console.log("this is title: ",title);
     
             // Add course title to the user's myCourses
-            await axios.post('http://localhost:3000/auth/users/myCourses', { userId, title });
+            await axios.post('https://resourcify-qw1s.onrender.com/auth/users/myCourses', { userId, title });
     
             toast({
                 title: "Success!",

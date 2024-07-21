@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async () => {
     console.log('Ya i am in ');
     try {
-      const response = await Axios.post('http://localhost:3000/auth/login', {
+      const response = await Axios.post('https://resourcify-qw1s.onrender.com/auth/login', {
         email,
         password,
       });

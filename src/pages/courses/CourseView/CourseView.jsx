@@ -22,7 +22,7 @@ function ChapterView() {
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
@@ -32,7 +32,7 @@ function ChapterView() {
 
         async function fetchCourses(courseId) {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 const filteredCourses = response.data.filter(course => course._id === courseId);
                 setCourses(filteredCourses);
             } catch (error) {
@@ -109,7 +109,7 @@ function ChapterView() {
                         >
                             <VStack align='left'>
                                 <Text>Course Content</Text>
-                                <Progress colorScheme='orange' size='xs' value={40} />
+                                <Progress colorScheme='orange' size='xs' value={0} />
                             </VStack>
                             {chapters.length > 0 ? (
                                 chapters.map((chapter, index) => (

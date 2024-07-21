@@ -4,6 +4,7 @@ import {
     Button, HStack, VStack, Box, AspectRatio, Icon, Text, Flex, ChakraProvider, Progress, Tag, TagLeftIcon, TagLabel, useToast
 } from '@chakra-ui/react';
 import { FaBackward, FaRegCircleDot } from 'react-icons/fa6';
+import { SiTicktick } from "react-icons/si";
 import { BsFilePdfFill, BsTextParagraph } from 'react-icons/bs';
 import CommentSection from './components/CommentSection';
 import { MdOutlinePlayCircle } from "react-icons/md";
@@ -17,14 +18,44 @@ function ChapterView() {
     const [courses, setCourses] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [chapter, setChapter] = useState([]);
+    const [userDetails, setUserDetails] = useState([]);
     const toast = useToast();
     const chaptertitle = chid;
     
+    
+
+        
+
+    const fetchUserDetails = async () => {
+        try {
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth//users/id/${uid}`);
+            console.log(response);
+            if (response.status === 200) {
+                const userDetails = response.data;
+                console.log('User details fetched successfully:', userDetails);
+                // Set the user details in the state
+                setUserDetails(userDetails);
+            } else {
+                console.error('Failed to fetch user details:', response.data.message);
+                setError(response.data.message); // Set the error message from the response
+            }
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+            if (error.response) {
+                console.error('Error response data:', error.response.data);
+                setError(error.response.data.message);
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchUserDetails(uid);
+    }, [uid]);
 
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
@@ -34,7 +65,7 @@ function ChapterView() {
     
         async function fetchCourses(courseId) {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 const filteredCourses = response.data.filter(course => course._id === courseId);
                 setCourses(filteredCourses);
             } catch (error) {
@@ -49,7 +80,7 @@ function ChapterView() {
         }
         async function fetchChapter(courseId) {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 const filteredChapter = response.data.filter(chapter => chapter._id === chid);
                 setChapter(filteredChapter);
             } catch (error) {
@@ -74,27 +105,38 @@ function ChapterView() {
 
     const navigateToChapterDetails = (chapterTitle) => {
         navigate(`/course/${cid}/${chapterTitle}`);
+        window.location.reload();
     };
 
+
+    const useid=userDetails?.username;
     const handleChapterComplete = async () => {
         try {
             console.log('Marking chapter as completed');
             console.log(`Sending request to mark chapter ${chid} as completed for user ${uid}`);
             
-            await axios.put(`http://localhost:3000/auth/users/${uid}/completedChapters`, { chid });
+            await axios.put(`https://resourcify-qw1s.onrender.com/auth/users/${uid}/completedChapters`, { chid });
             
             const currentIndex = getChapterIndex(chid, chapters);
             const nextChapterId = chapters[currentIndex + 1]?._id || null;
 
             if (nextChapterId) {
                 navigate(`/course/${uid}/${cid}/${nextChapterId}`);
+                window.location.reload();
             } else {
-                navigate(`/student-courses/${uid}/completed`);
+                await axios.put(`https://resourcify-qw1s.onrender.com/auth/users/${uid}/completedCourses`, { cid });
+                navigate(`/student-courses/${useid}/completed`);
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error saving completion status:', error);
         }
     };
+
+    const filteredChap = chapters.filter(chapters => userDetails.completedChapter?.includes(chapters._id));
+    const total_no_of_chapters=chapters.length;
+    const no_of_completed_chapters=filteredChap.length;
+    const percentage_completed=(no_of_completed_chapters/total_no_of_chapters)*100;
 
     return (
         <ChakraProvider>
@@ -140,7 +182,7 @@ function ChapterView() {
                         >
                             <VStack align='left'>
                                 <Text>Course Content</Text>
-                                <Progress colorScheme='orange' size='xs' value={40} />
+                                <Progress colorScheme='orange' size='xs' value={percentage_completed} />
                             </VStack>
                             {chapters.length > 0 ? (
                                 chapters.map((chapter, index) => (
@@ -155,7 +197,13 @@ function ChapterView() {
                                         onClick={() => navigateToChapterDetails(chapter.title)}
                                     >
                                         <HStack>
-                                            <Icon as={chaptertitle === chapter.title ? MdOutlinePlayCircle : FaRegCircleDot} h={5} w={5} />
+                                            <Icon as={
+                                                chaptertitle === chapter.title
+                                                    ? MdOutlinePlayCircle
+                                                    : userDetails.completedChapter.includes(chapter._id)
+                                                        ? SiTicktick
+                                                        : FaRegCircleDot
+                                            } h={5} w={5} />
                                             <Text fontWeight='semibold'>{chapter.title}</Text>
                                         </HStack>
                                         <HStack spacing={4}>

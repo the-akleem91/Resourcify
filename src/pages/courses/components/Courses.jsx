@@ -119,7 +119,7 @@ function CourseCard({ title, description, courseId, images, curriculum }) {
 
 export const taskLoader = async () => {
   try {
-    const res = await fetch('http://localhost:3000/courses');
+    const res = await fetch('https://resourcify-qw1s.onrender.com/courses');
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }

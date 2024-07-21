@@ -40,7 +40,7 @@ export default function CourseEditor() {
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
                 const filteredChapters = response.data.filter(chapter => chapter.courseTitle === courseTitle);
                 setChapterList(filteredChapters);
             } catch (error) {
@@ -83,7 +83,7 @@ export default function CourseEditor() {
 
     const deleteChapterByTitle = async (title) => {
         try {
-          const response = await axios.delete(`http://localhost:3000/chapters/by-title/${title}`);
+          const response = await axios.delete(`https://resourcify-qw1s.onrender.com/chapters/by-title/${title}`);
           console.log('Chapter deleted:', response.data);
         } catch (err) {
           console.error('Error deleting chapter:', err.message);
@@ -107,7 +107,7 @@ export default function CourseEditor() {
         };
     
         try {
-            const response = await axios.put('http://localhost:3000/courses', courseData, {
+            const response = await axios.put('https://resourcify-qw1s.onrender.com/courses', courseData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

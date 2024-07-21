@@ -40,7 +40,7 @@ export default function CMCourses() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 // Set the user details in the state
@@ -67,7 +67,7 @@ export default function CMCourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 const allCourses = response.data;
 
                 if (C) {

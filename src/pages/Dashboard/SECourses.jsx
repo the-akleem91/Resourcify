@@ -17,7 +17,7 @@ export default function SECourses() {
 
     const fetchUserDetails = async (username) => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
+            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 setUserDetails(userDetails);
@@ -41,7 +41,7 @@ export default function SECourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
+                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
                 const allCourses = response.data;
 
                 if (userDetails && userDetails.enrolledCourses) {
@@ -69,8 +69,12 @@ export default function SECourses() {
         navigate(`/profile/${username}`);
     };
 
+    
+    const ec = userDetails?.enrolledCourses.length;
+    const cc = userDetails?.completedCourses.length;
+
     const handleCardClick = () => {
-        navigate('/student-courses/completed');
+        navigate(`/student-courses/${username}/completed`);
     };
 
     return (
@@ -82,13 +86,13 @@ export default function SECourses() {
                         <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
                     </HStack>
                     <HStack spacing={4}>
-                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2}>
+                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2} bg="gray.100">
                             <Box bg='orange.100' borderRadius='50%' h={10} w={10}>
                                 <Icon as={FiClock} w={8} h={8} m={1} color='orange'></Icon>
                             </Box>
                             <Box>
                                 <Text fontSize='20px' fontWeight='semibold'>Enrolled</Text>
-                                <Text>{courses.filter(course => !course.completed).length} Courses</Text>
+                                <Text>{ec} Courses</Text>
                             </Box>
                         </HStack>
                         <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer">
@@ -97,7 +101,7 @@ export default function SECourses() {
                             </Box>
                             <Box>
                                 <Text fontSize='20px' fontWeight='semibold'>Completed</Text>
-                                <Text>{courses.filter(course => course.completed).length} Courses</Text>
+                                <Text>{cc} Courses</Text>
                             </Box>
                         </HStack>
                     </HStack>
