@@ -22,6 +22,21 @@ export default function CMCourses() {
     const username= d;
     const toast= useToast();
 
+    const handleCourseClick = (title) => {
+        navigate(`/see-course/${u}/${title}`);
+    };
+
+    const handleAddCourse = () => {
+        navigate(`/edit-course/${username}`)
+    };
+
+    const handleAvatar = () => {
+        navigate(`/profile/${username}`);
+    };
+
+    const handleCardClick = () => {
+        navigate('/student-courses/completed');
+    };
 
     const fetchUserDetails = async () => {
         try {
@@ -78,23 +93,15 @@ export default function CMCourses() {
     }, [username, C]);
     
     let c = courses;
+    let u = userDetails?._id;
+    console.log("This is u",u);
+
+    const f= courses[0]?.chapters?.length;
+
+
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
 
-    const handleCourseClick = (id) => {
-        navigate(`/course/${id}`);
-    };
-
-    const handleAddCourse = () => {
-        navigate(`/edit-course/${username}`)
-    };
-
-    const handleAvatar = () => {
-        navigate(`/profile/${username}`);
-    };
-
-    const handleCardClick = () => {
-        navigate('/student-courses/completed');
-    };
+    
 
     return (
         <ChakraProvider>
@@ -129,7 +136,7 @@ export default function CMCourses() {
                             Add course
                         </Button>
                     </HStack>
-                    <Flex wrap='wrap' justifyContent='center'>
+                    <Flex wrap='wrap' justifyContent='center' >
                         {courses.map(course => (
                             <VStack
                                 key={course._id} // Assuming your course model has _id as the unique identifier
@@ -148,7 +155,7 @@ export default function CMCourses() {
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                     </Box>
-                                    <Text>{course.chadl} Chapters</Text>
+                                    <Text>{f} Chapters</Text>
                                 </HStack>
                                 <HStack>
                                     <HStack>
@@ -157,6 +164,7 @@ export default function CMCourses() {
                                     </HStack>
                                     <Text>{course.view}</Text>
                                 </HStack>
+                                <Button colorScheme='orange' onClick={() => handleCourseClick(course?._id)}>See Course</Button>
                             </VStack>
                         ))}
                     </Flex>

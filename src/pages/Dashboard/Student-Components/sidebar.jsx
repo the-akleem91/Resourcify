@@ -24,7 +24,7 @@ export default function Sidebar() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
@@ -58,7 +58,7 @@ export default function Sidebar() {
 
 
   return (
-    <Box h='100%'>
+    <Box h="auto">
       <Box h='100%'>
         <Box display={{ base: "block", md: "none" }} h='100%' p="4">
           <Button onClick={isOpen ? onClose : onOpen}>

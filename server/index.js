@@ -93,7 +93,7 @@ app.put('/courses', async (req, res) => {
       console.log('Received a request to /auth/courses');
       console.log('Request body:', req.body);
 
-      const { title, description, tags, chapters, thumbnail } = req.body;
+      const { title, description, tags, chapters, thumbnail, introVideo } = req.body;
 
       // Validate required fields
       if (!title || !description) {
@@ -112,6 +112,7 @@ app.put('/courses', async (req, res) => {
               tags,
               chapters,
               thumbnail: thumbnail ? thumbnail.toString() : '', // Ensure thumbnail is a string
+              introVideo
           });
       } else {
           console.log('Course found, updating existing course');
@@ -119,6 +120,7 @@ app.put('/courses', async (req, res) => {
           course.tags = tags;
           course.chapters = chapters;
           course.thumbnail = thumbnail ? thumbnail.toString() : ''; // Ensure thumbnail is a string
+          course.introVideo = introVideo;
       }
 
       await course.save();
@@ -145,6 +147,7 @@ app.use(cors());
 app.use('/auth/courses', CourseRouter);
 app.use('/courses', courseUpload, CourseRouter);
 app.use('/chapters', chapterUpload, ChapterRouter);
+app.use('/chapters', ChapterRouter);
 app.use('/auth', UserRouter);
 app.use('/auth/*', UserRouter);
 

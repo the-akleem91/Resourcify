@@ -179,6 +179,28 @@ router.get('/users/:userId', async (req, res) => {
     }
 });
 
+router.put('/users/:id/completedChapters', async (req, res) => {
+    const { id } = req.params;  // _id of the user
+    const { chid } = req.body;
+  
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,  // Use _id to find the user
+        { $addToSet: { completedChapter: chid } },  // Use $addToSet to avoid duplicates
+        { new: true }
+      );
+
+  
+      if (user) {
+        res.status(200).send(`Chapter ${chid} marked as completed for user with ID ${id}`);
+      } else {
+        res.status(404).send(`User with ID ${id} not found`);
+      }
+    } catch (error) {
+      console.error('Error updating completed chapters:', error);
+      res.status(500).send('Error updating completed chapters');
+    }
+  });
 
 
 

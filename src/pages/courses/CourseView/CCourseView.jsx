@@ -11,29 +11,28 @@ import { CiClock1 } from 'react-icons/ci';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function ChapterView() {
-    const { uid, cid } = useParams();
-    const navigate = useNavigate();
+function CCourseView() {
+    const  {uid, cid}  = useParams(); 
+    const navigate = useNavigate(); // Destructure to get 'id' directly from useParams
     const [chapters, setChapters] = useState([]);
     const [courses, setCourses] = useState([]);
     const toast = useToast();
-    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('http://localhost:3000/chapters');
+                const response = await axios.get('https://localhost:3000/chapters');
                 const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         }
-
-        async function fetchCourses(courseId) {
+    
+        async function fetchCourses(cid) {
             try {
-                const response = await axios.get('http://localhost:3000/auth/courses');
-                const filteredCourses = response.data.filter(course => course._id === courseId);
+                const response = await axios.get('https://localhost:3000/auth/courses');
+                const filteredCourses = response.data.filter(course => course._id === cid);
                 setCourses(filteredCourses);
             } catch (error) {
                 toast({
@@ -54,20 +53,9 @@ function ChapterView() {
         navigate(`/course/${uid}/${cid}/${id}`);
     };
 
-    const handleVideoEnd = () => {
-        setShowPopup(true);
-    };
-
-    console.log("this is my chapters",chapters[0]?._id)
-
-    const handleNextChapter = () => {
-        setShowPopup(false);
-        navigateToChapterDetails(chapters[0]?._id); // Assuming the next chapter is the second item in the array
-    };
-
     return (
         <ChakraProvider>
-            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }} overflowX='hidden'>
+            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }}>
                 <Sidebar />
                 <VStack
                     h="100%"
@@ -93,12 +81,7 @@ function ChapterView() {
                             p={{ base: '2', md: '5' }}
                         >
                             <AspectRatio ratio={16 / 9}>
-                                <video
-                                    src="../../img/Eduvid.mp4"
-                                    controls
-                                    onEnded={handleVideoEnd}
-                                    style={{ width: '100%' }}
-                                />
+                                <iframe src="../../img/Eduvid.mp4" frameBorder="1" allowFullScreen title="Course Video" />
                             </AspectRatio>
                         </Box>
                         <Box
@@ -166,27 +149,8 @@ function ChapterView() {
                     </Box>
                 </VStack>
             </Flex>
-
-            {showPopup && (
-                <Box
-                    position="fixed"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                    bg="white"
-                    p={8}
-                    borderRadius={8}
-                    boxShadow="lg"
-                    textAlign="center"
-                    zIndex={1000}
-                >
-                    <Text fontSize="2xl" mb={4}>Intro Complete</Text>
-                    <Text fontSize="md" mb={6}>You are done with the intro, now let's start!</Text>
-                    <Button colorScheme="orange" onClick={handleNextChapter}>Start Next Chapter</Button>
-                </Box>
-            )}
         </ChakraProvider>
     );
 }
 
-export default ChapterView;
+export default CCourseView;

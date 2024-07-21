@@ -12,18 +12,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ChapterView() {
-    const  {uid, cid, chid}  = useParams(); 
+    const { uid, cid, chid } = useParams(); 
     const navigate = useNavigate();
-    const title = useParams(); // Destructure to get 'title' directly
     const [courses, setCourses] = useState([]);
     const [chapters, setChapters] = useState([]);
     const [chapter, setChapter] = useState([]);
-    const toast= useToast();
-    const chaptertitle = title.id;
-    let chapterId;
-
-    console.log(chapterId);
-    let c;
+    const toast = useToast();
+    const chaptertitle = chid;
+    
 
     useEffect(() => {
         async function fetchChapters() {
@@ -71,32 +67,38 @@ function ChapterView() {
         fetchChapters();
     }, [cid, courses, toast]);
 
-    
-    const navigateToChapterDetails = (chapterTitle) => {
-        navigate(`/course/${c}/${chapterTitle}`);
+    // Function to get the index of the current chapter
+    const getChapterIndex = (chapterId, chaptersArray) => {
+        return chaptersArray.findIndex(chapter => chapter._id === chapterId);
     };
 
-    const handleVideoComplete = async (chapterId) => {  // Accept chapterId as a parameter
-        try {
-          console.log('Video has ended');
-          console.log(`Sending request to mark chapter ${chapterId} as completed`);
-          await axios.post(`http://localhost:3000/chapters/complete`, { chapterId });   // Include chapterId in the URL
-          console.log('Completion status saved to MongoDB');
-        } catch (error) {
-          console.error('Error saving completion status:', error);
-        }
-      };
+    const navigateToChapterDetails = (chapterTitle) => {
+        navigate(`/course/${cid}/${chapterTitle}`);
+    };
 
-    
-    if (chapter && chapter.length > 0) {
-        chapterId = chapter[0]._id;
-    } else {
-        console.error('Chapter or chapter[0] is undefined or empty.');
-    }
+    const handleChapterComplete = async () => {
+        try {
+            console.log('Marking chapter as completed');
+            console.log(`Sending request to mark chapter ${chid} as completed for user ${uid}`);
+            
+            await axios.put(`http://localhost:3000/auth/users/${uid}/completedChapters`, { chid });
+            
+            const currentIndex = getChapterIndex(chid, chapters);
+            const nextChapterId = chapters[currentIndex + 1]?._id || null;
+
+            if (nextChapterId) {
+                navigate(`/course/${uid}/${cid}/${nextChapterId}`);
+            } else {
+                navigate(`/student-courses/${uid}/completed`);
+            }
+        } catch (error) {
+            console.error('Error saving completion status:', error);
+        }
+    };
 
     return (
         <ChakraProvider>
-            <Flex h="100vh" flexDirection={{ base: 'column', lg: 'row' }}>
+            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }}>
                 <Sidebar/>
                 <VStack
                     h="100%"
@@ -121,14 +123,13 @@ function ChapterView() {
                             my={{ base: '4', md: '10' }}
                             p={{ base: '2', md: '5' }}
                         >
-                                <AspectRatio ratio={16 / 9} >
-                                    <video
-                                        src='../../img/Eduvid.mp4'
-                                        controls
-                                        onEnded={() => handleVideoComplete(chapterId)} 
-                                    />
-                                </AspectRatio>
-                           
+                            <AspectRatio ratio={16 / 9}>
+                                <video
+                                    src='../../../../public/img/Eduvid.mp4'
+                                    controls
+                                    onEnded={handleChapterComplete} 
+                                />
+                            </AspectRatio>
                         </Box>
 
                         <Box
@@ -190,7 +191,7 @@ function ChapterView() {
                                         Resources & Attachments
                                     </Text>
                                 </HStack>
-                                <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100" >
+                                <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100">
                                     {chapter.notes}
                                 </Box>
                             </Box>

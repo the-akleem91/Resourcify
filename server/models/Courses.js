@@ -17,7 +17,13 @@ const courseSchema = new mongoose.Schema({
   chapters: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Chapters'
-  }]
+  }],
+  introVideo: {
+    type: String,
+  },
+  views: {
+    type: String,
+  }
 });
 
 const Course = mongoose.model('Course', courseSchema);

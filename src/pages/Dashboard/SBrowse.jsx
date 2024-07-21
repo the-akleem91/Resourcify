@@ -12,14 +12,14 @@ export default function SBrowse() {
     const [input, setInput] = useState("");
     const [chapters, setChapters] = useState([]);
     const [userDetails, setUserDetails] = useState(null);
-    const { id: username } = useParams();
+    const { uid: username } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
 
     const fetchUserDetails = async (username) => {
         console.log(username);
         try {
-            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 setUserDetails(response.data);
             } else {
@@ -184,9 +184,9 @@ export default function SBrowse() {
     };
 
     return (
-        <ChakraProvider>
-            <Flex direction={{ base: 'column', md: 'row' }} overflowX='hidden'>
-                <Sidebar />
+        <Box h="auto">
+            <Flex h="100%" direction={{ base: 'column', md: 'row' }} overflowX='hidden'>
+                <Sidebar/>
                 <Box flex="1" p="4">
                     <HStack>
                         <InputGroup>
@@ -238,6 +238,6 @@ export default function SBrowse() {
                     </Flex>
                 </Box>
             </Flex>
-        </ChakraProvider>
+        </Box>
     );
 }

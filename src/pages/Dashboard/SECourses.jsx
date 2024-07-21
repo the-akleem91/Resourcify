@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Img, Progress, Text, useBreakpointValue } from '@chakra-ui/react';
-import { ChakraProvider, Box, Flex, HStack, VStack, Tag , Avatar} from '@chakra-ui/react';
+import { Img, Progress, Text, useBreakpointValue, ChakraProvider, Box, Flex, HStack, VStack, Tag, Avatar } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { Icon } from '@chakra-ui/react';
 import { FiClock, FiCheckCircle } from 'react-icons/fi';
@@ -9,32 +8,26 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-
-
 export default function SECourses() {
     const [courses, setCourses] = useState([]);
     const [userDetails, setUserDetails] = useState(null);
-    let d= useParams().uid;
-    console.log("id : ",d);
-    const username= d;
+    const [error, setError] = useState(null); // Error state to handle errors
+    let d = useParams().uid;
+    const username = d;
 
     const fetchUserDetails = async (username) => {
         try {
-            console.log("hello, are you here");
-            const response = await axios.get(`http://localhost:3000/auth/user/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
-                console.log('User details fetched successfully:', userDetails);
-                // Set the user details in the state
                 setUserDetails(userDetails);
             } else {
                 console.error('Failed to fetch user details:', response.data.message);
-                setError(response.data.message); // Set the error message from the response
+                setError(response.data.message);
             }
         } catch (error) {
             console.error('Error fetching user details:', error);
             if (error.response) {
-                console.error('Error response data:', error.response.data);
                 setError(error.response.data.message);
             }
         }
@@ -44,39 +37,28 @@ export default function SECourses() {
         fetchUserDetails(username);
     }, [username]);
 
-
     const navigate = useNavigate();
     useEffect(() => {
         const fetchCourses = async () => {
             try {
                 const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
-    
+
                 if (userDetails && userDetails.enrolledCourses) {
                     const enrolledCourses = userDetails.enrolledCourses;
-                    const filteredCourses = allCourses.filter(course => enrolledCourses.includes(course.id));
+                    const filteredCourses = allCourses.filter(course => enrolledCourses.includes(course.title));
                     setCourses(filteredCourses);
                 } else {
                     setCourses(allCourses);
                 }
             } catch (error) {
-                toast({
-                    title: "Error",
-                    description: error.response?.data?.message || error.message,
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                });
+                console.error('Error fetching courses:', error);
             }
         };
-    
+
         fetchCourses();
     }, [userDetails]);
-    
-    
 
-    let c = courses[0];
-    console.log("this is courses", c); 
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
 
     const handleCourseClick = (id) => {
@@ -93,7 +75,7 @@ export default function SECourses() {
 
     return (
         <ChakraProvider>
-            <Flex>
+            <Flex h="100vh">
                 <Sidebar />
                 <Box flex="1" p="4">
                     <HStack justifyContent='flex-end'>
@@ -109,42 +91,51 @@ export default function SECourses() {
                                 <Text>{courses.filter(course => !course.completed).length} Courses</Text>
                             </Box>
                         </HStack>
-                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer" >
+                        <HStack border='3px solid gray' w={columnWidth} borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer">
                             <Box bg='green.100' borderRadius='50%' h={10} w={10}>
                                 <Icon as={FiCheckCircle} w={8} h={8} m={1} color='green'></Icon>
                             </Box>
                             <Box>
-                                <Text fontSize='20px' fontWeight='semibold' >Completed</Text>
+                                <Text fontSize='20px' fontWeight='semibold'>Completed</Text>
                                 <Text>{courses.filter(course => course.completed).length} Courses</Text>
                             </Box>
                         </HStack>
                     </HStack>
-                    <Flex wrap='wrap' justifyContent='center'>
-                        {courses.map(course => (
-                            <VStack
-                                key={course._id} // Assuming your course model has _id as the unique identifier
-                                border='3px solid gray'
-                                w={{ base: '100%', sm: '45%', md: '30%' }}
-                                align='left'
-                                p='10px'
-                                m={3}
-                                borderRadius='10'
-                                boxShadow='lg'
-                            >
-                                <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
-                                <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
-                                <Text fontWeight='light' align='left'>{course.description}</Text>
-                                <HStack>
-                                    <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
-                                        <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
-                                    </Box>
-                                    <Text>{course.chapterNo} Chapters</Text>
-                                </HStack>
-                                <Tag colorScheme='orange'>{course.status}</Tag>
-                                <Text>% completed</Text>
-                                <Progress size='xs' colorScheme='orange' value='50'></Progress>
+                    <Flex wrap='wrap' justifyContent='center' alignContent="center">
+                        {courses.length === 0 ? (
+                            <VStack spacing={0}>
+                                <Img src="../../../public/img/notfound.png" height='400px' mt={8}/>
+                                <Text fontSize="2xl" fontWeight="bold" mt={8}>You are not enrolled in any courses.</Text>
+                                <Text fontSize="lg" mt={4}>Enroll in a course now to start learning!</Text>
+                                <Text fontSize="lg" mt={4}>Tap on Explore Button to get started.</Text>
                             </VStack>
-                        ))}
+                        ) : (
+                            courses.map(course => (
+                                <VStack
+                                    key={course._id}
+                                    border='3px solid gray'
+                                    w={{ base: '100%', sm: '45%', md: '30%' }}
+                                    align='left'
+                                    p='10px'
+                                    m={3}
+                                    borderRadius='10'
+                                    boxShadow='lg'
+                                >
+                                    <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
+                                    <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
+                                    <Text fontWeight='light' align='left'>{course.description}</Text>
+                                    <HStack>
+                                        <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
+                                            <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
+                                        </Box>
+                                        <Text>{course.chapterNo} Chapters</Text>
+                                    </HStack>
+                                    <Tag colorScheme='orange'>{course.status}</Tag>
+                                    <Text>% completed</Text>
+                                    <Progress size='xs' colorScheme='orange' value='50'></Progress>
+                                </VStack>
+                            ))
+                        )}
                     </Flex>
                 </Box>
             </Flex>

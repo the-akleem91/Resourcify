@@ -33,6 +33,7 @@ import Educator from './pages/educator/educator'
 import Educator1 from './pages/educator/educator1'
 import CourseEStart from './pages/Dashboard/CourseEStart'
 import CMCourses from './pages/Dashboard/CMCourses'
+import CCourseView from './pages/courses/CourseView/CCourseView'
 
 // router and routes
 const router = createBrowserRouter(
@@ -56,9 +57,10 @@ const router = createBrowserRouter(
       <Route path="chapter-courses" elemtnt={<CCourses />} />
       <Route path="user-analytics/:id" element={<CAnalytics />} />
       <Route path="student-courses/:uid/enrolled" element={<SECourses />}  />
-      <Route path="student-courses/completed" element={<SCompCourses />} />
-      <Route path=":id/student-browse" element={<SBrowse />}  />
+      <Route path="student-courses/:uid/completed" element={<SCompCourses />} />
+      <Route path=":uid/student-browse" element={<SBrowse />}  />
       <Route path='course/:uid/:cid' element={<CourseView/>} />
+      <Route path='see-course/:uid/:cid' element={<CCourseView/>} />
       <Route path='course/:uid/:cid/:chid' element={<ChapterView/>} />
       <Route path='profile/:uid' element={<Profile/>} />
       <Route path='educator' element={<Educator/>} />

@@ -24,7 +24,7 @@ export default function Sidebar() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/auth/users`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
@@ -58,7 +58,7 @@ export default function Sidebar() {
 
 
   return (
-    <Box>
+    <Box h='auto'>
       <Box h='100%'>
         <Box display={{ base: "block", md: "none" }} h='100%' p="4">
           <Button onClick={isOpen ? onClose : onOpen}>
@@ -77,7 +77,7 @@ export default function Sidebar() {
           display={{ base: isOpen ? "block" : "none", md: "block" }}
         >
           <VStack align="start" direction={direction} spacing={{ base: 2, md: 4 }}>
-            <Image src="../../img/Resourcify.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
+            <Image src="../../../../../public/img/Resourcify.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}
               width="full"

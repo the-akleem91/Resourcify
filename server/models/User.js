@@ -10,6 +10,8 @@ const UserSchema = new mongoose.Schema({
     avatar:{type: String, default:'#'},
     enrolledCourses: [{ type: String }],
     myCourses: [{ type: String }],
+    completedChapter: [{ type : String}],
+    completedCourses: [{ type : String}],
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date }
 })

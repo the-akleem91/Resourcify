@@ -3,7 +3,6 @@ import {
     Button, Img, Input, Text, ChakraProvider, Box, Flex, HStack, VStack, Icon, Tag, TagLabel, TagCloseButton, useToast
 } from '@chakra-ui/react';
 import Sidebar from './Creator-Components/sidebar';
-// import ChapterList from './Creator-Components/ChapterList';
 import { TbLayout2 } from "react-icons/tb";
 import { MdOutlineModeEdit, MdDelete } from "react-icons/md";
 import { FiPlusCircle } from "react-icons/fi";
@@ -20,6 +19,7 @@ export default function CourseEditor() {
     const [courseThumbnail, setCourseThumbnail] = useState(null);
     const [tagList, setTagList] = useState([]);
     const [chapterList, setChapterList] = useState([]);
+    const [introVideo, setintroVideo] = useState(null);
     const [input, setInput] = useState('');
     const [file, setFile] = useState(null);
     const toast = useToast();
@@ -103,6 +103,7 @@ export default function CourseEditor() {
             tags: tagList,
             chapters: chapterList,
             thumbnail: courseThumbnail ? courseThumbnail.toString() : '', // Convert to string
+            introVideo: introVideo,
         };
     
         try {
@@ -141,10 +142,27 @@ export default function CourseEditor() {
         }
     };
     
+    function handlePdfChange(e, setFileState) {
+        let inputFile = e.target.files[0];
+        let size = inputFile.size;
+        let type = inputFile.type;
+        if(size < 10000000 && (type === 'application/pdf' || type.startsWith('video/'))){
+            setintroVideo(URL.createObjectURL(e.target.files[0]));
+            // setFileState(inputFile);
+        } else {
+            toast({
+                title: "File Error",
+                description: "File size exceeded or type is undesired.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    }
 
     return (
         <ChakraProvider>
-            <Flex>
+            <Flex h="100vh">
                 <Sidebar />
                 <Box flex="1" p="4">
                     <HStack justifyContent='space-between' w='100%' pb={10}>
@@ -248,12 +266,13 @@ export default function CourseEditor() {
                                             </HStack>
                                         ))}
                                     </VStack>
-                                    {/* <ChapterList 
-                                        chapterList={chapterList}
-                                        handleChapterClick={handleChapterClick}
-                                        deleteChapterByTitle={deleteChapterByTitle}
-                                        onDragEnd={handleOnDragEnd}
-                                    /> */}
+                                    <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
+                                        <HStack w='100%' justifyContent='space-between'>
+                                            <Text fontWeight='semibold'>Add Intro Video</Text>
+                                        </HStack>
+                                        <Input placeholder='Add Videos' type='file' onChange={(e) => handlePdfChange(e, setintroVideo)} accept="video/*" />
+                                        <Img src={file} />
+                                    </VStack>
                             </VStack>
                         </HStack>
                     </HStack>
