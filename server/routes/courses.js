@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import { Course } from '../models/Courses.js';
+import { User } from '../models/User.js';
 
 const router = express.Router();
 const app = express();
@@ -28,6 +29,35 @@ app.post("/courses", upload.single("image"), async (req, res) => {
     res.status(200).json({ status: "ok" });
   } catch (error) {
     res.status(500).json({ status: error });
+  }
+});
+
+router.post('/enroll', async (req, res) => {
+  const { userId, courseId } = req.body;
+  console.log("this is req", req.body);
+
+  try {
+      // Find the user by ID
+      const course = await Course.findById(userId);
+      if (!course) {
+          return res.status(404).json({ message: 'Course not found' });
+      }
+
+      // Find the course by ID
+      const user = await User.findById(courseId);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Add the course title to the user's enrolled courses
+      course.enrolledBy.push(user.username);
+
+      // Save the updated user
+      await course.save();
+
+      res.status(200).json({ message: 'Course enrolled successfully', user });
+  } catch (error) {
+      res.status(500).json({ message: 'An error occurred', error });
   }
 });
 

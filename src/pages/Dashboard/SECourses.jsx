@@ -17,7 +17,7 @@ export default function SECourses() {
 
     const fetchUserDetails = async (username) => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 setUserDetails(userDetails);
@@ -41,7 +41,7 @@ export default function SECourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
 
                 if (userDetails && userDetails.enrolledCourses) {

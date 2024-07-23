@@ -1,11 +1,10 @@
-import React, { use, useEffect, useState } from 'react';
-import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast, Avatar } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { ChakraProvider, Box, Flex, VStack, HStack, Img, Text, Icon, Tag, Button, Input, useToast, Avatar, InputGroup, InputRightElement } from '@chakra-ui/react';
 import Sidebar from './Student-Components/sidebar';
 import { IoBookSharp } from "react-icons/io5";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
-import { InputGroup, InputRightElement } from '@chakra-ui/react';
 
 export default function SBrowse() {
     const [courses, setCourses] = useState([]);
@@ -19,7 +18,7 @@ export default function SBrowse() {
     const fetchUserDetails = async (username) => {
         console.log(username);
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 setUserDetails(response.data);
             } else {
@@ -49,7 +48,7 @@ export default function SBrowse() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
 
                 if (userDetails) {
@@ -71,7 +70,7 @@ export default function SBrowse() {
 
         const fetchChapters = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 setChapters(response.data);
             } catch (error) {
                 toast({
@@ -96,7 +95,7 @@ export default function SBrowse() {
 
     const search = async () => {
         try {
-            const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+            const response = await axios.get('http://localhost:3000/chapters');
             const filteredChapters = response.data.filter(chapter => chapter.tags.map(tag => tag.toLowerCase()).includes(input));
 
             if (filteredChapters.length === 0) {
@@ -111,7 +110,7 @@ export default function SBrowse() {
             }
 
             const courseTitle = filteredChapters[0].courseTitle;
-            const cresponse = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+            const cresponse = await axios.get('http://localhost:3000/auth/courses');
             const filteredCourses = cresponse.data.filter(course => course.title === courseTitle);
 
             setCourses(filteredCourses);
@@ -148,8 +147,9 @@ export default function SBrowse() {
         console.log("this is courseId", courseId);
         
         try {
-            const response = await axios.post('https://resourcify-qw1s.onrender.com/auth/enroll', { userId, courseId });
-            if (response.status === 200) {
+            const response = await axios.post('http://localhost:3000/auth/enroll', { userId, courseId });
+            const res = await axios.post('http://localhost:3000/auth/courses/enroll', { userId, courseId });
+            if (response.status === 200 && res.status === 200) {
                 toast({
                     title: "Success",
                     description: "Course enrolled successfully",
@@ -184,23 +184,23 @@ export default function SBrowse() {
     };
 
     return (
-        <Box h="auto">
-            <Flex h="100%" direction={{ base: 'column', md: 'row' }} overflowX='hidden'>
-                <Sidebar/>
+        <Box h="auto" overflowX="hidden"  maxW={{ base: '400px', md: '1500px' }}>
+            <Flex h="100%" direction={{ base: 'column', md: 'row' }}>
+                <Sidebar />
                 <Box flex="1" p="4">
-                    <HStack>
-                        <InputGroup>
+                    <HStack mb={4} spacing={4} flexWrap="wrap" justifyContent={{ base: 'center', md: 'space-between' }}>
+                        <InputGroup maxW={{ base: '100%', md: '90%' }}>
                             <Input placeholder='Enter search text' type='text' onChange={handleInputChange} />
-                            <InputRightElement onClick={search}>
+                            <InputRightElement onClick={search} cursor="pointer">
                                 <Search2Icon color='green.500' />
                             </InputRightElement>
                         </InputGroup>
-                        <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} />
+                        <Avatar name={userDetails?.username} src='https://bit.ly/tioluwani-kolawole' onClick={handleAvatar} cursor="pointer" />
                     </HStack>
-                    <HStack spacing={4} mb={4} wrap='wrap' justify={{ base: 'center', md: 'flex-start' }}>
+                    <HStack spacing={4} mb={4} flexWrap="wrap" justifyContent={{ base: 'center', md: 'flex-start' }} w="100%">
                         {renderUniqueTags()}
                     </HStack>
-                    <Flex wrap='wrap' justifyContent='center'>
+                    <Flex wrap='wrap' justifyContent='center' width="90%">
                         {courses.map(course => (
                             <VStack
                                 key={course._id}
@@ -211,10 +211,12 @@ export default function SBrowse() {
                                 m={3}
                                 borderRadius='10'
                                 boxShadow='lg'
+                                overflow='hidden'
+                                
                             >
-                                <Img src={course.image} alt={course.title} aspectRatio={3 / 4} h='150px' />
-                                <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
-                                <Text fontWeight='light' align='left'>{course.description}</Text>
+                                <Img src={course.image} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
+                                <Text fontWeight='bold' fontSize='20px' noOfLines={2}>{course.title}</Text>
+                                <Text fontWeight='light' noOfLines={1} w="40px">{course.description}</Text>
                                 <HStack>
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
@@ -227,10 +229,10 @@ export default function SBrowse() {
                                         bg='orange.300'
                                         color='white'
                                         size='xs'
-                                        _hover={{ color: 'orange.300', border: '3px solid orange', bg: 'white' }}
+                                        _hover={{ color: 'orange.300', border: '3px solid orange' }}
                                         onClick={() => enrollCourse(userDetails._id, course._id)}
                                     >
-                                        Enroll Now!
+                                        Enroll Now
                                     </Button>
                                 )}
                             </VStack>

@@ -23,7 +23,10 @@ const courseSchema = new mongoose.Schema({
   },
   views: {
     type: String,
-  }
+  },
+  enrolledBy: {
+    type: String,
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);

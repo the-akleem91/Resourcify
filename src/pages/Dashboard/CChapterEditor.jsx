@@ -24,13 +24,15 @@ import { MdOutlineModeEdit, MdOutlineVideoLibrary, MdDelete } from "react-icons/
 import { FaFileLines } from "react-icons/fa6";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import PDFViewer from './Creator-Components/PdfViewer';
 
 export default function CChapterEditor() {
     const  {id, title} = useParams();
     const navigate = useNavigate();
     console.log("this is id",id);
     console.log("this is title",title);
-    const [file, setFile] = useState();
+    const [file1, setFile1] = useState();
+    const [file2, setFile2] = useState();
     const [chapterTitle, setChapterTitle] = useState('');
     const [chapterDescription, setChapterDescription] = useState('');
     const [chapterNotes, setChapterNotes] = useState(null);
@@ -46,8 +48,28 @@ export default function CChapterEditor() {
         console.log(size);
         let type = inputFile.type;
         console.log(type);
-        if(size < 10000000 && (type === 'application/pdf' || type.startsWith('video/'))){
-            setFile(URL.createObjectURL(e.target.files[0]));
+        if(size < 1000000 && (type === 'application/pdf')){
+            setFile1(URL.createObjectURL(e.target.files[0]));
+            setFileState(inputFile);
+        } else {
+            toast({
+                title: "File Error",
+                description: "File size exceeded or type is undesired.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    }
+    function handleVideoChange(e, setFileState) {
+        let inputFile = e.target.files[0];
+        console.log(inputFile);
+        let size = inputFile.size;
+        console.log(size);
+        let type = inputFile.type;
+        console.log(type);
+        if(size < 10000000 && (type.startsWith('video/'))){
+            setFile2(URL.createObjectURL(e.target.files[0]));
             setFileState(inputFile);
         } else {
             toast({
@@ -89,7 +111,7 @@ export default function CChapterEditor() {
         if (videoLectures) formData.append('video', videoLectures);
     
         try {
-            const response = await axios.post('https://resourcify-qw1s.onrender.com/chapters', formData, {
+            const response = await axios.post('http://localhost:3000/chapters', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -211,7 +233,7 @@ export default function CChapterEditor() {
                                         <Button leftIcon={<MdOutlineModeEdit />}>Edit Notes</Button>
                                     </HStack>
                                     <Input placeholder='Add Notes' type='file' onChange={(e) => handlePdfChange(e, setChapterNotes)} accept="application/pdf" />
-                                    <Img src={file} />
+                                    
                                 </VStack>
                                 <HStack spacing={2} w='100%'>
                                     <Box align='left' bg='#F6D6A8' h={12} w={12} borderRadius='50%' p={1} color='#FF9500'>
@@ -224,8 +246,8 @@ export default function CChapterEditor() {
                                         <Text fontWeight='semibold'>Video Lectures</Text>
                                         <Button leftIcon={<MdOutlineModeEdit />}>Edit Videos</Button>
                                     </HStack>
-                                    <Input placeholder='Add Videos' type='file' onChange={(e) => handlePdfChange(e, setVideoLectures)} accept="video/*" />
-                                    <Img src={file} />
+                                    <Input placeholder='Add Videos' type='file' onChange={(e) => handleVideoChange(e, setVideoLectures)} accept="video/*" />
+                                    {videoLectures && <video src={URL.createObjectURL(videoLectures)} controls />}
                                 </VStack>
                             </VStack>
                         </VStack>

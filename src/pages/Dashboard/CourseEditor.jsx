@@ -14,40 +14,32 @@ export default function CourseEditor() {
     const {id, title} = useParams();
     const navigate = useNavigate();
     const courseTitle = title;
-    console.log('This title : ', courseTitle);
     const [courseDescription, setCourseDescription] = useState('');
     const [courseThumbnail, setCourseThumbnail] = useState(null);
     const [tagList, setTagList] = useState([]);
     const [chapterList, setChapterList] = useState([]);
-    const [introVideo, setintroVideo] = useState(null);
+    const [introVideo, setIntroVideo] = useState(null);
     const [input, setInput] = useState('');
-    const [file, setFile] = useState(null);
     const toast = useToast();
-
 
     const handleOnDragEnd = (result) => {
         if (!result.destination) return;
-    
         const items = Array.from(chapterList);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
-    
-        // Update your state with the reordered items
         setChapterList(items);
     };
-    
 
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 const filteredChapters = response.data.filter(chapter => chapter.courseTitle === courseTitle);
                 setChapterList(filteredChapters);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         }
-
         fetchChapters();
     }, [courseTitle]);
 
@@ -56,11 +48,9 @@ export default function CourseEditor() {
     };
 
     const onInputChange = (e) => {
-        console.log(e.target.files[0]);
         setCourseThumbnail(e.target.files[0]);
-      };
+    };
 
-    
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             const trimmedInput = input.trim();
@@ -76,43 +66,38 @@ export default function CourseEditor() {
     };
 
     const handleInputChange = (e) => {
-        const input = e.target.value;
-        setInput(input);
+        setInput(e.target.value);
     };
-
 
     const deleteChapterByTitle = async (title) => {
         try {
-          const response = await axios.delete(`https://resourcify-qw1s.onrender.com/chapters/by-title/${title}`);
-          console.log('Chapter deleted:', response.data);
+            const response = await axios.delete(`http://localhost:3000/chapters/by-title/${title}`);
+            console.log('Chapter deleted:', response.data);
         } catch (err) {
-          console.error('Error deleting chapter:', err.message);
+            console.error('Error deleting chapter:', err.message);
         }
-      };
-    
-      // Handle the button click
-      const handleDeleteClick = (title) => {
+    };
+
+    const handleDeleteClick = (title) => {
         deleteChapterByTitle(title);
-      };
+    };
 
+    const handlePublish = async () => {
+        const formData = new FormData();
+        formData.append('title', courseTitle);
+        formData.append('description', courseDescription);
+        formData.append('tags', JSON.stringify(tagList));
+        formData.append('chapters', JSON.stringify(chapterList));
+        if (courseThumbnail) formData.append('thumbnail', courseThumbnail);
+        if (introVideo) formData.append('introVideo', introVideo);
 
-      const handlePublish = async () => {
-        const courseData = {
-            title: courseTitle,
-            description: courseDescription,
-            tags: tagList,
-            chapters: chapterList,
-            thumbnail: courseThumbnail ? courseThumbnail.toString() : '', // Convert to string
-            introVideo: introVideo,
-        };
-    
         try {
-            const response = await axios.put('https://resourcify-qw1s.onrender.com/courses', courseData, {
+            const response = await axios.put('http://localhost:3000/courses', formData, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                 },
             });
-    
+
             console.log(response.data);
             toast({
                 title: "Course Published",
@@ -121,17 +106,13 @@ export default function CourseEditor() {
                 duration: 5000,
                 isClosable: true,
             });
-                 
             navigate(`/dashboard/${id}`);
-
-            // Reset the form (optional)
-            // setCourseTitle(''); // Reset title
-            setCourseDescription(''); // Reset description
-            setCourseThumbnail(null); // Reset thumbnail
-            setChapterList([]); // Reset chapters list after successful publish
-            setTagList([]); // Reset tags list after successful publish
+            setCourseDescription('');
+            setCourseThumbnail(null);
+            setChapterList([]);
+            setTagList([]);
         } catch (error) {
-            console.error('Error saving course details:', error);  // Log the error
+            console.error('Error saving course details:', error);
             toast({
                 title: "Error",
                 description: "There was an error saving your course details.",
@@ -141,14 +122,13 @@ export default function CourseEditor() {
             });
         }
     };
-    
+
     function handlePdfChange(e, setFileState) {
         let inputFile = e.target.files[0];
         let size = inputFile.size;
         let type = inputFile.type;
-        if(size < 10000000 && (type === 'application/pdf' || type.startsWith('video/'))){
-            setintroVideo(URL.createObjectURL(e.target.files[0]));
-            // setFileState(inputFile);
+        if (size < 10000000 && (type === 'application/pdf' || type.startsWith('video/'))) {
+            setIntroVideo(inputFile);
         } else {
             toast({
                 title: "File Error",
@@ -196,83 +176,67 @@ export default function CourseEditor() {
                                     <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
                                         <HStack w='100%' justifyContent='space-between'>
                                             <Text fontWeight='semibold'>Course Description</Text>
-                                            <Button leftIcon={<MdOutlineModeEdit />}>Edit description</Button>
+                                            <Button leftIcon={<MdOutlineModeEdit />} variant='link'></Button>
                                         </HStack>
-                                        <Input
-                                            placeholder='Write course description'
-                                            value={courseDescription}
-                                            onChange={(e) => setCourseDescription(e.target.value)}
-                                        />
+                                        <Input value={courseDescription} onChange={(e) => setCourseDescription(e.target.value)} placeholder='Add Description' />
                                     </VStack>
                                     <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
                                         <HStack w='100%' justifyContent='space-between'>
-                                            <Text fontWeight='semibold'>Course Thumbnail</Text>
-                                            <Button leftIcon={<MdOutlineModeEdit />}>Edit image</Button>
+                                            <Text fontWeight='semibold'>Add Thumbnail</Text>
                                         </HStack>
-                                        <Input
-                                            placeholder='Add Thumbnail'
-                                            type='file'
-                                            onChange={onInputChange}
-                                            accept="image/png, image/jpeg"
-                                        />
-                                        {file && <Img src={file} />}
+                                        <Input placeholder='Add Thumbnail' type='file' onChange={onInputChange} accept="image/png, image/jpeg, image/jpg" />
+                                        {courseThumbnail && <Img src={URL.createObjectURL(courseThumbnail)} />}
                                     </VStack>
                                     <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
                                         <HStack w='100%' justifyContent='space-between'>
-                                            <Text fontWeight='semibold'>Course Tags</Text>
-                                            <Button leftIcon={<MdOutlineModeEdit />}>Edit Tags</Button>
+                                            <Text fontWeight='semibold'>Tags</Text>
                                         </HStack>
-                                        <Input
-                                            placeholder='Enter tags and press enter'
-                                            value={input}
-                                            onChange={handleInputChange}
-                                            onKeyPress={handleKeyPress}
-                                        />
-                                        <HStack>
+                                        <HStack w='100%' flexWrap='wrap'>
                                             {tagList.map((tag, index) => (
-                                                <Tag
-                                                    size='lg'
-                                                    key={index}
-                                                    borderRadius='full'
-                                                    variant='solid'
-                                                    colorScheme='orange'
-                                                >
+                                                <Tag key={index} borderRadius='full' variant='solid' colorScheme='orange'>
                                                     <TagLabel>{tag}</TagLabel>
                                                     <TagCloseButton onClick={() => removeTag(tag)} />
                                                 </Tag>
                                             ))}
+                                            <Input
+                                                variant='unstyled'
+                                                placeholder='Enter a tag and press enter'
+                                                value={input}
+                                                onChange={handleInputChange}
+                                                onKeyDown={handleKeyPress}
+                                            />
                                         </HStack>
                                     </VStack>
                                 </VStack>
                             </VStack>
                             <VStack w="50%" flexDirection='column'>
-                                    <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
-                                        <HStack w='100%' justifyContent='space-between'>
-                                            <Text fontWeight='semibold'>Add Chapters</Text>
-                                            <Button leftIcon={<FiPlusCircle />} onClick={handleChapterClick}>New Chapter</Button>
-                                        </HStack>
-                                        {chapterList.map((chapter, index) => (
-                                            <HStack key={index} w='100%' justifyContent='space-between'>
-                                                <HStack>
-                                                    <Box bg='#F6D6A8' h={12} w={12} borderRadius='50%' p={1} color='#FF9500'>
-                                                        <Icon as={CgMenuGridO} h={10} w={10} />
-                                                    </Box>
-                                                    <Text>{chapter.title}</Text>
-                                                </HStack>
-                                                <HStack>
-                                                    <Button leftIcon={<MdOutlineModeEdit />} variant='link'>Edit</Button>
-                                                    <Button leftIcon={<MdDelete />} onClick={() => deleteChapterByTitle('Chapter Title')} variant='link'>Delete</Button>
-                                                </HStack>
+                                <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
+                                    <HStack w='100%' justifyContent='space-between'>
+                                        <Text fontWeight='semibold'>Add Chapters</Text>
+                                        <Button leftIcon={<FiPlusCircle />} onClick={handleChapterClick}>New Chapter</Button>
+                                    </HStack>
+                                    {chapterList.map((chapter, index) => (
+                                        <HStack key={index} w='100%' justifyContent='space-between'>
+                                            <HStack>
+                                                <Box bg='#F6D6A8' h={12} w={12} borderRadius='50%' p={1} color='#FF9500'>
+                                                    <Icon as={CgMenuGridO} h={10} w={10} />
+                                                </Box>
+                                                <Text>{chapter.title}</Text>
                                             </HStack>
-                                        ))}
-                                    </VStack>
-                                    <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
-                                        <HStack w='100%' justifyContent='space-between'>
-                                            <Text fontWeight='semibold'>Add Intro Video</Text>
+                                            <HStack>
+                                                <Button leftIcon={<MdOutlineModeEdit />} variant='link'>Edit</Button>
+                                                <Button leftIcon={<MdDelete />} onClick={() => deleteChapterByTitle('Chapter Title')} variant='link'>Delete</Button>
+                                            </HStack>
                                         </HStack>
-                                        <Input placeholder='Add Videos' type='file' onChange={(e) => handlePdfChange(e, setintroVideo)} accept="video/*" />
-                                        <Img src={file} />
-                                    </VStack>
+                                    ))}
+                                </VStack>
+                                <VStack w='100%' bg="gray.100" p="20px" borderRadius='5px'>
+                                    <HStack w='100%' justifyContent='space-between'>
+                                        <Text fontWeight='semibold'>Add Intro Video</Text>
+                                    </HStack>
+                                    <Input placeholder='Add Videos' type='file' onChange={(e) => handlePdfChange(e, setIntroVideo)} accept="video/*" />
+                                    {introVideo && <video src={URL.createObjectURL(introVideo)} controls />}
+                                </VStack>
                             </VStack>
                         </HStack>
                     </HStack>

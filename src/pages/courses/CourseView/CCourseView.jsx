@@ -11,28 +11,29 @@ import { CiClock1 } from 'react-icons/ci';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function CCourseView() {
-    const  {uid, cid}  = useParams(); 
-    const navigate = useNavigate(); // Destructure to get 'id' directly from useParams
+function ChapterView() {
+    const { uid, cid } = useParams();
+    const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
     const [courses, setCourses] = useState([]);
     const toast = useToast();
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         async function fetchChapters() {
             try {
-                const response = await axios.get('https://localhost:3000/chapters');
+                const response = await axios.get('http://localhost:3000/chapters');
                 const filteredCourses = response.data.filter(chapter => chapter.courseTitle === courses[0]?.title);
                 setChapters(filteredCourses);
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         }
-    
-        async function fetchCourses(cid) {
+
+        async function fetchCourses(courseId) {
             try {
-                const response = await axios.get('https://localhost:3000/auth/courses');
-                const filteredCourses = response.data.filter(course => course._id === cid);
+                const response = await axios.get('http://localhost:3000/auth/courses');
+                const filteredCourses = response.data.filter(course => course._id === courseId);
                 setCourses(filteredCourses);
             } catch (error) {
                 toast({
@@ -49,13 +50,27 @@ function CCourseView() {
         fetchChapters();
     }, [cid, courses, toast]);
 
+    console.log("this is courses:", courses[0]?.introVideo );
+
+
     const navigateToChapterDetails = (id) => {
-        navigate(`/course/${uid}/${cid}/${id}`);
+        navigate(`/see-course/${uid}/${cid}/${id}`);
+    };
+
+    const handleVideoEnd = () => {
+        setShowPopup(true);
+    };
+
+    console.log("this is my course",courses[0]);
+
+    const handleNextChapter = () => {
+        setShowPopup(false);
+        navigateToChapterDetails(chapters[0]?._id); // Assuming the next chapter is the second item in the array
     };
 
     return (
         <ChakraProvider>
-            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }}>
+            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }} overflowX='hidden'>
                 <Sidebar />
                 <VStack
                     h="100%"
@@ -73,6 +88,8 @@ function CCourseView() {
                         flexDirection={{ base: 'column', lg: 'column' }}
                         alignItems={{ base: 'center', lg: 'flex-start' }}
                     >
+                    {courses.length > 0 ? (
+                            courses.map((course, index) => (  
                         <Box
                             w={{ base: '100%', lg: '98%' }}
                             maxW="1300px"
@@ -81,9 +98,18 @@ function CCourseView() {
                             p={{ base: '2', md: '5' }}
                         >
                             <AspectRatio ratio={16 / 9}>
-                                <iframe src="../../img/Eduvid.mp4" frameBorder="1" allowFullScreen title="Course Video" />
+                                <video
+                                    src={`../../../../server/${course.introVideo}`}
+                                    controls
+                                    onEnded={handleVideoEnd}
+                                    style={{ width: '100%' }}
+                                />
                             </AspectRatio>
                         </Box>
+                         ))
+                        ) : (
+                            <Text>No video available</Text>
+                        )}
                         <Box
                             border="1px solid #e2e8f0"
                             w={{ base: '100%', lg: '98%' }}
@@ -92,7 +118,7 @@ function CCourseView() {
                         >
                             <VStack align='left'>
                                 <Text>Course Content</Text>
-                                <Progress colorScheme='orange' size='xs' value={40} />
+                                <Progress colorScheme='orange' size='xs' value={0} />
                             </VStack>
                             {chapters.length > 0 ? (
                                 chapters.map((chapter, index) => (
@@ -123,7 +149,8 @@ function CCourseView() {
                             )}
                         </Box>
                     </Flex>
-
+                    {courses.length > 0 ? (
+                            courses.map((course, index) => (  
                     <Box w="100%">
                         <HStack spacing="2" mb="4">
                             <Icon as={BsTextParagraph} />
@@ -132,9 +159,13 @@ function CCourseView() {
                             </Text>
                         </HStack>
                         <Text>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
+                            {course.description}
                         </Text>
                     </Box>
+                    ))
+                ) : (
+                    <Text>No descriptionavailable</Text>
+                )}
                     <Box w="100%">
                         <HStack spacing="2" mb="4">
                             <Icon as={BsFilePdfFill} />
@@ -149,8 +180,27 @@ function CCourseView() {
                     </Box>
                 </VStack>
             </Flex>
+
+            {showPopup && (
+                <Box
+                    position="fixed"
+                    top="50%"
+                    left="50%"
+                    transform="translate(-50%, -50%)"
+                    bg="white"
+                    p={8}
+                    borderRadius={8}
+                    boxShadow="lg"
+                    textAlign="center"
+                    zIndex={1000}
+                >
+                    <Text fontSize="2xl" mb={4}>Intro Complete</Text>
+                    <Text fontSize="md" mb={6}>You are done with the intro, now let's start!</Text>
+                    <Button colorScheme="orange" onClick={handleNextChapter}>Start Next Chapter</Button>
+                </Box>
+            )}
         </ChakraProvider>
     );
 }
 
-export default CCourseView;
+export default ChapterView;

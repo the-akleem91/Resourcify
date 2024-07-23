@@ -22,6 +22,8 @@ export default function CMCourses() {
     const username= d;
     const toast= useToast();
 
+    console.log("hi i am here");
+
     const handleCourseClick = (title) => {
         navigate(`/see-course/${u}/${title}`);
     };
@@ -40,7 +42,7 @@ export default function CMCourses() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             if (response.status === 200) {
                 const userDetails = response.data;
                 // Set the user details in the state
@@ -67,7 +69,7 @@ export default function CMCourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('https://resourcify-qw1s.onrender.com/auth/courses');
+                const response = await axios.get('http://localhost:3000/auth/courses');
                 const allCourses = response.data;
 
                 if (C) {
@@ -97,8 +99,13 @@ export default function CMCourses() {
     console.log("This is u",u);
 
     const f= courses[0]?.chapters?.length;
-
-
+    const getTextUntilFirstFullStop = (text) => {
+        if (typeof text !== 'string') {
+          return ''; // Return an empty string if text is not a string
+        }
+        const firstFullStopIndex = text.indexOf('.');
+        return firstFullStopIndex !== -1 ? text.substring(0, firstFullStopIndex + 1) : text;
+      }; 
     const columnWidth = useBreakpointValue({ base: '100%', md: '45%', lg: '30%' });
 
     
@@ -148,9 +155,9 @@ export default function CMCourses() {
                                 borderRadius='10'
                                 boxShadow='lg'
                             >
-                                <Img src={course.thumbnail} alt={course.title} aspectRatio={3/4} h='150px' />
+                                <Img src={`../../../server/${course?.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
                                 <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
-                                <Text fontWeight='light' align='left'>{course.description}</Text>
+                                <Text fontWeight='light' align='left'>{getTextUntilFirstFullStop(course?.description)}</Text>
                                 <HStack>
                                     <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                         <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />

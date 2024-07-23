@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-export default function Sidebar() {
+export default function CSidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sidebarWidth = useBreakpointValue({ base: "full", md: "200px" });
   const iconSize = useBreakpointValue({ base: "20px", md: "24px" });
@@ -55,7 +55,7 @@ export default function Sidebar() {
   };
 
     const handleDashboard = () => {
-        navigate(`/student-courses/${useid}/enrolled`);
+        navigate(`/dashboard/${useid}`);
     };
 
 
@@ -99,7 +99,7 @@ export default function Sidebar() {
               spacing={4}
             >
               <Icon as={IoIosCompass} boxSize={iconSize} />
-              <NavLink cursor="pointer" onClick={handleExplore}>Explore</NavLink>
+              <NavLink cursor="pointer" onClick={handleExplore}>Analytics</NavLink>
             </HStack>
           </VStack>
         </Box>

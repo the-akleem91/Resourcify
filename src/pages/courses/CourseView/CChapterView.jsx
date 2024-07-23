@@ -12,7 +12,7 @@ import { CiClock1 } from 'react-icons/ci';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function ChapterView() {
+function CChapterView() {
     const { uid, cid, chid } = useParams(); 
     const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
@@ -121,11 +121,11 @@ function ChapterView() {
             const nextChapterId = chapters[currentIndex + 1]?._id || null;
 
             if (nextChapterId) {
-                navigate(`/course/${uid}/${cid}/${nextChapterId}`);
+                navigate(`/see-course/${uid}/${cid}/${nextChapterId}`);
                 window.location.reload();
             } else {
                 await axios.put(`http://localhost:3000/auth/users/${uid}/completedCourses`, { cid });
-                navigate(`/student-courses/${useid}/completed`);
+                navigate(`/dashboard/${useid}`);
                 window.location.reload();
             }
         } catch (error) {
@@ -140,7 +140,7 @@ function ChapterView() {
 
     return (
         <ChakraProvider>
-            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }}>
+            <Flex h="100%" flexDirection={{ base: 'column', lg: 'row' }} overflowX='hidden'>
                 <Sidebar/>
                 <VStack
                     h="100%"
@@ -158,6 +158,8 @@ function ChapterView() {
                         flexDirection={{ base: 'column', lg: 'column' }}
                         alignItems={{ base: 'center', lg: 'flex-start' }}
                     >
+                    {chapter.length > 0 ? (
+                            chapter.map((chapter) => (  
                         <Box
                             w={{ base: '100%', lg: '98%' }}
                             maxW="1300px"
@@ -167,13 +169,16 @@ function ChapterView() {
                         >
                             <AspectRatio ratio={16 / 9}>
                                 <video
-                                    src='../../../../public/img/Eduvid.mp4'
+                                    src={`../../../../server/${chapter.video}`}
                                     controls
                                     onEnded={handleChapterComplete} 
                                 />
                             </AspectRatio>
                         </Box>
-
+                        ))
+                    ) : (
+                        <Text>No video available</Text>
+                    )}
                         <Box
                             border="1px solid #e2e8f0"
                             w={{ base: '100%', lg: '98%' }}
@@ -228,7 +233,7 @@ function ChapterView() {
                                         Chapter Overview
                                     </Text>
                                 </HStack>
-                                <Text>
+                                <Text w="90%">
                                     {chapter.description}
                                 </Text>
                             </Box>
@@ -255,4 +260,4 @@ function ChapterView() {
     );
 }
 
-export default ChapterView;
+export default CChapterView;

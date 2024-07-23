@@ -24,7 +24,7 @@ export default function Sidebar() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;

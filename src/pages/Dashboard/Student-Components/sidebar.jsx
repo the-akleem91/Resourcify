@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sidebarWidth = useBreakpointValue({ base: "full", md: "200px" });
@@ -24,7 +23,7 @@ export default function Sidebar() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get(`https://resourcify-qw1s.onrender.com/auth/users/${username}`);
+            const response = await axios.get(`http://localhost:3000/auth/users/${username}`);
             console.log(response);
             if (response.status === 200) {
                 const userDetails = response.data;
@@ -77,7 +76,7 @@ export default function Sidebar() {
           display={{ base: isOpen ? "block" : "none", md: "block" }}
         >
           <VStack align="start" direction={direction} spacing={{ base: 2, md: 4 }}>
-            <Image src="../../img/Resourcify.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
+            <Image src="../../../../public/img/Resourcify.png" alt="Logo" maxW={{ base: "100px", md: "150px" }} />
             <HStack
               _hover={{ bg: '#E5B673', borderRight: { md: "5px solid #D88511" }, color: "gray.100" }}
               width="full"
