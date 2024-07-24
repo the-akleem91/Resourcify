@@ -29,12 +29,11 @@ import SBrowse from './pages/Dashboard/SBrowse';
 import CourseView from './pages/courses/CourseView/CourseView';
 import ChapterView from './pages/courses/CourseView/ChapterView';
 import Profile from './pages/profile/Profile';
-import Educator from './pages/educator/educator';
 import Educator1 from './pages/educator/educator1';
 import CourseEStart from './pages/Dashboard/CourseEStart';
 import CMCourses from './pages/Dashboard/CMCourses';
 import CCourseView from './pages/courses/CourseView/CCourseView';
-import CChapterView from './pages/courses/CourseView/CChapterView'
+import CChapterView from './pages/courses/CourseView/CChapterView';
 
 // router and routes
 const router = createBrowserRouter(
@@ -65,8 +64,7 @@ const router = createBrowserRouter(
       <Route path='see-course/:uid/:cid/:chid' element={<CChapterView/>} />
       <Route path='course/:uid/:cid/:chid' element={<ChapterView/>} />
       <Route path='profile/:uid' element={<Profile/>} />
-      <Route path='educator' element={<Educator/>} />
-      <Route path='educator1' element={<Educator1/>} />    
+      <Route path='educator' element={<Educator1/>} /> 
     </Route>
   )
 )

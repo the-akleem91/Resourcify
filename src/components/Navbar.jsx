@@ -12,10 +12,10 @@ export default function Navbar() {
 
         <HStack display={{ base: "none", md: "flex" }} spacing="20px" ml="20px">
           <Box><NavLink to="/">Home</NavLink></Box>
-          <Box><NavLink to="/courses">Courses</NavLink></Box>
           <Box><NavLink to="/about">About Us</NavLink></Box>
           <Box><NavLink to="/pricing">Pricing</NavLink></Box>
           <Box><NavLink to="/contact">Contact</NavLink></Box>
+          <Box><NavLink to="/educator">For Educators</NavLink></Box>
         </HStack>
 
         <Spacer />

@@ -80,6 +80,7 @@ app.post('/courses/course', async (req, res) => {
           thumbnail: '', // Provide default value
           tags: [], // Provide default value
           chapters: [] // Provide default value
+          
       });
 
       await course.save();
@@ -96,35 +97,42 @@ const upload1 = multer({ storage: storage }).fields([
 
 app.post('/auth/courses/enroll', async (req, res) => {
   const { userId, courseId } = req.body;
-  console.log("this is req", req.body);
+  console.log("Request body:", req.body);
 
   try {
-      // Find the user by ID
-      const course = await Course.findById(courseId);
-      console.log("this is course:", course);
-      if (!course) {
-          return res.status(400).json({ message: 'Course not found' });
-      }
+    // Find the course by ID
+    const course = await Course.findById(courseId);
+    if (!course) {
+      console.error("Course not found:", courseId);
+      return res.status(400).json({ message: 'Course not found' });
+    }
+    console.log("Course found:", course);
 
-      // Find the course by ID
-      const user = await User.findById(userId);
-      console.log("this is user:", user);
-      if (!user) {
-          return res.status(400).json({ message: 'User not found' });
-      }
-      console.log("this is enrolled person",course?.enrolledBy);
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      console.error("User not found:", userId);
+      return res.status(400).json({ message: 'User not found' });
+    }
+    console.log("User found:", user);
 
-      // Add the course title to the user's enrolled courses
-      course.enrolledBy.push(user.username);
+    // Add the course title to the user's enrolled courses
+    if (!course.enrolledBy) {
+      course.enrolledBy = []; // Initialize the array if it doesn't exist
+    }
+    course.enrolledBy.push(user.username);
 
-      // Save the updated user
-      await course.save();
+    // Save the updated course
+    await course.save();
+    console.log("Course updated and saved:", course);
 
-      res.status(200).json({ message: 'Course enrolled successfully', user });
+    res.status(200).json({ message: 'Course enrolled successfully', user });
   } catch (error) {
-      res.status(500).json({ message: 'An error occurred', error });
+    console.error("An error occurred:", error);
+    res.status(500).json({ message: 'An error occurred', error });
   }
 });
+
 
 app.put('/courses', upload1, async (req, res) => {
   try {

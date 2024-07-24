@@ -108,6 +108,10 @@ function ChapterView() {
         window.location.reload();
     };
 
+    const navigatePDF = (chapterTitle) => {
+        navigate(`/pdf/${uid}/${cid}/${chapterTitle}`);
+        window.location.reload();
+    };
 
     const useid=userDetails?.username;
     const handleChapterComplete = async () => {
@@ -228,7 +232,7 @@ function ChapterView() {
                                         Chapter Overview
                                     </Text>
                                 </HStack>
-                                <Text>
+                                <Text border='5px solid black' w='1100px'>
                                     {chapter.description}
                                 </Text>
                             </Box>
@@ -239,7 +243,7 @@ function ChapterView() {
                                         Resources & Attachments
                                     </Text>
                                 </HStack>
-                                <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100">
+                                <Box border="1px solid #e2e8f0" w="200px" h="150px" borderRadius="10px" bg="gray.100" onClick={navigatePDF(chapter?._id)}>
                                     {chapter.notes}
                                 </Box>
                             </Box>

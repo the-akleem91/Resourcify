@@ -124,18 +124,15 @@ export default function SECourses() {
                                     borderRadius='10'
                                     boxShadow='lg'
                                 >
-                                    <Img src={course.image} alt={course.title} aspectRatio={3/4} h='150px' />
+                                    <Img src={`../../../server/${course.thumbnail}`} alt={course.title} aspectRatio={3/4} h='150px' />
                                     <Text fontWeight='bold' fontSize='20px' align='left' h='50px'>{course.title}</Text>
                                     <Text fontWeight='light' align='left'>{course.description}</Text>
                                     <HStack>
                                         <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                             <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                         </Box>
-                                        <Text>{course.chapterNo} Chapters</Text>
+                                        <Text>{course.chapter} Chapters</Text>
                                     </HStack>
-                                    <Tag colorScheme='orange'>{course.status}</Tag>
-                                    <Text>% completed</Text>
-                                    <Progress size='xs' colorScheme='orange' value='50'></Progress>
                                 </VStack>
                             ))
                         )}

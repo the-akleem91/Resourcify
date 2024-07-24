@@ -64,7 +64,7 @@ export default function HeroHome() {
               _hover={{ bg: "orange.500" }}
               m="10px"
             >
-              <NavLink to="/courses">Explore Courses</NavLink>
+              <NavLink to="/signup">Explore Courses</NavLink>
             </Button>
             <Button
               color="black"

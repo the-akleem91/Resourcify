@@ -48,12 +48,13 @@ export default function Sidebar() {
         fetchUserDetails(username);
     }, [username]);
 
+
     const handleDashboard = () => {
       navigate(`/dashboard/${username}`);
   };
 
     const handleAnalytics = () => {
-        navigate(`user-analytics/${username}`);
+        navigate(`/user-analytics/${username}`);
     };
 
 

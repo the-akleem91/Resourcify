@@ -32,7 +32,7 @@ export default function Navbar(){
             <List spacing={4}>
               <ListItem>
                 <ListIcon as={EmailIcon} color='black' />
-                jayantjoshi0001@gmail.com
+                resourcifycourses@gmail.com
               </ListItem>
               <ListItem>
                 <ListIcon as={PhoneIcon} color='black' />
@@ -95,7 +95,7 @@ export default function Navbar(){
           </Box>
         </Flex>
         <Center mt={{ base: "20px", md: "40px" }}>
-          <Text>All rights are reserved to Jayant Joshi</Text>
+          <Text>All rights are reserved to ResourcifyCourses</Text>
         </Center>
     </Box>
   );

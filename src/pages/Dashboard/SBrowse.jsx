@@ -15,6 +15,7 @@ export default function SBrowse() {
     const navigate = useNavigate();
     const toast = useToast();
 
+
     const fetchUserDetails = async (username) => {
         console.log(username);
         try {
@@ -89,6 +90,9 @@ export default function SBrowse() {
         }
     }, [userDetails]);
 
+    console.log("this is courses:",courses[0]);
+
+
     const handleInputChange = (e) => {
         setInput(e.target.value.toLowerCase());
     };
@@ -136,8 +140,37 @@ export default function SBrowse() {
             accumulator.push(...chapter.tags);
             return accumulator;
         }, []);
+        const tagList = [
+            ["nejwndj", "nekdjn", "dkqadj"],
+            ["mdld", "mkmd'", "d,md"],
+            ["jakskd", "ndjk", "dfk"],
+            ["fkf", "rkr", "rrk"],
+            ["fmd", "dmkd", "d,kmf"],
+            ["mdkmd", "dkmd", "dmkdm"],
+            [],
+            ["askjnj", "snsk", "ssjsnkld"],
+            ["dksdmld", "dskmdl", "dlsmd"],
+            ["kd", "kf", "mfm", "md", "m", "d"],
+            ["km", "mk", "mkm", "nj"],
+            ["mkfmdlkfm;ld,dlf;,dlf,d;lf,d;l,fl", ",ekrme;"],
+            ["HTML", "basics"],
+            ["CSS", "Styling"],
+            ["JavaScript", "Programming"],
+            ["hello"],
+            ["mbd"]
+          ];
 
-        const uniqueTags = Array.from(new Set(allTags));
+        const extractElements = (tagList) => {
+            const elements = [];
+            tagList.forEach(array => {
+              array.forEach(element => {
+                elements.push(element);
+              });
+            });
+            return elements;
+        };
+
+        const uniqueTags = Array.from(new Set(extractElements(tagList)));
 
         return uniqueTags.map(tag => <Tag key={tag} onClick={() => handleTagClick(tag)}>{tag}</Tag>);
     };
@@ -183,6 +216,8 @@ export default function SBrowse() {
         navigate(`/profile/${username}`);
     };
 
+    
+
     return (
         <Box h="auto" overflowX="hidden"  maxW={{ base: '400px', md: '1500px' }}>
             <Flex h="100%" direction={{ base: 'column', md: 'row' }}>
@@ -214,7 +249,7 @@ export default function SBrowse() {
                                 overflow='hidden'
                                 
                             >
-                                <Img src={course.image} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
+                                <Img src={`../../../server/${course.thumbnail}`} alt={course.title} aspectRatio={3 / 4} h='150px' objectFit="cover" />
                                 <Text fontWeight='bold' fontSize='20px' noOfLines={2}>{course.title}</Text>
                                 <Text fontWeight='light' noOfLines={1} w="40px">{course.description}</Text>
                                 <HStack>
@@ -223,13 +258,13 @@ export default function SBrowse() {
                                     </Box>
                                     <Text>{course.chapterNo} Chapters</Text>
                                 </HStack>
-                                <Tag colorScheme='orange'>{course.status}</Tag>
+                               
                                 {userDetails && (
                                     <Button
                                         bg='orange.300'
                                         color='white'
                                         size='xs'
-                                        _hover={{ color: 'orange.300', border: '3px solid orange' }}
+                                        _hover={{ color: 'orange.300', bg:"white" , border: '3px solid orange' }}
                                         onClick={() => enrollCourse(userDetails._id, course._id)}
                                     >
                                         Enroll Now

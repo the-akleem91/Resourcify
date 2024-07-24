@@ -1,8 +1,14 @@
 import { Box, Button, Center, ChakraProvider, Grid, Icon, SimpleGrid, Text, Img, HStack } from "@chakra-ui/react";
 import { MdArrowOutward } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink , useNavigate} from "react-router-dom";
 
 export default function OurCourses() {
+  const navigate=useNavigate();
+
+  const handleClick= ()=> {
+    navigate("/signup");
+  };
+
   return (
     <ChakraProvider>
       <Box ml={{ base: "20px", md: "50px", lg: "100px" }} mb="100px" bg="gray.100" p={4}>
@@ -105,7 +111,7 @@ export default function OurCourses() {
                 <Text fontSize="15px">{course.description}</Text>
               </Box>
               <Box px="12px" pt="20px" pb="12px">
-                <Button  bg='black' variant="solid" w='100%' color='white' _hover={{bg : 'gray.100', color : 'black'}}>
+                <Button  bg='black' variant="solid" w='100%' color='white' onClick={handleClick} _hover={{bg : 'gray.100', color : 'black'}}>
                   Get it now!
                 </Button>
               </Box>

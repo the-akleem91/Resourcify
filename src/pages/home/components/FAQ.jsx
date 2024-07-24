@@ -11,7 +11,7 @@ export default function FAQ() {
           <Text fontSize={{ base: "20px", xl: "40px" }} fontWeight="bold">Frequently Asked Questions</Text>
           <HStack justifyContent='space-between'>
             <Text fontSize={{ base: "10px", xl: "20px" }} mt={{ base: "10px", xl: "20px" }}>
-              Still have questions? Contact our team via support@skillbridge.com
+              Still have questions? Contact our team via resourcifycourses@gmail.com
             </Text>
             <Button mt={{ base: "20px", xl: "35px" }} bg="white" border="1px solid gray" w={{ base: "105px", xl: "120px" }} h={{ base: "30px", xl: "45px" }}>
               <NavLink to="/pricing">See all FAQs</NavLink>

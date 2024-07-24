@@ -22,7 +22,6 @@ export default function CMCourses() {
     const username= d;
     const toast= useToast();
 
-    console.log("hi i am here");
 
     const handleCourseClick = (title) => {
         navigate(`/see-course/${u}/${title}`);
@@ -129,13 +128,13 @@ export default function CMCourses() {
                                     <Text>{courses.filter(course => !course.completed).length} Courses</Text>
                                 </Box>
                             </HStack>
-                            <HStack border='3px solid gray' w='50%' borderRadius='10px' p={2} onClick={handleCardClick} cursor="pointer" >
+                            <HStack border='3px solid gray' w='50%' borderRadius='10px' p={2} cursor="pointer" >
                                 <Box bg='green.100' borderRadius='50%' h={10} w={10}>
                                     <Icon as={PiEyesFill} w={8} h={8} m={1} color='green'></Icon>
                                 </Box>
                                 <Box>
                                     <Text fontSize='20px' fontWeight='semibold' >Views</Text>
-                                    <Text>{courses.filter(course => course.completed).length} Views</Text>
+                                    <Text>{courses.filter(course => course.enrolledBy).length} Views</Text>
                                 </Box>
                             </HStack>
                         </HStack>

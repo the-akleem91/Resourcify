@@ -21,11 +21,9 @@ const courseSchema = new mongoose.Schema({
   introVideo: {
     type: String,
   },
-  views: {
-    type: String,
-  },
   enrolledBy: {
-    type: String,
+    type: [String], // Change from String to [String]
+    default: [], // Set default value as an empty array
   },
 });
 
