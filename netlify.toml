@@ -8,6 +8,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.environment]
+  NODE_VERSION = "18.17.1"
+
+
 [context.production.environment]
   NODE_VERSION = "14"
 
