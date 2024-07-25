@@ -131,7 +131,7 @@ export default function SECourses() {
                                         <Box bg='orange.100' borderRadius='50%' h={6} w={6}>
                                             <Icon as={IoBookSharp} w={4} h={4} m={1} color='orange' />
                                         </Box>
-                                        <Text>{course.chapter} Chapters</Text>
+                                        <Text>{course.chapters.length} Chapters</Text>
                                     </HStack>
                                 </VStack>
                             ))
