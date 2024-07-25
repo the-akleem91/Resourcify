@@ -1,6 +1,6 @@
 [build]
 command = "npm run build"
-publish = "/opt/build/repo/dist"
+publish = ".next"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -18,5 +18,5 @@ publish = "/opt/build/repo/dist"
   NODE_VERSION = "14"
 
 [context.production]
-  publish = "/opt/build/repo/dist"
+  publish = "/dist"
   command = "npm run build"
