@@ -1,9 +1,16 @@
 [build]
   base = "/"
   publish = "dist"
+  command = "npm run build"
   functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+[context.production.environment]
+  NODE_VERSION = "14"
+
+[context.production]
+  publish = "/opt/build/repo/dist"
+  command = "npm run build"
