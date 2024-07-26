@@ -55,9 +55,9 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "3.4.4",
     "tailwindcss-animate": "^1.0.7",
+    "transformers": "3.1.0",
     "typescript": "5.5.2",
-    "uglify-js": "^3.19.0",
-    "transformers": "3.1.0"
+    "uglify-js": "^3.19.0"
   },
   "devDependencies": {
     "vite": "^5.3.5"
@@ -66,5 +66,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)."
 }
